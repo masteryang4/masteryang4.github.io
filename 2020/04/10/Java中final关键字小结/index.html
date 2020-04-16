@@ -77,7 +77,10 @@ function activateLightMode(){
 <p>修饰方法时，也同样只能使用，不能在子类中被重写。 </p>
 </blockquote>
 <p>finally:</p>
-<pre><code>&gt;通常放在 try…catch 的后面构造最终执行代码块，这就意味着程序无论正常执行还是发生异常，这里的代码只要 JVM 不关闭都能执行，可以将释放外部资源的代码写在finally块中。</code></pre><p>finalize：</p>
+<blockquote>
+<p>通常放在 try…catch 的后面构造最终执行代码块，这就意味着程序无论正常执行还是发生异常，这里的代码只要 JVM 不关闭都能执行，可以将释放外部资源的代码写在finally块中。</p>
+</blockquote>
+<p>finalize：</p>
 <blockquote>
 <p>Object 类中定义的方法。</p>
 <p>Java 中允许使用 finalize() 方法在垃圾收集器将对象从内存中清除出去之前做必要的清理工作。</p>
