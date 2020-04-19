@@ -28,9 +28,9 @@
         <category>集合</category>
       </categories>
       <tags>
-        <tag>Java</tag>
-        <tag>易错点</tag>
         <tag>源码</tag>
+        <tag>易错点</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -81,9 +81,9 @@
         <category>基础知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
-        <tag>易错点</tag>
         <tag>源码</tag>
+        <tag>易错点</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -180,9 +180,9 @@
         <category>集合</category>
       </categories>
       <tags>
-        <tag>Java</tag>
-        <tag>易错点</tag>
         <tag>源码</tag>
+        <tag>易错点</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -264,8 +264,22 @@
         <category>基础知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>易错点</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java空指针问题的本质</title>
+    <url>/2020/04/18/Java%E7%A9%BA%E6%8C%87%E9%92%88%E9%97%AE%E9%A2%98%E7%9A%84%E6%9C%AC%E8%B4%A8/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Java</category>
+        <category>基础知识</category>
+      </categories>
+      <tags>
+        <tag>易错点</tag>
+        <tag>Java</tag>
+        <tag>面试</tag>
       </tags>
   </entry>
   <entry>
@@ -278,8 +292,8 @@
         <category>基础知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>易错点</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -442,8 +456,8 @@
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>算法与数据结构</tag>
         <tag>面试</tag>
+        <tag>算法与数据结构</tag>
       </tags>
   </entry>
   <entry>
@@ -484,8 +498,8 @@
         <category>基础知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>易错点</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -513,8 +527,8 @@
         <category>多线程</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>易错点</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -526,8 +540,8 @@
         <category>集合</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>易错点</tag>
+        <tag>Java</tag>
         <tag>面试</tag>
       </tags>
   </entry>
@@ -540,22 +554,8 @@
         <category>基础知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>易错点</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java空指针问题的本质</title>
-    <url>/2020/04/18/Java%E7%A9%BA%E6%8C%87%E9%92%88%E9%97%AE%E9%A2%98%E7%9A%84%E6%9C%AC%E8%B4%A8/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>Java</category>
-        <category>基础知识</category>
-      </categories>
-      <tags>
         <tag>Java</tag>
-        <tag>易错点</tag>
-        <tag>面试</tag>
       </tags>
   </entry>
 </search>
