@@ -558,4 +558,69 @@
         <tag>Java</tag>
       </tags>
   </entry>
+  <entry>
+    <title>scala中的flatMap和foldLeft函数</title>
+    <url>/2020/04/21/scala%E4%B8%AD%E7%9A%84flatMap%E5%92%8CfoldLeft%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<h1 id="scala中的flatMap和foldLeft函数"><a href="#scala中的flatMap和foldLeft函数" class="headerlink" title="scala中的flatMap和foldLeft函数"></a>scala中的flatMap和foldLeft函数</h1><p>scala由于其函数式编程的特性，在大数据的处理中被广泛使用。</p>
+<p>此文针对scala集合中两个常用的，却不太好理解的函数进行示例讲解。</p>
+<h2 id="flatMap"><a href="#flatMap" class="headerlink" title="flatMap"></a>flatMap</h2><p>scala中最重要的函数之一，映射扁平化</p>
+<p>把握以下三点即可：</p>
+<blockquote>
+<p>1、flatMap = map + flatten</p>
+<p>2、什么类型调用的flatMap方法，则返回的也是什么类型</p>
+<p>3、<strong>先对集合中的每个元素进行map，</strong></p>
+<p>​      <strong>再对map后的每个元素（map后的每个元素必须还是集合）中的每个元素进行flatten</strong></p>
+</blockquote>
+<p>[注] 进行map的对象可以是只含一层的集合，但进行flatten操作的对象必需是至少含两层的集合</p>
+<p>map和flatten示例：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">scala</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Test0001</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line">    <span class="keyword">val</span> list = <span class="type">List</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">    <span class="comment">// 集合映射</span></span><br><span class="line">    println(<span class="string">"map =&gt; "</span> + list.map(x=&gt;&#123;x*<span class="number">2</span>&#125;)) <span class="comment">//map =&gt; List(2, 4, 6, 8)</span></span><br><span class="line">    println(<span class="string">"map =&gt; "</span> + list.map(x=&gt;x*<span class="number">2</span>))   <span class="comment">//map =&gt; List(2, 4, 6, 8)</span></span><br><span class="line">    println(<span class="string">"map =&gt; "</span> + list.map(_*<span class="number">2</span>))      <span class="comment">//map =&gt; List(2, 4, 6, 8)</span></span><br><span class="line">    <span class="comment">// 集合扁平化</span></span><br><span class="line">    <span class="keyword">val</span> list1 = <span class="type">List</span>(</span><br><span class="line">      <span class="type">List</span>(<span class="number">1</span>,<span class="number">2</span>),</span><br><span class="line">      <span class="type">List</span>(<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">    )</span><br><span class="line">    println(<span class="string">"flatten =&gt;"</span> + list1.flatten)   <span class="comment">//flatten =&gt;List(1, 2, 3, 4)</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>flatMap示例一：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">scala</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> words = <span class="type">Set</span>(<span class="string">"scala"</span>, <span class="string">"spark"</span>, <span class="string">"hadoop"</span>)</span><br><span class="line"><span class="keyword">val</span> result = words.flatMap(x =&gt; x.toUpperCase)</span><br><span class="line">println(result)  <span class="comment">//Set(A, L, P, C, H, K, R, O, D, S)</span></span><br></pre></td></tr></table></figure></div>
+
+<p>flatMap示例二：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">scala</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> tuples: <span class="type">List</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = <span class="type">List</span>((<span class="string">"Hello Scala"</span>, <span class="number">4</span>), (<span class="string">"Hello Spark"</span>, <span class="number">2</span>))</span><br><span class="line"><span class="keyword">val</span> strings: <span class="type">List</span>[<span class="type">String</span>] = tuples.map(t=&gt;&#123;(t._1+<span class="string">" "</span>)*t._2&#125;)</span><br><span class="line"><span class="comment">//List(Hello Scala Hello Scala Hello Scala Hello Scala , Hello Spark Hello Spark )</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> flatMapList: <span class="type">List</span>[<span class="type">String</span>] = strings.flatMap(t=&gt;&#123;t.split(<span class="string">" "</span>)&#125;)</span><br><span class="line"><span class="comment">//List(Hello, Scala, Hello, Scala, Hello, Scala, Hello, Scala, Hello, Spark, Hello, Spark)</span></span><br></pre></td></tr></table></figure></div>
+
+<p>flatMap示例三：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">scala</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> linesList = <span class="type">List</span>((<span class="string">"Hello Scala"</span>, <span class="number">4</span>), (<span class="string">"Hello Spark"</span>, <span class="number">2</span>))</span><br><span class="line"><span class="keyword">val</span> flatMapList: <span class="type">List</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = linesList.flatMap(t =&gt; &#123;</span><br><span class="line">    <span class="keyword">val</span> line: <span class="type">String</span> = t._1</span><br><span class="line">    <span class="keyword">val</span> words = line.split(<span class="string">" "</span>)</span><br><span class="line">    words.map(w =&gt; (w, t._2))</span><br><span class="line">&#125;)</span><br><span class="line">println(flatMapList)  <span class="comment">//List((Hello,4), (Scala,4), (Hello,2), (Spark,2))</span></span><br></pre></td></tr></table></figure></div>
+
+<p>根据上述三个原则即可算出函数结果。</p>
+<h2 id="foldLeft"><a href="#foldLeft" class="headerlink" title="foldLeft"></a>foldLeft</h2><p>集合折叠函数，fold、foldRight底层都是基于foldLeft函数。</p>
+<p>所以本文用到的函数可以不用严格区分，主要阐述其原理。</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">scala</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fold</span></span>[<span class="type">A1</span> &gt;: <span class="type">A</span>](z: <span class="type">A1</span>)(op: (<span class="type">A1</span>, <span class="type">A1</span>) =&gt; <span class="type">A1</span>): <span class="type">A1</span> = foldLeft(z)(op)</span><br></pre></td></tr></table></figure></div>
+
+<p>就是将集合的数据和集合之外的数据进行聚合操作。</p>
+<p>fold方法有函数柯里化，有2个参数列表</p>
+<ul>
+<li><p>第一个参数列表：集合之外的数据</p>
+</li>
+<li><p>第二个参数列表：表示计算规则</p>
+</li>
+</ul>
+<p>fold示例一：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">scala</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> list = <span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"><span class="comment">// 集合折叠</span></span><br><span class="line">println(<span class="string">"fold =&gt; "</span> + list.fold(<span class="number">0</span>)(_+_))    <span class="comment">//10</span></span><br><span class="line"><span class="comment">// 集合折叠(左)</span></span><br><span class="line">println(<span class="string">"foldLeft =&gt; "</span> + list.foldLeft(<span class="number">0</span>)(_+_)) <span class="comment">//10</span></span><br></pre></td></tr></table></figure></div>
+
+<p>  fold示例二：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">scala</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Scala21_Collection_Method4</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line">    <span class="comment">// 将两个Map集合进行合并(merge)处理</span></span><br><span class="line">    <span class="keyword">val</span> map1 = mutable.<span class="type">Map</span>(<span class="string">"a"</span> -&gt; <span class="number">1</span>, <span class="string">"b"</span> -&gt; <span class="number">2</span>, <span class="string">"c"</span> -&gt; <span class="number">3</span>)</span><br><span class="line">    <span class="keyword">val</span> map2 = mutable.<span class="type">Map</span>(<span class="string">"a"</span> -&gt; <span class="number">4</span>, <span class="string">"d"</span> -&gt; <span class="number">5</span>, <span class="string">"c"</span> -&gt; <span class="number">6</span>)</span><br><span class="line">    <span class="comment">// Map( "a"-&gt;5, "b"-&gt;2, "c"-&gt;9 ,"d"-&gt;5)</span></span><br><span class="line">    <span class="keyword">val</span> map3 = map2.foldLeft(map1)(</span><br><span class="line">      (map, kv) =&gt; &#123;</span><br><span class="line">        <span class="keyword">val</span> k = kv._1</span><br><span class="line">        <span class="keyword">val</span> v = kv._2</span><br><span class="line">        <span class="comment">//map.update(k, map.getOrElse(k, 0) + v)</span></span><br><span class="line">        map(k) = map.getOrElse(k, <span class="number">0</span>) + v</span><br><span class="line">        map</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">    println(map3) <span class="comment">//Map(b -&gt; 2, d -&gt; 5, a -&gt; 5, c -&gt; 9)</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>原理示意图如下：</p>
+<p><a href="https://pic.downk.cc/item/5e9f0b95c2a9a83be5c27ef7.png" data-fancybox="group" data-caption="folfLeft原理图" class="fancybox"><img alt="folfLeft原理图" title="folfLeft原理图" data-src="https://pic.downk.cc/item/5e9f0b95c2a9a83be5c27ef7.png" class="lazyload"></a></p>
+<p><strong>总结：</strong></p>
+<p><strong>其实就是在foldleft里面，第二个参数规定的就是：</strong></p>
+<p>*<em>foldleft第一个参数和foldleft调用者的“第一个元素”的运算规则 *</em></p>
+<p>可以用如下公式理解：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">scala</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight scala"><table><tr><td class="code"><pre><span class="line">a. foldLeft( b )( (b,a的第一个元素)=&gt;&#123;&#125; )</span><br></pre></td></tr></table></figure></div>
+
+<p>只不过在此公式中b和a的第一个元素都是动态的：</p>
+<p>b一直在迭代，a会继续往后顺序取后面的值。</p>
+]]></content>
+      <categories>
+        <category>大数据</category>
+        <category>scala</category>
+      </categories>
+      <tags>
+        <tag>易错点</tag>
+        <tag>scala</tag>
+      </tags>
+  </entry>
 </search>
