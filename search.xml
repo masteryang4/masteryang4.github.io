@@ -503,62 +503,6 @@
       </tags>
   </entry>
   <entry>
-    <title>面试题：sleep和wait的区别</title>
-    <url>/2020/04/14/sleep%E5%92%8Cwait%E7%9A%84%E5%8C%BA%E5%88%AB%E5%B0%8F%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="Java中sleep和wait方法的区别"><a href="#Java中sleep和wait方法的区别" class="headerlink" title="Java中sleep和wait方法的区别"></a>Java中sleep和wait方法的区别</h1><p> sleep和wait都能使线程处于阻塞状态，但二者有着本质区别。 </p>
-<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test_thread</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread();</span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread();</span><br><span class="line">        <span class="comment">//【本质区别】静态方法和成员方法</span></span><br><span class="line">        <span class="comment">//【静态方法】，绑定的是类。休眠的线程不是t1，是当前运行的main线程</span></span><br><span class="line">        <span class="comment">//和对象都没有关系，所以不存在什么对象锁</span></span><br><span class="line">        t1.sleep(<span class="number">1000</span>);</span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//【成员方法】，等待的线程就是t2</span></span><br><span class="line">        <span class="comment">//有同步/synchronized关键字才能拿到对象锁。</span></span><br><span class="line">        t2.wait();</span><br><span class="line">        t2.wait(<span class="number">1000</span>);<span class="comment">//wait也可以加等待时间</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//【扩展】scala中的伴生对象就是对静态语法的模拟</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
-<li>【核心】静态方法、成员方法<ol>
-<li>sleep是Thread类的静态方法。sleep的作用是让线程休眠道制定的时间，在时间到达时恢复，也就是说sleep将在接到时间到达事件事恢复线程执行。</li>
-<li>wait是Object的方法，也就是说可以对任意一个对象调用wait方法，调用wait方法将会属将调用者的线程挂起，直到其他线程调用同一个对象的notify方法才会重新激活调用者。 </li>
-</ol>
-</li>
-<li>sleep方法没有释放锁（lock），而wait方法释放了锁，使得其他线程可以使用同步控制块或者方法。 </li>
-<li>【使用范围】<ol>
-<li>wait，notify和notifyAll只能在同步控制方法或者同步控制块里面使用，</li>
-<li>而sleep可以在任何地方使用</li>
-</ol>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>易错点</tag>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于HashMap的两道小面试题</title>
-    <url>/2020/04/11/%E5%85%B3%E4%BA%8EHashMap%E7%9A%84%E4%B8%A4%E9%81%93%E5%B0%8F%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>Java</category>
-        <category>集合</category>
-      </categories>
-      <tags>
-        <tag>易错点</tag>
-        <tag>Java</tag>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于i=i++的分析与思考</title>
-    <url>/2020/04/11/%E5%85%B3%E4%BA%8Ei-i-%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>Java</category>
-        <category>基础知识</category>
-      </categories>
-      <tags>
-        <tag>易错点</tag>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>scala中的flatMap和foldLeft函数</title>
     <url>/2020/04/21/scala%E4%B8%AD%E7%9A%84flatMap%E5%92%8CfoldLeft%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<h1 id="scala中的flatMap和foldLeft函数"><a href="#scala中的flatMap和foldLeft函数" class="headerlink" title="scala中的flatMap和foldLeft函数"></a>scala中的flatMap和foldLeft函数</h1><p>scala由于其函数式编程的特性，在大数据的处理中被广泛使用。</p>
@@ -621,6 +565,62 @@
       <tags>
         <tag>易错点</tag>
         <tag>scala</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>面试题：sleep和wait的区别</title>
+    <url>/2020/04/14/sleep%E5%92%8Cwait%E7%9A%84%E5%8C%BA%E5%88%AB%E5%B0%8F%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="Java中sleep和wait方法的区别"><a href="#Java中sleep和wait方法的区别" class="headerlink" title="Java中sleep和wait方法的区别"></a>Java中sleep和wait方法的区别</h1><p> sleep和wait都能使线程处于阻塞状态，但二者有着本质区别。 </p>
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test_thread</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread();</span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread();</span><br><span class="line">        <span class="comment">//【本质区别】静态方法和成员方法</span></span><br><span class="line">        <span class="comment">//【静态方法】，绑定的是类。休眠的线程不是t1，是当前运行的main线程</span></span><br><span class="line">        <span class="comment">//和对象都没有关系，所以不存在什么对象锁</span></span><br><span class="line">        t1.sleep(<span class="number">1000</span>);</span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//【成员方法】，等待的线程就是t2</span></span><br><span class="line">        <span class="comment">//有同步/synchronized关键字才能拿到对象锁。</span></span><br><span class="line">        t2.wait();</span><br><span class="line">        t2.wait(<span class="number">1000</span>);<span class="comment">//wait也可以加等待时间</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//【扩展】scala中的伴生对象就是对静态语法的模拟</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>【核心】静态方法、成员方法<ol>
+<li>sleep是Thread类的静态方法。sleep的作用是让线程休眠道制定的时间，在时间到达时恢复，也就是说sleep将在接到时间到达事件事恢复线程执行。</li>
+<li>wait是Object的方法，也就是说可以对任意一个对象调用wait方法，调用wait方法将会属将调用者的线程挂起，直到其他线程调用同一个对象的notify方法才会重新激活调用者。 </li>
+</ol>
+</li>
+<li>sleep方法没有释放锁（lock），而wait方法释放了锁，使得其他线程可以使用同步控制块或者方法。 </li>
+<li>【使用范围】<ol>
+<li>wait，notify和notifyAll只能在同步控制方法或者同步控制块里面使用，</li>
+<li>而sleep可以在任何地方使用</li>
+</ol>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>易错点</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于HashMap的两道小面试题</title>
+    <url>/2020/04/11/%E5%85%B3%E4%BA%8EHashMap%E7%9A%84%E4%B8%A4%E9%81%93%E5%B0%8F%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Java</category>
+        <category>集合</category>
+      </categories>
+      <tags>
+        <tag>易错点</tag>
+        <tag>Java</tag>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于i=i++的分析与思考</title>
+    <url>/2020/04/11/%E5%85%B3%E4%BA%8Ei-i-%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Java</category>
+        <category>基础知识</category>
+      </categories>
+      <tags>
+        <tag>易错点</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
 </search>
