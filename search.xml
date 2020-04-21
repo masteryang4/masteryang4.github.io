@@ -553,8 +553,9 @@
 <p><strong>其实就是在foldleft里面，第二个参数规定的就是：</strong></p>
 <p>*<em>foldleft第一个参数和foldleft调用者的“第一个元素”的运算规则 *</em></p>
 <p>可以用如下公式理解：</p>
-<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">scala</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight scala"><table><tr><td class="code"><pre><span class="line">a. foldLeft( b )( (b,a的第一个元素)=&gt;&#123;&#125; )</span><br></pre></td></tr></table></figure></div>
-
+<blockquote>
+<p>a. foldLeft( b )( (b,a的第一个元素)=&gt;{} )</p>
+</blockquote>
 <p>只不过在此公式中b和a的第一个元素都是动态的：</p>
 <p>b一直在迭代，a会继续往后顺序取后面的值。</p>
 ]]></content>
