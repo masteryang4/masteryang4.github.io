@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://masteryang4.github.io/"/>
-  <updated>2020-04-21T15:56:19.430Z</updated>
+  <updated>2020-04-23T09:36:18.062Z</updated>
   <id>https://masteryang4.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>kafka分区分配策略</title>
+    <link href="https://masteryang4.github.io/2020/04/23/kafka%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/"/>
+    <id>https://masteryang4.github.io/2020/04/23/kafka%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/</id>
+    <published>2020-04-23T09:09:56.000Z</published>
+    <updated>2020-04-23T09:36:18.062Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="kafka分区分配策略"><a href="#kafka分区分配策略" class="headerlink" title="kafka分区分配策略"></a>kafka分区分配策略</h1><p>kafka系列总结之：kafka分区分配策略[转载&amp;归纳]</p><ul><li>kafka是由Apache软件基金会开发的一个开源流处理平台，由Scala和Java编写。</li><li>Kafka是一种高吞吐量的分布式发布订阅消息系统，它可以处理消费者在网站中的所有动作流数据 </li></ul><p>kafka官网：</p><blockquote><p>kafka.apache.org</p></blockquote><p>kafka分区分配策略文章索引</p><p>1、 <a href="https://blog.csdn.net/u013256816/article/details/81123600" target="_blank" rel="noopener">Kafka分区分配策略（1）——RangeAssignor</a></p><p>2、 <a href="https://blog.csdn.net/u013256816/article/details/81123625" target="_blank" rel="noopener">Kafka分区分配策略（2）——RoundRobinAssignor和StickyAssignor</a></p><p>3、 <a href="https://blog.csdn.net/u013256816/article/details/81123858" target="_blank" rel="noopener">Kafka分区分配策略（3）——自定义分区分配策略</a> </p><p>4、 <a href="https://blog.csdn.net/u013256816/article/details/81123907" target="_blank" rel="noopener">Kafka分区分配策略（4）——分配的实施</a></p><blockquote><p>[注]作者为 《深入理解Kafka:核心设计与实践原理》 的作者：朱忠华老师</p><p>作者更多kafka技术文章： <a href="https://blog.csdn.net/u013256816/category_6500871.html" target="_blank" rel="noopener">https://blog.csdn.net/u013256816/category_6500871.html</a> </p><p>作者个人博客： <a href="http://honeypps.com/" target="_blank" rel="noopener">http://honeypps.com/</a></p><p>作者CSDN博客： <a href="https://blog.csdn.net/u013256816" target="_blank" rel="noopener">https://blog.csdn.net/u013256816</a> </p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;kafka分区分配策略&quot;&gt;&lt;a href=&quot;#kafka分区分配策略&quot; class=&quot;headerlink&quot; title=&quot;kafka分区分配策略&quot;&gt;&lt;/a&gt;kafka分区分配策略&lt;/h1&gt;&lt;p&gt;kafka系列总结之：kafka分区分配策略[转载&amp;amp;归纳]&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="大数据" scheme="https://masteryang4.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="kafka" scheme="https://masteryang4.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/kafka/"/>
+    
+    
+      <category term="易错点" scheme="https://masteryang4.github.io/tags/%E6%98%93%E9%94%99%E7%82%B9/"/>
+    
+      <category term="大数据" scheme="https://masteryang4.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
   
   <entry>
     <title>scala中的flatMap和foldLeft函数</title>
