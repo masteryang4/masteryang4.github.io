@@ -638,8 +638,8 @@
 <p>原理示意图如下：</p>
 <p><a href="https://pic.downk.cc/item/5e9f0b95c2a9a83be5c27ef7.png" data-fancybox="group" data-caption="folfLeft原理图" class="fancybox"><img alt="folfLeft原理图" title="folfLeft原理图" data-src="https://pic.downk.cc/item/5e9f0b95c2a9a83be5c27ef7.png" class="lazyload"></a></p>
 <p><strong>总结：</strong></p>
-<p><strong>其实就是foldleft函数中，第二个参数规定的就是：</strong></p>
-<p>*<em>foldleft第一个参数和foldleft调用者的第一个元素的运算规则 *</em></p>
+<p><strong>其实就是foldleft函数中，第二个参数规定的就是，</strong></p>
+<p><strong>foldleft第一个参数和foldleft调用者的第一个元素的运算规则</strong></p>
 <p>可以用如下公式理解：</p>
 <blockquote>
 <p>a. foldLeft( b )( (b,a的第一个元素)=&gt;{} )</p>
