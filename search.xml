@@ -591,6 +591,33 @@
       </tags>
   </entry>
   <entry>
+    <title>kafka高效读写数据</title>
+    <url>/2020/04/27/kafka%E9%AB%98%E6%95%88%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<h1 id="kafka高效读写数据"><a href="#kafka高效读写数据" class="headerlink" title="kafka高效读写数据"></a>kafka高效读写数据</h1><h2 id="一、分布式集群"><a href="#一、分布式集群" class="headerlink" title="一、分布式集群"></a>一、分布式集群</h2><p>Kafka本身是分布式集群；同时采用分区技术，并发度高。  </p>
+<blockquote>
+<p>zookeeper在kafka中的作用：kafka集群中有一个broker会被选举成controller，负责管理集群broker的上下线，所有的topic分区副本分配和leader选举等工作。controller的管理工作都依赖于zk。</p>
+</blockquote>
+<h2 id="二、顺序写磁盘"><a href="#二、顺序写磁盘" class="headerlink" title="二、顺序写磁盘"></a>二、顺序写磁盘</h2><p>Kafka的producer生产数据，要写入到log文件中，写的过程是一直追加到文件末端，为顺序写。官网有数据表明，同样的磁盘，顺序写能到600M/s，而随机写只有100K/s。这与磁盘的机械机构有关，顺序写之所以快，是因为其省去了大量磁头寻址的时间。</p>
+<h2 id="三、零复制技术"><a href="#三、零复制技术" class="headerlink" title="三、零复制技术"></a>三、零复制技术</h2><p>kafka零复制技术示意图：</p>
+<p><a href="https://pic.downk.cc/item/5ea7012ec2a9a83be5e629f2.png" data-fancybox="group" data-caption="kafka零拷贝技术" class="fancybox"><img alt="kafka零拷贝技术" title="kafka零拷贝技术" data-src="https://pic.downk.cc/item/5ea7012ec2a9a83be5e629f2.png" class="lazyload"></a></p>
+<p>java复制技术示意图：</p>
+<p>（仅仅复制文件，没有对于文件的应用，效率很低。</p>
+<p>文件要经过操作系统层（OS层）Buffer缓存传给java应用层输入流，输入流再将数据写到输出流，输出流将数据写到OS层缓存，缓存在将数据写到新的文件。。。）</p>
+<p><a href="https://pic.downk.cc/item/5ea701a6c2a9a83be5e6b749.png" data-fancybox="group" data-caption="java拷贝技术原理图解" class="fancybox"><img alt="java拷贝技术原理图解" title="java拷贝技术原理图解" data-src="https://pic.downk.cc/item/5ea701a6c2a9a83be5e6b749.png" class="lazyload"></a></p>
+<p>因为java复制技术在拷贝文件时效率较低，所以对上图做出优化，如下图所示：</p>
+<p>（应用层通知操作系统层：仅仅是复制文件，所以操作系统层就不会将数据传给应用层，直接在操作系统层复制文件即可。）</p>
+<p><a href="https://pic.downk.cc/item/5ea701c6c2a9a83be5e6e1e8.png" data-fancybox="group" data-caption="零拷贝技术图解" class="fancybox"><img alt="零拷贝技术图解" title="零拷贝技术图解" data-src="https://pic.downk.cc/item/5ea701c6c2a9a83be5e6e1e8.png" class="lazyload"></a></p>
+]]></content>
+      <categories>
+        <category>大数据</category>
+        <category>kafka</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+        <tag>大数据</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>scala中的flatMap和foldLeft函数</title>
     <url>/2020/04/21/scala%E4%B8%AD%E7%9A%84flatMap%E5%92%8CfoldLeft%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<h1 id="scala中的flatMap和foldLeft函数"><a href="#scala中的flatMap和foldLeft函数" class="headerlink" title="scala中的flatMap和foldLeft函数"></a>scala中的flatMap和foldLeft函数</h1><p>scala由于其函数式编程的特性，在大数据的处理中被广泛使用。</p>
@@ -688,46 +715,6 @@
       </tags>
   </entry>
   <entry>
-    <title>关于HashMap的两道小面试题</title>
-    <url>/2020/04/11/%E5%85%B3%E4%BA%8EHashMap%E7%9A%84%E4%B8%A4%E9%81%93%E5%B0%8F%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>Java</category>
-        <category>集合</category>
-      </categories>
-      <tags>
-        <tag>易错点</tag>
-        <tag>Java</tag>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于i=i++的分析与思考</title>
-    <url>/2020/04/11/%E5%85%B3%E4%BA%8Ei-i-%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>Java</category>
-        <category>基础知识</category>
-      </categories>
-      <tags>
-        <tag>易错点</tag>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>kafka高效读写数据</title>
-    <url>/2020/04/27/kafka%E9%AB%98%E6%95%88%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[<h1 id="kafka高效读写数据"><a href="#kafka高效读写数据" class="headerlink" title="kafka高效读写数据"></a>kafka高效读写数据</h1><h2 id="一、分布式集群"><a href="#一、分布式集群" class="headerlink" title="一、分布式集群"></a>一、分布式集群</h2><h2 id="二、顺序写磁盘"><a href="#二、顺序写磁盘" class="headerlink" title="二、顺序写磁盘"></a>二、顺序写磁盘</h2><h2 id="三、零复制技术"><a href="#三、零复制技术" class="headerlink" title="三、零复制技术"></a>三、零复制技术</h2>]]></content>
-      <categories>
-        <category>大数据</category>
-        <category>kafka</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
-        <tag>大数据</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>[spark]十一种方式实现WordCount</title>
     <url>/2020/04/27/spark-%E5%8D%81%E4%B8%80%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%AE%9E%E7%8E%B0WordCount/</url>
     <content><![CDATA[<h1 id="Spark-十一种方式实现WordCount"><a href="#Spark-十一种方式实现WordCount" class="headerlink" title="[Spark]十一种方式实现WordCount"></a>[Spark]十一种方式实现WordCount</h1><p>使用Spark中的11种方法实现经典的WordCount算法。</p>
@@ -760,6 +747,33 @@
         <tag>scala</tag>
         <tag>spark</tag>
         <tag>wordcount</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于HashMap的两道小面试题</title>
+    <url>/2020/04/11/%E5%85%B3%E4%BA%8EHashMap%E7%9A%84%E4%B8%A4%E9%81%93%E5%B0%8F%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Java</category>
+        <category>集合</category>
+      </categories>
+      <tags>
+        <tag>易错点</tag>
+        <tag>Java</tag>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于i=i++的分析与思考</title>
+    <url>/2020/04/11/%E5%85%B3%E4%BA%8Ei-i-%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Java</category>
+        <category>基础知识</category>
+      </categories>
+      <tags>
+        <tag>易错点</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
 </search>
