@@ -712,4 +712,17 @@
         <tag>Java</tag>
       </tags>
   </entry>
+  <entry>
+    <title>kafka高效读写数据</title>
+    <url>/2020/04/27/kafka%E9%AB%98%E6%95%88%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<h1 id="kafka高效读写数据"><a href="#kafka高效读写数据" class="headerlink" title="kafka高效读写数据"></a>kafka高效读写数据</h1><h2 id="一、分布式集群"><a href="#一、分布式集群" class="headerlink" title="一、分布式集群"></a>一、分布式集群</h2><h2 id="二、顺序写磁盘"><a href="#二、顺序写磁盘" class="headerlink" title="二、顺序写磁盘"></a>二、顺序写磁盘</h2><h2 id="三、零复制技术"><a href="#三、零复制技术" class="headerlink" title="三、零复制技术"></a>三、零复制技术</h2>]]></content>
+      <categories>
+        <category>大数据</category>
+        <category>kafka</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+        <tag>大数据</tag>
+      </tags>
+  </entry>
 </search>
