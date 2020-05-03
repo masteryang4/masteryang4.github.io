@@ -186,6 +186,34 @@
       </tags>
   </entry>
   <entry>
+    <title>HashMap文章推荐</title>
+    <url>/2020/04/30/HashMap%E6%96%87%E7%AB%A0%E6%8E%A8%E8%8D%90/</url>
+    <content><![CDATA[<h1 id="HashMap文章推荐"><a href="#HashMap文章推荐" class="headerlink" title="HashMap文章推荐"></a>HashMap文章推荐</h1><p><a href="https://zhuanlan.zhihu.com/p/21673805" target="_blank" rel="noopener">Java 8系列之重新认识HashMap</a></p>
+<p>【强烈推荐】来自<strong>美团技术团队</strong>，里面的参考文章也非常好</p>
+<p><a href="https://zhuanlan.zhihu.com/p/96426441" target="_blank" rel="noopener">《吊打面试官》系列-HashMap</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/97902016" target="_blank" rel="noopener">《吊打面试官》系列-ConcurrentHashMap &amp; HashTable</a></p>
+<p>来自敖丙（蘑菇街大佬），从面试官角度阐述关键技术点，十分硬核，全是干货。</p>
+<p><a href="https://zhuanlan.zhihu.com/p/125628540" target="_blank" rel="noopener">一个HashMap跟面试官扯了半个小时</a></p>
+<p>面试者角度阐述HashMap。</p>
+<p>有空闲时间的话，我自己也会出一篇，甚至是一系列的HashMap文章，</p>
+<p>比如</p>
+<ul>
+<li>源码分析，</li>
+<li>知识点总结，</li>
+<li>常考面试题归档 等等</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>集合</category>
+      </categories>
+      <tags>
+        <tag>易错点</tag>
+        <tag>Java</tag>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo博客安装及部署</title>
     <url>/2020/03/12/Hexo%E5%8D%9A%E5%AE%A2%E5%AE%89%E8%A3%85%E5%8F%8A%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<h1 id="安装nodejs"><a href="#安装nodejs" class="headerlink" title="安装nodejs"></a>安装nodejs</h1><blockquote>
@@ -787,34 +815,6 @@
       <tags>
         <tag>易错点</tag>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HashMap文章推荐</title>
-    <url>/2020/04/30/HashMap%E6%96%87%E7%AB%A0%E6%8E%A8%E8%8D%90/</url>
-    <content><![CDATA[<h1 id="HashMap文章推荐"><a href="#HashMap文章推荐" class="headerlink" title="HashMap文章推荐"></a>HashMap文章推荐</h1><p><a href="https://zhuanlan.zhihu.com/p/21673805" target="_blank" rel="noopener">Java 8系列之重新认识HashMap</a></p>
-<p>【强烈推荐】来自<strong>美团技术团队</strong>，里面的参考文章也非常好</p>
-<p><a href="https://zhuanlan.zhihu.com/p/96426441" target="_blank" rel="noopener">《吊打面试官》系列-HashMap</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/97902016" target="_blank" rel="noopener">《吊打面试官》系列-ConcurrentHashMap &amp; HashTable</a></p>
-<p>来自敖丙（蘑菇街大佬），从面试官角度阐述关键技术点，十分硬核，全是干货。</p>
-<p><a href="https://zhuanlan.zhihu.com/p/125628540" target="_blank" rel="noopener">一个HashMap跟面试官扯了半个小时</a></p>
-<p>面试者角度阐述HashMap。</p>
-<p>有空闲时间的话，我自己也会出一篇，甚至是一系列的HashMap文章，</p>
-<p>比如</p>
-<ul>
-<li>源码分析，</li>
-<li>知识点总结，</li>
-<li>常考面试题归档 等等</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>集合</category>
-      </categories>
-      <tags>
-        <tag>易错点</tag>
-        <tag>Java</tag>
-        <tag>面试</tag>
       </tags>
   </entry>
 </search>
