@@ -183,6 +183,7 @@
         <tag>源码</tag>
         <tag>易错点</tag>
         <tag>Java</tag>
+        <tag>hashmap</tag>
       </tags>
   </entry>
   <entry>
@@ -211,6 +212,7 @@
         <tag>易错点</tag>
         <tag>Java</tag>
         <tag>面试</tag>
+        <tag>hashmap</tag>
       </tags>
   </entry>
   <entry>
@@ -596,6 +598,7 @@
         <tag>易错点</tag>
         <tag>面试</tag>
         <tag>大数据</tag>
+        <tag>flume</tag>
       </tags>
   </entry>
   <entry>
@@ -629,6 +632,7 @@
       <tags>
         <tag>易错点</tag>
         <tag>大数据</tag>
+        <tag>kafka</tag>
       </tags>
   </entry>
   <entry>
@@ -656,6 +660,7 @@
       <tags>
         <tag>面试</tag>
         <tag>大数据</tag>
+        <tag>kafka</tag>
       </tags>
   </entry>
   <entry>
