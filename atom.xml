@@ -76,9 +76,9 @@
     
       <category term="Java" scheme="https://masteryang4.github.io/tags/Java/"/>
     
-      <category term="面试" scheme="https://masteryang4.github.io/tags/%E9%9D%A2%E8%AF%95/"/>
-    
       <category term="hashmap" scheme="https://masteryang4.github.io/tags/hashmap/"/>
+    
+      <category term="面试" scheme="https://masteryang4.github.io/tags/%E9%9D%A2%E8%AF%95/"/>
     
   </entry>
   
@@ -131,9 +131,9 @@
     
       <category term="大数据" scheme="https://masteryang4.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
-      <category term="scala" scheme="https://masteryang4.github.io/tags/scala/"/>
-    
       <category term="spark" scheme="https://masteryang4.github.io/tags/spark/"/>
+    
+      <category term="scala" scheme="https://masteryang4.github.io/tags/scala/"/>
     
       <category term="wordcount" scheme="https://masteryang4.github.io/tags/wordcount/"/>
     
