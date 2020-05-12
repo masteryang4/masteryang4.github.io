@@ -70,7 +70,377 @@ function activateLightMode(){
   isPost: true
   
 }</script><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="MasterYangBlog" type="application/atom+xml">
-</head><body><canvas class="fireworks"></canvas><header> <div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">MasterYangBlog</a></span><span class="toggle-menu pull_right close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></span><span class="pull_right" id="search_button"><a class="site-page social-icon search"><i class="fa fa-search fa-fw"></i><span> 搜索</span></a></span></div></header><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/n.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">24</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">22</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div><div id="mobile-sidebar-toc"><div class="toc_mobile_headline">目录</div><div class="sidebar-toc__content"></div></div></div><div id="body-wrap"><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true">     </i><div class="auto_open" id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"></div></div></div><main id="content-outer"><div id="top-container" style="background-image: url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1589303886869&amp;di=591e71182490ed643a68c876b1f31aa3&amp;imgtype=0&amp;src=http%3A%2F%2Fwww.moqifei.com%2Fwp-content%2Fuploads%2F2014%2F09%2Faec379310a55b319139cb67141a98226cffc1748.jpg)"><div id="post-info"><div id="post-title"><div class="posttitle">[精]Redis总结与思考</div></div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 发表于 2020-05-12<span class="post-meta__separator">|</span><i class="fa fa-history fa-fw" aria-hidden="true"></i> 更新于 2020-05-12</time><span class="post-meta__separator">|</span><span><i class="fa fa-inbox post-meta__icon fa-fw" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><i class="fa fa-angle-right fa-fw" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon fa-fw" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/Redis/">Redis</a></span><div class="post-meta-wordcount"><div class="post-meta-pv-cv"><span><i class="fa fa-eye post-meta__icon fa-fw" aria-hidden="true"> </i>阅读量:</span><span id="busuanzi_value_page_pv"></span></div></div></div></div></div><div class="layout layout_post" id="content-inner">   <article id="post"><div class="article-container" id="post-content"></div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Yang4</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://masteryang4.github.io/2020/05/12/%E7%B2%BE-Redis%E6%80%BB%E7%BB%93%E4%B8%8E%E6%80%9D%E8%80%83/">https://masteryang4.github.io/2020/05/12/%E7%B2%BE-Redis%E6%80%BB%E7%BB%93%E4%B8%8E%E6%80%9D%E8%80%83/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://masteryang4.github.io">MasterYangBlog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9D%A2%E8%AF%95/">面试    </a><a class="post-meta__tags" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据    </a><a class="post-meta__tags" href="/tags/Redis/">Redis    </a><a class="post-meta__tags" href="/tags/JavaWeb/">JavaWeb    </a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库    </a></div><div class="post_share"><div class="social-share" data-image="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1589303886869&amp;di=591e71182490ed643a68c876b1f31aa3&amp;imgtype=0&amp;src=http%3A%2F%2Fwww.moqifei.com%2Fwp-content%2Fuploads%2F2014%2F09%2Faec379310a55b319139cb67141a98226cffc1748.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="lazyload post-qr-code__img" src="https://pic.downk.cc/item/5ea1a251c2a9a83be535b287.png" alt="微信"><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="lazyload post-qr-code__img" src="https://pic.downk.cc/item/5ea1a33ac2a9a83be536f9bc.png" alt="支付宝"><div class="post-qr-code__desc">支付宝</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="next-post pull-full"><a href="/2020/05/12/JUnit%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/"><img class="next_cover lazyload" data-src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1589295756460&amp;di=1a4908e6b5429e6efb6e848250c4f1f5&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.kanzhun.com%2Fimages%2Fseo%2Fmianshiti%2F20191125%2F0536aad15afa6bf20742196d373901c5.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="label">下一篇</div><div class="next_info"><span>JUnit常用注解</span></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2020/04/27/kafka高效读写数据/" title="kafka高效读写数据"><img class="relatedPosts_cover lazyload"data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1587643152224&di=b00da8f175f6e52957ebb50cd276b587&imgtype=0&src=http%3A%2F%2Fwww.wper.com%2Fuploadfile%2F2019%2F0722%2F20190722115240184.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-04-27</div><div class="relatedPosts_title">kafka高效读写数据</div></div></a></div><div class="relatedPosts_item"><a href="/2020/04/24/精-flume总结与思考/" title="flume总结与思考"><img class="relatedPosts_cover lazyload"data-src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2122825373,1774283517&fm=26&gp=0.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-04-24</div><div class="relatedPosts_title">flume总结与思考</div></div></a></div><div class="relatedPosts_item"><a href="/2020/04/30/HashMap文章推荐/" title="HashMap文章推荐"><img class="relatedPosts_cover lazyload"data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588271543306&di=e2ef3798580a9377d9dbc4cb55feb892&imgtype=0&src=http%3A%2F%2Fhf.java.tedu.cn%2Fimg%2F201801%2F1515043265758.jpeg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-04-30</div><div class="relatedPosts_title">HashMap文章推荐</div></div></a></div><div class="relatedPosts_item"><a href="/2020/04/18/Java空指针问题的本质/" title="Java空指针问题的本质"><img class="relatedPosts_cover lazyload"data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586972405233&di=f43f2b7ffbdb14f9cec9289e8f79e61b&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farchive%2Fb46358df68b713da0d2efdd514bf89452b3e14c4.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-04-18</div><div class="relatedPosts_title">Java空指针问题的本质</div></div></a></div><div class="relatedPosts_item"><a href="/2020/03/22/LeetCode经典10道题/" title="LeetCode经典10道题"><img class="relatedPosts_cover lazyload"data-src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1128609435,2537138478&fm=26&gp=0.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-03-22</div><div class="relatedPosts_title">LeetCode经典10道题</div></div></a></div><div class="relatedPosts_item"><a href="/2020/04/11/关于HashMap的两道小面试题/" title="关于HashMap的两道小面试题"><img class="relatedPosts_cover lazyload"data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586972405233&di=f43f2b7ffbdb14f9cec9289e8f79e61b&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farchive%2Fb46358df68b713da0d2efdd514bf89452b3e14c4.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-04-11</div><div class="relatedPosts_title">关于HashMap的两道小面试题</div></div></a></div></div><div class="clear_both"></div></div><hr><div id="post-comment"><div class="comment_headling"><i class="fa fa-comments fa-fw" aria-hidden="true"></i><span> 评论</span></div><div class="vcomment" id="vcomment"></div><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = false == true ? true : false;
+</head><body><canvas class="fireworks"></canvas><header> <div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">MasterYangBlog</a></span><span class="toggle-menu pull_right close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></span><span class="pull_right" id="search_button"><a class="site-page social-icon search"><i class="fa fa-search fa-fw"></i><span> 搜索</span></a></span></div></header><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/n.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">24</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">22</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div><div id="mobile-sidebar-toc"><div class="toc_mobile_headline">目录</div><div class="sidebar-toc__content"><ol class="toc_mobile_items"><li class="toc_mobile_items-item toc_mobile_items-level-1"><a class="toc_mobile_items-link" href="#Redis总结与思考"><span class="toc_mobile_items-number">1.</span> <span class="toc_mobile_items-text">Redis总结与思考</span></a><ol class="toc_mobile_items-child"><li class="toc_mobile_items-item toc_mobile_items-level-2"><a class="toc_mobile_items-link" href="#Redis介绍及安装"><span class="toc_mobile_items-number">1.1.</span> <span class="toc_mobile_items-text">Redis介绍及安装</span></a><ol class="toc_mobile_items-child"><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#Redis简介"><span class="toc_mobile_items-number">1.1.1.</span> <span class="toc_mobile_items-text">Redis简介</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#Redis安装及启动"><span class="toc_mobile_items-number">1.1.2.</span> <span class="toc_mobile_items-text">Redis安装及启动</span></a></li></ol></li><li class="toc_mobile_items-item toc_mobile_items-level-2"><a class="toc_mobile_items-link" href="#Redis数据类型"><span class="toc_mobile_items-number">1.2.</span> <span class="toc_mobile_items-text">Redis数据类型</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-2"><a class="toc_mobile_items-link" href="#Redis的Java客户端Jedis"><span class="toc_mobile_items-number">1.3.</span> <span class="toc_mobile_items-text">Redis的Java客户端Jedis</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-2"><a class="toc_mobile_items-link" href="#Redis事务"><span class="toc_mobile_items-number">1.4.</span> <span class="toc_mobile_items-text">Redis事务</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-2"><a class="toc_mobile_items-link" href="#Redis持久化"><span class="toc_mobile_items-number">1.5.</span> <span class="toc_mobile_items-text">Redis持久化</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-2"><a class="toc_mobile_items-link" href="#Redis主从复制"><span class="toc_mobile_items-number">1.6.</span> <span class="toc_mobile_items-text">Redis主从复制</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-2"><a class="toc_mobile_items-link" href="#Redis集群"><span class="toc_mobile_items-number">1.7.</span> <span class="toc_mobile_items-text">Redis集群</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-2"><a class="toc_mobile_items-link" href="#Redis常考面试题"><span class="toc_mobile_items-number">1.8.</span> <span class="toc_mobile_items-text">Redis常考面试题</span></a></li></ol></li></ol></div></div></div><div id="body-wrap"><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true">     </i><div class="auto_open" id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis总结与思考"><span class="toc-number">1.</span> <span class="toc-text">Redis总结与思考</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis介绍及安装"><span class="toc-number">1.1.</span> <span class="toc-text">Redis介绍及安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis简介"><span class="toc-number">1.1.1.</span> <span class="toc-text">Redis简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis安装及启动"><span class="toc-number">1.1.2.</span> <span class="toc-text">Redis安装及启动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis数据类型"><span class="toc-number">1.2.</span> <span class="toc-text">Redis数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis的Java客户端Jedis"><span class="toc-number">1.3.</span> <span class="toc-text">Redis的Java客户端Jedis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis事务"><span class="toc-number">1.4.</span> <span class="toc-text">Redis事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis持久化"><span class="toc-number">1.5.</span> <span class="toc-text">Redis持久化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis主从复制"><span class="toc-number">1.6.</span> <span class="toc-text">Redis主从复制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis集群"><span class="toc-number">1.7.</span> <span class="toc-text">Redis集群</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis常考面试题"><span class="toc-number">1.8.</span> <span class="toc-text">Redis常考面试题</span></a></li></ol></li></ol></div></div></div><main id="content-outer"><div id="top-container" style="background-image: url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1589303886869&amp;di=591e71182490ed643a68c876b1f31aa3&amp;imgtype=0&amp;src=http%3A%2F%2Fwww.moqifei.com%2Fwp-content%2Fuploads%2F2014%2F09%2Faec379310a55b319139cb67141a98226cffc1748.jpg)"><div id="post-info"><div id="post-title"><div class="posttitle">[精]Redis总结与思考</div></div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 发表于 2020-05-12<span class="post-meta__separator">|</span><i class="fa fa-history fa-fw" aria-hidden="true"></i> 更新于 2020-05-12</time><span class="post-meta__separator">|</span><span><i class="fa fa-inbox post-meta__icon fa-fw" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><i class="fa fa-angle-right fa-fw" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon fa-fw" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/Redis/">Redis</a></span><div class="post-meta-wordcount"><div class="post-meta-pv-cv"><span><i class="fa fa-eye post-meta__icon fa-fw" aria-hidden="true"> </i>阅读量:</span><span id="busuanzi_value_page_pv"></span></div></div></div></div></div><div class="layout layout_post" id="content-inner">   <article id="post"><div class="article-container" id="post-content"><h1 id="Redis总结与思考"><a href="#Redis总结与思考" class="headerlink" title="Redis总结与思考"></a>Redis总结与思考</h1><h2 id="Redis介绍及安装"><a href="#Redis介绍及安装" class="headerlink" title="Redis介绍及安装"></a>Redis介绍及安装</h2><h3 id="Redis简介"><a href="#Redis简介" class="headerlink" title="Redis简介"></a>Redis简介</h3><p>1、Redis是最常用的非关系型数据库（NoSQL）——不依赖业务逻辑方式存储，而以简单的key-value模式存储。</p>
+<blockquote>
+<p>常见的NoSQL数据库：</p>
+<p>​         Memcached,Redis,MongoDB,HBase</p>
+</blockquote>
+<p>2、Redis有16个库，编号为0~15，默认使用0号库。</p>
+<p>3、Redis使用的是<strong>单线程+多路IO复用技术</strong>（Linux系统特有）。</p>
+<h3 id="Redis安装及启动"><a href="#Redis安装及启动" class="headerlink" title="Redis安装及启动"></a>Redis安装及启动</h3><p><strong>1、Redis安装步骤：</strong></p>
+<ul>
+<li>首先保证有gcc-c++工具，否则先执行：yum install gcc-c++</li>
+<li>下载获得redis-3.2.5.tar.gz后将它放入Linux目录</li>
+<li>解压命令:tar -zxvf redis-3.2.5.tar.gz</li>
+<li>解压完成后进入目录:cd redis-3.2.5</li>
+<li>在redis-3.2.5目录下执行make命令</li>
+<li>在redis-3.2.5目录下执行make install命令</li>
+</ul>
+<p><strong>2、Redis默认安装目录：/usr/local/bin</strong></p>
+<ul>
+<li>redis-benchmark：性能测试工具，可以在自己本子运行，看看自己本子性能如何(服务启动起来后执行)</li>
+<li>redis-check-aof：修复有问题的AOF文件</li>
+<li>redis-check-rdb：修复有问题RDB文件</li>
+<li>redis-sentinel：Redis集群使用</li>
+<li>redis-server：Redis服务器启动命令</li>
+<li>redis-cli：客户端，操作入口</li>
+</ul>
+<p><strong>3、Redis启动：</strong></p>
+<ul>
+<li>备份redis.conf：拷贝一份redis.conf到其他目录</li>
+<li>修改redis.conf文件将里面的daemonize no 改成 yes(128行)，让服务在后台启动</li>
+<li>启动命令：执行  redis-server  /root/myredis/redis.conf</li>
+<li>用客户端访问: redis-cli -p  <strong>6379</strong></li>
+<li>关闭：客户端中输入shutdown，redis-server进程就已关闭。之后Ctrl+c退出客户端即可。</li>
+</ul>
+<h2 id="Redis数据类型"><a href="#Redis数据类型" class="headerlink" title="Redis数据类型"></a>Redis数据类型</h2><blockquote>
+<p><strong>常用</strong>五大数据类型：String,list,set,hash,zset</p>
+</blockquote>
+<p>五大数据类型常用指令：</p>
+<p>0、Key通用指令</p>
+<table>
+<thead>
+<tr>
+<th>Key常用指令</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>keys *</td>
+<td>查询当前库的所有键</td>
+</tr>
+<tr>
+<td>exists  <key></key></td>
+<td>判断某个键是否存在</td>
+</tr>
+<tr>
+<td>type  <key></key></td>
+<td>查看键对应的数据的类型</td>
+</tr>
+<tr>
+<td>del  <key></key></td>
+<td>删除某个键</td>
+</tr>
+<tr>
+<td>expire   <key>   <seconds></seconds></key></td>
+<td>为键值设置过期时间，单位秒</td>
+</tr>
+<tr>
+<td>ttl   <key></key></td>
+<td>查看还有多少秒过期，-1表示永不过期，-2表示已过期</td>
+</tr>
+<tr>
+<td>dbsize</td>
+<td>查看当前数据库的key的数量</td>
+</tr>
+<tr>
+<td>flushdb</td>
+<td>清空当前库</td>
+</tr>
+<tr>
+<td>flushall</td>
+<td>通杀全部库</td>
+</tr>
+</tbody></table>
+<p>1、String</p>
+<ul>
+<li>String类型是二进制安全的。意味着Redis的string可以包含任何数据。比如jpg图片或者序列化的对象 。</li>
+<li>String类型是Redis最基本的数据类型，一个Redis中字符串value最多可以是512M</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>String常用指令</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>get   <key></key></td>
+<td>查询对应键值</td>
+</tr>
+<tr>
+<td>set   <key>  <value></value></key></td>
+<td>添加键值对</td>
+</tr>
+<tr>
+<td>append  <key>  <value></value></key></td>
+<td>将给定的<value> 追加到原值的末尾</value></td>
+</tr>
+<tr>
+<td>strlen  <key></key></td>
+<td>获得值的长度</td>
+</tr>
+<tr>
+<td>setnx  <key>  <value></value></key></td>
+<td>只有在 key 不存在时设置 key 的值</td>
+</tr>
+<tr>
+<td>incr  <key></key></td>
+<td>将 key 中储存的数字值增1</td>
+</tr>
+<tr>
+<td>只能对数字值操作，如果为空，新增值为1</td>
+<td></td>
+</tr>
+<tr>
+<td>decr  <key></key></td>
+<td>将 key 中储存的数字值减1</td>
+</tr>
+<tr>
+<td>只能对数字值操作，如果为空，新增值为-1</td>
+<td></td>
+</tr>
+<tr>
+<td>incrby / decrby  <key>  &lt;步长&gt;</key></td>
+<td>将 key 中储存的数字值增减。自定义步长</td>
+</tr>
+<tr>
+<td>mset  <key1>  <value1>  <key2>  <value2>  …</value2></key2></value1></key1></td>
+<td>同时设置一个或多个 key-value对</td>
+</tr>
+<tr>
+<td>mget  <key1>   <key2>   <key3> …</key3></key2></key1></td>
+<td>同时获取一个或多个 value</td>
+</tr>
+<tr>
+<td>msetnx <key1>  <value1>  <key2>  <value2>  …</value2></key2></value1></key1></td>
+<td>同时设置一个或多个 key-value 对，<br>当且仅当所有给定 key 都不存在。</td>
+</tr>
+<tr>
+<td>getrange  <key>  &lt;起始位置&gt;  &lt;结束位置&gt;</key></td>
+<td>获得值的范围，类似java中的substring</td>
+</tr>
+<tr>
+<td>setrange  <key>   &lt;起始位置&gt;   <value></value></key></td>
+<td>用 <value>  覆写<key> 所储存的字符串值<br>，从&lt;起始位置&gt;开始</key></value></td>
+</tr>
+<tr>
+<td>setex  <key>  &lt;过期时间&gt;   <value></value></key></td>
+<td>设置键值的同时，设置过期时间，单位秒</td>
+</tr>
+<tr>
+<td>getset <key>  <value></value></key></td>
+<td>以新换旧，设置了新值同时获得旧值</td>
+</tr>
+</tbody></table>
+<p>2、List</p>
+<ul>
+<li>单键多值</li>
+<li>Redis 列表是简单的字符串列表，按照插入顺序排序。</li>
+<li>它的底层实际是个双向链表，对两端的操作性能很高，通过索引下标的操作中间的节点性能会较差。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>List常用指令</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>lpush/rpush  <key>  <value1>  <value2> …</value2></value1></key></td>
+<td>从左边/右边插入一个或多个值</td>
+</tr>
+<tr>
+<td>lpop/rpop  <key></key></td>
+<td>从左边/右边吐出一个值。值在键在，值亡键亡。</td>
+</tr>
+<tr>
+<td>rpoplpush  <key1>  <key2></key2></key1></td>
+<td>从<key1>列表右边吐出一个值，插到<key2>列表左边</key2></key1></td>
+</tr>
+<tr>
+<td>lrange <key> <start> <stop></stop></start></key></td>
+<td>按照索引下标获得元素(从左到右)</td>
+</tr>
+<tr>
+<td>lindex <key> <index></index></key></td>
+<td>按照索引下标获得元素(从左到右)</td>
+</tr>
+<tr>
+<td>llen <key></key></td>
+<td>获得列表长度</td>
+</tr>
+<tr>
+<td>linsert <key>  before <value>  <newvalue></newvalue></value></key></td>
+<td>在<value>的前面插入<newvalue></newvalue></value></td>
+</tr>
+<tr>
+<td>lrem <key> <n>  <value></value></n></key></td>
+<td>从左边删除n个value(从左到右)</td>
+</tr>
+</tbody></table>
+<p>3、Set</p>
+<ul>
+<li>Redis的Set是string类型的无序集合</li>
+<li>它底层其实是一个value为null的hash表,所以添加，删除，查找的复杂度都是O(1)。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Set常用指令</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sadd <key>  <value1>  <value2> …</value2></value1></key></td>
+<td>将一个或多个 member 元素加入到集合 key 当中，<br>已经存在于集合的 member 元素将被忽略。</td>
+</tr>
+<tr>
+<td>smembers <key></key></td>
+<td>取出该集合的所有值</td>
+</tr>
+<tr>
+<td>sismember <key>  <value></value></key></td>
+<td>判断集合<key>是否为含有该<value>值，有返回1，没有返回0</value></key></td>
+</tr>
+<tr>
+<td>scard   <key></key></td>
+<td>返回该集合的元素个数。</td>
+</tr>
+<tr>
+<td>srem <key> <value1> <value2> …</value2></value1></key></td>
+<td>删除集合中的某个元素。</td>
+</tr>
+<tr>
+<td>spop <key> <n></n></key></td>
+<td>随机从该集合中吐出一个或多个值。</td>
+</tr>
+<tr>
+<td>srandmember <key> <n></n></key></td>
+<td>随机从该集合中取出n个值。</td>
+</tr>
+<tr>
+<td>不会从集合中删除</td>
+<td></td>
+</tr>
+<tr>
+<td>sinter <key1> <key2></key2></key1></td>
+<td>返回两个集合的交集元素。</td>
+</tr>
+<tr>
+<td>sunion <key1> <key2></key2></key1></td>
+<td>返回两个集合的并集元素。</td>
+</tr>
+<tr>
+<td>sdiff <key1> <key2></key2></key1></td>
+<td>返回两个集合的差集元素。</td>
+</tr>
+</tbody></table>
+<p>4、Hash</p>
+<ul>
+<li>Redis  hash 是一个键值对集合。</li>
+<li>Redis hash是一个string类型的field和value的映射表，hash特别适合用于存储<strong>对象</strong>。</li>
+<li>类似Java里面的Map&lt;String,Object&gt;</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">Hash常用指令</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">hset <key>  <field>  <value></value></field></key></td>
+<td>给<key>集合中的  <field>键赋值<value></value></field></key></td>
+</tr>
+<tr>
+<td align="left">hget <key>  <field></field></key></td>
+<td>从<key>集合<field> 取出 value</field></key></td>
+</tr>
+<tr>
+<td align="left">hmset <key>  <field1> <value1> <field2> <value2>…</value2></field2></value1></field1></key></td>
+<td>批量设置hash的值</td>
+</tr>
+<tr>
+<td align="left">hexists key  <field></field></td>
+<td>查看哈希表 key 中，给定域 field 是否存在</td>
+</tr>
+<tr>
+<td align="left">hkeys <key></key></td>
+<td>列出该hash集合的所有field</td>
+</tr>
+<tr>
+<td align="left">hvals <key></key></td>
+<td>列出该hash集合的所有value</td>
+</tr>
+<tr>
+<td align="left">hincrby <key> <field>  <increment></increment></field></key></td>
+<td>为哈希表 key 中的域 field 的值加上增量 increment</td>
+</tr>
+<tr>
+<td align="left">hsetnx <key>  <field> <value></value></field></key></td>
+<td>将哈希表 key 中的域 field 的值设置为 value ，当且仅当域 field 不存在</td>
+</tr>
+</tbody></table>
+<p>5、zset  (sorted set)</p>
+<ul>
+<li><p>Redis有序集合zset与普通集合set非常相似，是一个没有重复元素的字符串集合。</p>
+</li>
+<li><p>有序集合的所有成员都关联了一个评分（score） ，这个评分（score）被用来按照从最低分到最高分的方式排序集合中的成员。（集合的成员是唯一的，但是评分可以是重复了的）</p>
+</li>
+<li><p>因为元素是有序的, 所以你也可以很快的根据评分（score）或者次序（position）来获取一个范围的元素。访问有序集合的中间元素也是非常快的,因此你能够使用有序集合作为一个没有重复成员的智能列表。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>zset常用指令</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>zadd  <key> <score1> <value1>  <score2> <value2>…</value2></score2></value1></score1></key></td>
+<td>将一个或多个 member 元素及其 score 值加入到有序集 key 当中</td>
+</tr>
+<tr>
+<td>zrange <key>  <start> <stop>  [WITHSCORES]</stop></start></key></td>
+<td>返回有序集 key 中，下标在<start> <stop>之间的元素</stop></start></td>
+</tr>
+<tr>
+<td>带WITHSCORES，可以让分数一起和值返回到结果集。</td>
+<td></td>
+</tr>
+<tr>
+<td>zrangebyscore key min max [withscores] [limit offset count]</td>
+<td>返回有序集 key 中，所有 score 值介于 min 和 max 之间(包括等于 min 或 max )的成员。有序集成员按 score 值递增(从小到大)次序排列</td>
+</tr>
+<tr>
+<td>zrevrangebyscore key max min [withscores] [limit offset count]</td>
+<td>同上，改为从大到小排列</td>
+</tr>
+<tr>
+<td>zincrby <key> <increment> <value></value></increment></key></td>
+<td>为元素的score加上增量</td>
+</tr>
+<tr>
+<td>zrem  <key>  <value></value></key></td>
+<td>删除该集合下，指定值的元素</td>
+</tr>
+<tr>
+<td>zcount <key>  <min>  <max></max></min></key></td>
+<td>统计该集合，分数区间内的元素个数</td>
+</tr>
+<tr>
+<td>zrank <key>  <value></value></key></td>
+<td>返回该值在集合中的排名，从0开始</td>
+</tr>
+</tbody></table>
+<h2 id="Redis的Java客户端Jedis"><a href="#Redis的Java客户端Jedis" class="headerlink" title="Redis的Java客户端Jedis"></a>Redis的Java客户端Jedis</h2><p>maven依赖：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">xml</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>redis.clients<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jedis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.8.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="Redis事务"><a href="#Redis事务" class="headerlink" title="Redis事务"></a>Redis事务</h2><h2 id="Redis持久化"><a href="#Redis持久化" class="headerlink" title="Redis持久化"></a>Redis持久化</h2><h2 id="Redis主从复制"><a href="#Redis主从复制" class="headerlink" title="Redis主从复制"></a>Redis主从复制</h2><h2 id="Redis集群"><a href="#Redis集群" class="headerlink" title="Redis集群"></a>Redis集群</h2><h2 id="Redis常考面试题"><a href="#Redis常考面试题" class="headerlink" title="Redis常考面试题"></a>Redis常考面试题</h2></div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Yang4</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://masteryang4.github.io/2020/05/12/%E7%B2%BE-Redis%E6%80%BB%E7%BB%93%E4%B8%8E%E6%80%9D%E8%80%83/">https://masteryang4.github.io/2020/05/12/%E7%B2%BE-Redis%E6%80%BB%E7%BB%93%E4%B8%8E%E6%80%9D%E8%80%83/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://masteryang4.github.io">MasterYangBlog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9D%A2%E8%AF%95/">面试    </a><a class="post-meta__tags" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据    </a><a class="post-meta__tags" href="/tags/Redis/">Redis    </a><a class="post-meta__tags" href="/tags/JavaWeb/">JavaWeb    </a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库    </a></div><div class="post_share"><div class="social-share" data-image="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1589303886869&amp;di=591e71182490ed643a68c876b1f31aa3&amp;imgtype=0&amp;src=http%3A%2F%2Fwww.moqifei.com%2Fwp-content%2Fuploads%2F2014%2F09%2Faec379310a55b319139cb67141a98226cffc1748.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="lazyload post-qr-code__img" src="https://pic.downk.cc/item/5ea1a251c2a9a83be535b287.png" alt="微信"><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="lazyload post-qr-code__img" src="https://pic.downk.cc/item/5ea1a33ac2a9a83be536f9bc.png" alt="支付宝"><div class="post-qr-code__desc">支付宝</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="next-post pull-full"><a href="/2020/05/12/JUnit%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/"><img class="next_cover lazyload" data-src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1589295756460&amp;di=1a4908e6b5429e6efb6e848250c4f1f5&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.kanzhun.com%2Fimages%2Fseo%2Fmianshiti%2F20191125%2F0536aad15afa6bf20742196d373901c5.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="label">下一篇</div><div class="next_info"><span>JUnit常用注解</span></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2020/04/27/kafka高效读写数据/" title="kafka高效读写数据"><img class="relatedPosts_cover lazyload"data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1587643152224&di=b00da8f175f6e52957ebb50cd276b587&imgtype=0&src=http%3A%2F%2Fwww.wper.com%2Fuploadfile%2F2019%2F0722%2F20190722115240184.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-04-27</div><div class="relatedPosts_title">kafka高效读写数据</div></div></a></div><div class="relatedPosts_item"><a href="/2020/04/24/精-flume总结与思考/" title="flume总结与思考"><img class="relatedPosts_cover lazyload"data-src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2122825373,1774283517&fm=26&gp=0.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-04-24</div><div class="relatedPosts_title">flume总结与思考</div></div></a></div><div class="relatedPosts_item"><a href="/2020/04/30/HashMap文章推荐/" title="HashMap文章推荐"><img class="relatedPosts_cover lazyload"data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588271543306&di=e2ef3798580a9377d9dbc4cb55feb892&imgtype=0&src=http%3A%2F%2Fhf.java.tedu.cn%2Fimg%2F201801%2F1515043265758.jpeg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-04-30</div><div class="relatedPosts_title">HashMap文章推荐</div></div></a></div><div class="relatedPosts_item"><a href="/2020/04/18/Java空指针问题的本质/" title="Java空指针问题的本质"><img class="relatedPosts_cover lazyload"data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586972405233&di=f43f2b7ffbdb14f9cec9289e8f79e61b&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farchive%2Fb46358df68b713da0d2efdd514bf89452b3e14c4.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-04-18</div><div class="relatedPosts_title">Java空指针问题的本质</div></div></a></div><div class="relatedPosts_item"><a href="/2020/03/22/LeetCode经典10道题/" title="LeetCode经典10道题"><img class="relatedPosts_cover lazyload"data-src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1128609435,2537138478&fm=26&gp=0.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-03-22</div><div class="relatedPosts_title">LeetCode经典10道题</div></div></a></div><div class="relatedPosts_item"><a href="/2020/04/11/关于HashMap的两道小面试题/" title="关于HashMap的两道小面试题"><img class="relatedPosts_cover lazyload"data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586972405233&di=f43f2b7ffbdb14f9cec9289e8f79e61b&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farchive%2Fb46358df68b713da0d2efdd514bf89452b3e14c4.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-04-11</div><div class="relatedPosts_title">关于HashMap的两道小面试题</div></div></a></div></div><div class="clear_both"></div></div><hr><div id="post-comment"><div class="comment_headling"><i class="fa fa-comments fa-fw" aria-hidden="true"></i><span> 评论</span></div><div class="vcomment" id="vcomment"></div><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = false == true ? true : false;
 var verify = false == true ? true : false;
 var GUEST_INFO = ['nick','mail','link'];
 var guest_info = 'nick,mail,link'.split(',').filter(function(item){
