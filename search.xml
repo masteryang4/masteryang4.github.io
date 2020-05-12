@@ -854,4 +854,68 @@
         <tag>Java</tag>
       </tags>
   </entry>
+  <entry>
+    <title>JUnit常用注解</title>
+    <url>/2020/05/12/JUnit%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/</url>
+    <content><![CDATA[<h1 id="JUnit常用注解"><a href="#JUnit常用注解" class="headerlink" title="JUnit常用注解"></a>JUnit常用注解</h1><p>JUnit是 Java平台最常用的测试框架 。</p>
+<p>本文重点阐述JUnit4版本的@Before、@After、@BeforeClass、@AfterClass四个注解。</p>
+<h2 id="JUnit4，JUnit5注解对比"><a href="#JUnit4，JUnit5注解对比" class="headerlink" title="JUnit4，JUnit5注解对比"></a>JUnit4，JUnit5注解对比</h2><table>
+<thead>
+<tr>
+<th>JUnit4</th>
+<th>JUnit5</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@BeforeClass</td>
+<td>@BeforeAll</td>
+<td>在当前类的<strong>所有测试方法</strong>之前执行。注解在【静态方法】上。</td>
+</tr>
+<tr>
+<td>@AfterClass</td>
+<td>@AfterAll</td>
+<td>在当前类中的<strong>所有测试方法</strong>之后执行。注解在【静态方法】上。</td>
+</tr>
+<tr>
+<td>@Before</td>
+<td>@BeforeEach</td>
+<td>在<strong>每个测试方法</strong>之前执行。注解在【非静态方法】上。</td>
+</tr>
+<tr>
+<td>@After</td>
+<td>@AfterEach</td>
+<td>在<strong>每个测试方法</strong>之后执行。注解在【非静态方法】上。</td>
+</tr>
+</tbody></table>
+<p>为什么 JUnit中@BeforeClass和@AfterClass标注的方法必须是static的 ？</p>
+<p>其实和JUnit的运行机制有关：</p>
+<blockquote>
+<p>在JUnit中：每运行一个@Test方法，就会为该测试类新建一个新的实例。所以@BeforeClass和@AfterClass必须是static的，因为运行他们的时候，测试类还没有实例化。</p>
+<p>这种设计有助于提高测试方法之间的独立性，因为每个@Test执行的时候，都新建了一个实例，这样的话，可以避免测试方法之间重用各个@Test方法里面的变量值。</p>
+</blockquote>
+<p>示例：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JUintDemo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">        System.out.println(<span class="string">"test1 i="</span> + i); <span class="comment">//test1 i=1</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"test2 i="</span> + i); <span class="comment">//test2 i=2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.junit.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JunitTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@BeforeClass</span></span><br><span class="line">    <span class="comment">//【静态方法】</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">beforeClass</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"before class:begin this class================"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterClass</span></span><br><span class="line">    <span class="comment">//【静态方法】</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">afterClass</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"after class:end this class================="</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"before:begin test"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@After</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"after:end test"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"[this is a test!]"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"[this is another test!!!!!]"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>执行整个JunitTest文件，输出结果：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">before class:begin this class&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">before:begin test</span><br><span class="line">[this is a test!]</span><br><span class="line">after:end test</span><br><span class="line">before:begin test</span><br><span class="line">[this is another test!!!!!]</span><br><span class="line">after:end test</span><br><span class="line">after class:end this class&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>一整个JUnit4的单元测试用例执行顺序为： </p>
+<p>​        @BeforeClass -&gt; @Before -&gt; @Test -&gt; @After -&gt; @AfterClass; </p>
+<p>每一个单独的测试方法的调用顺序为： </p>
+<p>​        @Before -&gt; @Test -&gt; @After; </p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>基础知识</category>
+      </categories>
+      <tags>
+        <tag>易错点</tag>
+        <tag>Java</tag>
+        <tag>JUnit</tag>
+        <tag>单元测试</tag>
+      </tags>
+  </entry>
 </search>
