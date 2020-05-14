@@ -229,7 +229,7 @@ function activateLightMode(){
 
 <h1 id="四、其他"><a href="#四、其他" class="headerlink" title="四、其他"></a>四、其他</h1><h2 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h2><p>1、zk常用端口号：</p>
 <blockquote>
-<p>2181，客户端访问端口<br>2888，zk内部信息通讯（数据）<br>888，zk选举专用</p>
+<p>2181，客户端访问端口<br>2888，zk内部信息通讯（数据）<br>3888，zk选举专用</p>
 </blockquote>
 <p>2、zk不能越级创建节点；</p>
 <p>且创建节点一般要带有数据（除非数据是null），否则创建会失败</p>
@@ -241,7 +241,7 @@ function activateLightMode(){
 <p>10 台服务器：3 台 zk</p>
 <p>20 台服务器：5 台 zk</p>
 <p>100 台服务器：11 台 zk</p>
-<p>【注意s】台数并不是越多越好。 太多选举时间过长影响性能。 </p>
+<p>【注意】台数并不是越多越好。 太多选举时间过长影响性能。 </p>
 </blockquote>
 </li>
 <li><p>ZooKeeper的监听原理</p>
