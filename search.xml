@@ -1486,4 +1486,96 @@
         <tag>分布式</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MySQL事务相关</title>
+    <url>/2020/05/14/MySQL%E4%BA%8B%E5%8A%A1%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<h1 id="事务四大特性（ACID）"><a href="#事务四大特性（ACID）" class="headerlink" title="事务四大特性（ACID）"></a>事务四大特性（ACID）</h1><p><strong>1、原子性（Atomicity）：</strong></p>
+<p>事务开始后所有操作，要么全部做完，要么全部不做，不可能停滞在中间环节。</p>
+<p>事务执行过程中出错，会回滚到事务开始前的状态，所有的操作就像没有发生一样。</p>
+<p>也就是说事务是一个不可分割的整体。</p>
+<p>的基本单位 </p>
+<p><strong>2、一致性（Consistency）：</strong></p>
+<p>事务开始前和结束后，数据库的完整性约束没有被破坏 。</p>
+<p>比如 A 向 B 转账，不可能 A 扣了钱，B 却没收到。 </p>
+<p><strong>3、隔离性（Isolation）：</strong></p>
+<p>同一时间，只允许一个事务请求同一数据，不同的事务之间彼此没有任何干扰。</p>
+<p>比如 A 正在从一张银行卡中取钱，在 A 取钱的过程结束前，B 不能向这张卡转账。 </p>
+<p><strong>4、持久性（Durability）：</strong></p>
+<p>事务完成后，事务对数据库的所有更新将被保存到数据库，不 能回滚。 </p>
+<h1 id="MySQL事务隔离级别"><a href="#MySQL事务隔离级别" class="headerlink" title="MySQL事务隔离级别"></a>MySQL事务隔离级别</h1><p>多个事务之间隔离的，相互独立的。</p>
+<p>但是如果多个事务操作同一批数据，则会引发一些问题，设置不同的隔离级别就可以解决这些问题。</p>
+<table>
+<thead>
+<tr>
+<th>事务隔离级别</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>读未提交（read-uncommitted）</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>不可重复读（read-committed）</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>可重复读（repeatable-read）</td>
+<td>否</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>串行化（serializable）</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>隔离级别越高，效率越低。</p>
+<p>大多数数据库的默认级别就是不可重复读（Read committed），比如Sql Server , Oracle</p>
+<p><strong>【注意】MySQL的默认事务隔离级别是——可重复读</strong></p>
+</blockquote>
+<h1 id="事务并发存在的问题"><a href="#事务并发存在的问题" class="headerlink" title="事务并发存在的问题"></a>事务并发存在的问题</h1><p>1、脏读：事务 A 读取了事务 B 更新的数据，然后 B 回滚操作，那么 A 读取到的数据是脏数据。</p>
+<p>（一个事务，读取到另一个事务中没有提交的数据）</p>
+<p>2、不可重复读：事务A多次读取同一数据，事务B在事务A多次读取的过程中，对数据做了更新并提交，导致事务 A多次读取同一数据时，结果不一致 。</p>
+<p>（在同一个事务中，两次读取到的数据不一样 ）</p>
+<p>3、幻读：系统管理员 A 将数据库中所有学生的成绩从具体分数改为 ABCDE 等级，但是系统管理员 B 就在这个时候插入了一条具体分数的记录，当系统管理员 A 改结束后发现还有一条记录没有改过来，就好像发生了幻觉一样，这就叫幻读。 </p>
+<p>（一个事务操作(DML)数据表中所有记录，另一个事务添加了一条数据，则第一个事务查询不到添加的数据）</p>
+<p>（ 一个事务(同一个read view)在前后两次查询同一范围的时候，后一次查询看到了前一次查询没有看到的行）</p>
+<blockquote>
+<p>可重复读的隔离级别下使用了MVCC机制，select操作不会更新版本号，是快照读（历史版本）；</p>
+<p>insert、update和delete会更新版本号，是当前读（当前版本）。 幻读只在<strong>当前读</strong>下才会出现。 </p>
+</blockquote>
+<blockquote>
+<p>不可重复读的和幻读很容易混淆，<strong>不可重复读侧重于修改，幻读侧重于新增或删除</strong>。</p>
+<p>解决不可重复读的问题只需锁住满足条件的行，解决幻读需要锁表等方法</p>
+</blockquote>
+<p><strong>幻读产生的原因：</strong></p>
+<ul>
+<li>行锁只能锁住行，即使把所有的行记录都上锁，也阻止不了新插入的记录。 </li>
+</ul>
+<p><strong>解决幻读的其他方法：</strong></p>
+<ul>
+<li>将两行记录间的空隙加上锁，阻止新记录的插入；这个锁称为<strong>间隙锁</strong>。 </li>
+</ul>
+]]></content>
+      <categories>
+        <category>SQL</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>易错点</tag>
+        <tag>面试</tag>
+        <tag>MySQL</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
 </search>

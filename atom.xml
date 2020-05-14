@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://masteryang4.github.io/"/>
-  <updated>2020-05-14T08:56:10.020Z</updated>
+  <updated>2020-05-14T12:21:18.503Z</updated>
   <id>https://masteryang4.github.io/</id>
   
   <author>
@@ -15,6 +15,40 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MySQL事务相关</title>
+    <link href="https://masteryang4.github.io/2020/05/14/MySQL%E4%BA%8B%E5%8A%A1%E7%9B%B8%E5%85%B3/"/>
+    <id>https://masteryang4.github.io/2020/05/14/MySQL%E4%BA%8B%E5%8A%A1%E7%9B%B8%E5%85%B3/</id>
+    <published>2020-05-14T09:10:57.000Z</published>
+    <updated>2020-05-14T12:21:18.503Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="事务四大特性（ACID）"><a href="#事务四大特性（ACID）" class="headerlink" title="事务四大特性（ACID）"></a>事务四大特性（ACID）</h1><p><strong>1、原子性（Atomicity）：</strong></p><p>事务开始后所有操作，要么全部做完，要么全部不做，不可能停滞在中间环节。</p><p>事务执行过程中出错，会回滚到事务开始前的状态，所有的操作就像没有发生一样。</p><p>也就是说事务是一个不可分割的整体。</p><p>的基本单位 </p><p><strong>2、一致性（Consistency）：</strong></p><p>事务开始前和结束后，数据库的完整性约束没有被破坏 。</p><p>比如 A 向 B 转账，不可能 A 扣了钱，B 却没收到。 </p><p><strong>3、隔离性（Isolation）：</strong></p><p>同一时间，只允许一个事务请求同一数据，不同的事务之间彼此没有任何干扰。</p><p>比如 A 正在从一张银行卡中取钱，在 A 取钱的过程结束前，B 不能向这张卡转账。 </p><p><strong>4、持久性（Durability）：</strong></p><p>事务完成后，事务对数据库的所有更新将被保存到数据库，不 能回滚。 </p><h1 id="MySQL事务隔离级别"><a href="#MySQL事务隔离级别" class="headerlink" title="MySQL事务隔离级别"></a>MySQL事务隔离级别</h1><p>多个事务之间隔离的，相互独立的。</p><p>但是如果多个事务操作同一批数据，则会引发一些问题，设置不同的隔离级别就可以解决这些问题。</p><table><thead><tr><th>事务隔离级别</th><th>脏读</th><th>不可重复读</th><th>幻读</th></tr></thead><tbody><tr><td>读未提交（read-uncommitted）</td><td>是</td><td>是</td><td>是</td></tr><tr><td>不可重复读（read-committed）</td><td>否</td><td>是</td><td>是</td></tr><tr><td>可重复读（repeatable-read）</td><td>否</td><td>否</td><td>是</td></tr><tr><td>串行化（serializable）</td><td>否</td><td>否</td><td>否</td></tr></tbody></table><blockquote><p>隔离级别越高，效率越低。</p><p>大多数数据库的默认级别就是不可重复读（Read committed），比如Sql Server , Oracle</p><p><strong>【注意】MySQL的默认事务隔离级别是——可重复读</strong></p></blockquote><h1 id="事务并发存在的问题"><a href="#事务并发存在的问题" class="headerlink" title="事务并发存在的问题"></a>事务并发存在的问题</h1><p>1、脏读：事务 A 读取了事务 B 更新的数据，然后 B 回滚操作，那么 A 读取到的数据是脏数据。</p><p>（一个事务，读取到另一个事务中没有提交的数据）</p><p>2、不可重复读：事务A多次读取同一数据，事务B在事务A多次读取的过程中，对数据做了更新并提交，导致事务 A多次读取同一数据时，结果不一致 。</p><p>（在同一个事务中，两次读取到的数据不一样 ）</p><p>3、幻读：系统管理员 A 将数据库中所有学生的成绩从具体分数改为 ABCDE 等级，但是系统管理员 B 就在这个时候插入了一条具体分数的记录，当系统管理员 A 改结束后发现还有一条记录没有改过来，就好像发生了幻觉一样，这就叫幻读。 </p><p>（一个事务操作(DML)数据表中所有记录，另一个事务添加了一条数据，则第一个事务查询不到添加的数据）</p><p>（ 一个事务(同一个read view)在前后两次查询同一范围的时候，后一次查询看到了前一次查询没有看到的行）</p><blockquote><p>可重复读的隔离级别下使用了MVCC机制，select操作不会更新版本号，是快照读（历史版本）；</p><p>insert、update和delete会更新版本号，是当前读（当前版本）。 幻读只在<strong>当前读</strong>下才会出现。 </p></blockquote><blockquote><p>不可重复读的和幻读很容易混淆，<strong>不可重复读侧重于修改，幻读侧重于新增或删除</strong>。</p><p>解决不可重复读的问题只需锁住满足条件的行，解决幻读需要锁表等方法</p></blockquote><p><strong>幻读产生的原因：</strong></p><ul><li>行锁只能锁住行，即使把所有的行记录都上锁，也阻止不了新插入的记录。 </li></ul><p><strong>解决幻读的其他方法：</strong></p><ul><li>将两行记录间的空隙加上锁，阻止新记录的插入；这个锁称为<strong>间隙锁</strong>。 </li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;事务四大特性（ACID）&quot;&gt;&lt;a href=&quot;#事务四大特性（ACID）&quot; class=&quot;headerlink&quot; title=&quot;事务四大特性（ACID）&quot;&gt;&lt;/a&gt;事务四大特性（ACID）&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;1、原子性（Atomicity）：&lt;/str
+      
+    
+    </summary>
+    
+    
+      <category term="SQL" scheme="https://masteryang4.github.io/categories/SQL/"/>
+    
+      <category term="MySQL" scheme="https://masteryang4.github.io/categories/SQL/MySQL/"/>
+    
+    
+      <category term="易错点" scheme="https://masteryang4.github.io/tags/%E6%98%93%E9%94%99%E7%82%B9/"/>
+    
+      <category term="面试" scheme="https://masteryang4.github.io/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="MySQL" scheme="https://masteryang4.github.io/tags/MySQL/"/>
+    
+      <category term="数据库" scheme="https://masteryang4.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title>[精]zookeeper总结与思考</title>
@@ -590,35 +624,6 @@
       <category term="易错点" scheme="https://masteryang4.github.io/tags/%E6%98%93%E9%94%99%E7%82%B9/"/>
     
       <category term="Java" scheme="https://masteryang4.github.io/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SQL的执行顺序问题</title>
-    <link href="https://masteryang4.github.io/2020/04/10/SQL%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F%E9%97%AE%E9%A2%98/"/>
-    <id>https://masteryang4.github.io/2020/04/10/SQL%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F%E9%97%AE%E9%A2%98/</id>
-    <published>2020-04-10T15:44:24.000Z</published>
-    <updated>2020-04-14T13:41:32.432Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="SQL的执行顺序问题"><a href="#SQL的执行顺序问题" class="headerlink" title="SQL的执行顺序问题"></a>SQL的执行顺序问题</h2><p>众所周知，sql的执行顺序：</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">sql</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from... where...group by... having....select ... <span class="keyword">order</span> by... <span class="keyword">limit</span></span><br></pre></td></tr></table></figure></div><p>但是，有一个“bug”，在 <strong>MySQL</strong> 中：</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">sql</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> title, <span class="keyword">COUNT</span>(title) <span class="keyword">AS</span> t <span class="keyword">FROM</span> <span class="keyword">table</span> <span class="keyword">GROUP</span> <span class="keyword">BY</span> title <span class="keyword">HAVING</span> t &gt;= <span class="number">2</span></span><br></pre></td></tr></table></figure></div><p>这样的语句是可以执行的。</p><p>正常来说，having在select之前执行，但是却可以使用select的别名，这是为什么呢？</p><p>查阅了一切资料，做出如下解释：</p><h4 id="解释一"><a href="#解释一" class="headerlink" title="解释一"></a>解释一</h4><blockquote><p>mysql的处理方式是中间生成虚拟表（或者叫临时表），而这个虚拟表的生成的列靠的就是select。</p><p>所以猜测类似having之后的操作，其实内部已经根据select生成了虚拟表，列自然也是as后的。</p></blockquote><h4 id="解释二"><a href="#解释二" class="headerlink" title="解释二"></a>解释二</h4><blockquote><p>之所以MYSQL可以这么做是因为MYSQL用的是临时表，</p><p>在having前已经产生了数据，所以可以用别名，但SQL Sever不可以，SQL是在having后才Select。</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;SQL的执行顺序问题&quot;&gt;&lt;a href=&quot;#SQL的执行顺序问题&quot; class=&quot;headerlink&quot; title=&quot;SQL的执行顺序问题&quot;&gt;&lt;/a&gt;SQL的执行顺序问题&lt;/h2&gt;&lt;p&gt;众所周知，sql的执行顺序：&lt;/p&gt;
-&lt;div class=&quot;code-ar
-      
-    
-    </summary>
-    
-    
-      <category term="SQL" scheme="https://masteryang4.github.io/categories/SQL/"/>
-    
-      <category term="MySQL" scheme="https://masteryang4.github.io/categories/SQL/MySQL/"/>
-    
-    
-      <category term="MySQL" scheme="https://masteryang4.github.io/tags/MySQL/"/>
     
   </entry>
   
