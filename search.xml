@@ -1936,4 +1936,63 @@
         <tag>分布式</tag>
       </tags>
   </entry>
+  <entry>
+    <title>scala样例类转换成为JSON字符串</title>
+    <url>/2020/05/25/scala%E6%A0%B7%E4%BE%8B%E7%B1%BB%E8%BD%AC%E6%8D%A2%E6%88%90%E4%B8%BAJSON%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <content><![CDATA[<h1 id="JSON常用方法"><a href="#JSON常用方法" class="headerlink" title="JSON常用方法"></a>JSON常用方法</h1><p>Java中并没有内置JSON的解析，因此使用JSON需要借助第三方类库。</p>
+<p>几个常用的 JSON 解析类库：</p>
+<ul>
+<li><a href="https://github.com/google/gson" target="_blank" rel="noopener">Gson</a>: 谷歌开发的 JSON 库，功能十分全面。</li>
+<li><a href="https://github.com/alibaba/fastjson" target="_blank" rel="noopener">FastJson</a>: 阿里巴巴开发的 JSON 库，性能十分优秀。</li>
+<li><a href="https://github.com/FasterXML/jackson" target="_blank" rel="noopener">Jackson</a>: 社区十分活跃且更新速度很快。</li>
+</ul>
+<p>maven依赖：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">xml</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.47<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>JSON 对象与字符串的相互转化</p>
+<table>
+<thead>
+<tr>
+<th align="left">方法</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>JSON.parseObject()</code></td>
+<td align="left">从字符串解析 JSON 对象</td>
+</tr>
+<tr>
+<td align="left">JSON.parseArray()</td>
+<td align="left">从字符串解析 JSON 数组</td>
+</tr>
+<tr>
+<td align="left"><code>JSON.toJSONString(obj/array)</code></td>
+<td align="left">将 JSON 对象或 JSON 数组转化为字符串</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JSONTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//从字符串解析JSON对象</span></span><br><span class="line">        JSONObject obj = JSON.parseObject(<span class="string">"&#123;\"name\":\"ys\"&#125;"</span>);</span><br><span class="line">        System.out.println(obj); <span class="comment">//&#123;"name":"ys"&#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//将JSON对象转化为字符串</span></span><br><span class="line">        String objStr = JSON.toJSONString(obj);</span><br><span class="line">        System.out.println(objStr); <span class="comment">//&#123;"name":"ys"&#125;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="Scala样例类转换成JSON字符串"><a href="#Scala样例类转换成JSON字符串" class="headerlink" title="Scala样例类转换成JSON字符串"></a>Scala样例类转换成JSON字符串</h1><p>将<strong>Scala样例类</strong>转换成为JSON字符串，JSON.toJSONString(obj)会失效，所以使用如下方法：</p>
+<p>maven依赖（json4s —&gt; json for scala）：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">xml</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.json4s<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>json4s-native_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">scala</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.json4s.native.<span class="type">Serialization</span></span><br><span class="line"><span class="keyword">implicit</span> <span class="keyword">val</span> formats=org.json4s.<span class="type">DefaultFormats</span> <span class="comment">//隐式转换</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> orderInfoJson: <span class="type">String</span> = <span class="type">Serialization</span>.write(orderInfo)</span><br></pre></td></tr></table></figure></div>
+
+<p>示例</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">scala</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.&#123;<span class="type">JSON</span>, <span class="type">JSONObject</span>&#125;</span><br><span class="line"><span class="keyword">import</span> com.atguigu.bean.<span class="type">UserInfo</span></span><br><span class="line"><span class="keyword">import</span> org.json4s.native.<span class="type">Serialization</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">JsonStrTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> userInfo = <span class="type">UserInfo</span>(<span class="string">"1001"</span>,<span class="string">"name1"</span>,<span class="string">"5"</span>,<span class="string">"2020-05-25"</span>,<span class="string">"male"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">implicit</span> <span class="keyword">val</span> formats = org.json4s.<span class="type">DefaultFormats</span></span><br><span class="line">      </span><br><span class="line">    <span class="comment">//println(JSON.toJSONString(userInfo)) //报错</span></span><br><span class="line">      </span><br><span class="line">    <span class="keyword">val</span> str = <span class="type">Serialization</span>.write(userInfo)</span><br><span class="line">    println(str)</span><br><span class="line">    <span class="comment">// &#123;"id":"1001","login_name":"name1","user_level":"5","birthday":"2020-05-25","gender":"male"&#125;</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">val</span> nObject: <span class="type">JSONObject</span> = <span class="type">JSON</span>.parseObject(str)  <span class="comment">//正常解析</span></span><br><span class="line">    println(nObject)</span><br><span class="line">    <span class="comment">// &#123;"birthday":"2020-05-25","login_name":"name1","gender":"male","user_level":"5","id":"1001"&#125;</span></span><br><span class="line">        </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>UserInfo.scala</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">scala</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">UserInfo</span>(<span class="params">id:<span class="type">String</span>,</span></span></span><br><span class="line"><span class="class"><span class="params">                    login_name:<span class="type">String</span>,</span></span></span><br><span class="line"><span class="class"><span class="params">                    user_level:<span class="type">String</span>,</span></span></span><br><span class="line"><span class="class"><span class="params">                    birthday:<span class="type">String</span>,</span></span></span><br><span class="line"><span class="class"><span class="params">                    gender:<span class="type">String</span></span>)</span></span><br></pre></td></tr></table></figure></div>
+
+
+]]></content>
+      <categories>
+        <category>大数据 -scala</category>
+      </categories>
+      <tags>
+        <tag>大数据</tag>
+        <tag>scala</tag>
+      </tags>
+  </entry>
 </search>
