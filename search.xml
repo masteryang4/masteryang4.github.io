@@ -1995,4 +1995,39 @@
         <tag>scala</tag>
       </tags>
   </entry>
+  <entry>
+    <title>spark常用算子join</title>
+    <url>/2020/05/25/spark%E5%B8%B8%E7%94%A8%E7%AE%97%E5%AD%90join/</url>
+    <content><![CDATA[<h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p>JOIN函数签名</p>
+<blockquote>
+<p>def join<code>[W]</code>(other: RDD[(K, W)]): RDD[(K, (V, W))]</p>
+</blockquote>
+<p>函数说明</p>
+<ul>
+<li>spark RDD <strong>转换算子</strong></li>
+<li>(对照函数签名)在类型为(K,V)和(K,W)的RDD上调用，返回一个相同key对应的所有元素连接在一起的(K,(V,W))的RDD</li>
+</ul>
+<h1 id="重点示例"><a href="#重点示例" class="headerlink" title="重点示例"></a>重点示例</h1><ul>
+<li>join</li>
+<li>leftOuterJoin</li>
+<li>rightOuterJoin</li>
+<li>fullOuterJoin</li>
+</ul>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">scala</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.spark.rdd.<span class="type">RDD</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkConf</span>, <span class="type">SparkContext</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">JoinTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1.创建SparkConf</span></span><br><span class="line">    <span class="keyword">val</span> sparkConf: <span class="type">SparkConf</span> = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"JoinTest"</span>).setMaster(<span class="string">"local[*]"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2.创建SparkContext</span></span><br><span class="line">    <span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(sparkConf)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3.创建两个RDD</span></span><br><span class="line">    <span class="keyword">val</span> rdd1: <span class="type">RDD</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = sc.makeRDD(<span class="type">Array</span>((<span class="string">"a"</span>, <span class="number">1</span>), (<span class="string">"a"</span>, <span class="number">2</span>), (<span class="string">"b"</span>, <span class="number">1</span>), (<span class="string">"c"</span>, <span class="number">1</span>)))</span><br><span class="line">    <span class="keyword">val</span> rdd2: <span class="type">RDD</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = sc.makeRDD(<span class="type">Array</span>((<span class="string">"a"</span>, <span class="number">1</span>), (<span class="string">"b"</span>, <span class="number">1</span>), (<span class="string">"b"</span>, <span class="number">2</span>), (<span class="string">"d"</span>, <span class="number">1</span>)))</span><br><span class="line"></span><br><span class="line">    <span class="comment">//4.测试各种JOIN【 注意返回值 】</span></span><br><span class="line">    <span class="keyword">val</span> result1: <span class="type">RDD</span>[(<span class="type">String</span>, (<span class="type">Int</span>, <span class="type">Int</span>))] = rdd1.join(rdd2)</span><br><span class="line">    <span class="keyword">val</span> result2: <span class="type">RDD</span>[(<span class="type">String</span>, (<span class="type">Int</span>, <span class="type">Option</span>[<span class="type">Int</span>]))] = rdd1.leftOuterJoin(rdd2)</span><br><span class="line">    <span class="keyword">val</span> result3: <span class="type">RDD</span>[(<span class="type">String</span>, (<span class="type">Option</span>[<span class="type">Int</span>], <span class="type">Int</span>))] = rdd1.rightOuterJoin(rdd2)</span><br><span class="line">    <span class="keyword">val</span> result4: <span class="type">RDD</span>[(<span class="type">String</span>, (<span class="type">Option</span>[<span class="type">Int</span>], <span class="type">Option</span>[<span class="type">Int</span>]))] = rdd1.fullOuterJoin(rdd2)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//5.打印</span></span><br><span class="line">    result1.foreach(println)</span><br><span class="line">    println(<span class="string">"======================&gt;&gt;&gt;"</span>)</span><br><span class="line">    result2.foreach(println)</span><br><span class="line">    println(<span class="string">"======================&gt;&gt;&gt;"</span>)</span><br><span class="line">    result3.foreach(println)</span><br><span class="line">    println(<span class="string">"======================&gt;&gt;&gt;"</span>)</span><br><span class="line">    result4.foreach(println)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//6.关闭连接</span></span><br><span class="line">    sc.stop()</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>输出结果：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(b,(1,1))</span><br><span class="line">(a,(1,1))</span><br><span class="line">(a,(2,1))</span><br><span class="line">(b,(1,2))</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;&gt;&gt;</span><br><span class="line">(c,(1,None))</span><br><span class="line">(a,(1,Some(1)))</span><br><span class="line">(a,(2,Some(1)))</span><br><span class="line">(b,(1,Some(1)))</span><br><span class="line">(b,(1,Some(2)))</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;&gt;&gt;</span><br><span class="line">(d,(None,1))</span><br><span class="line">(a,(Some(1),1))</span><br><span class="line">(a,(Some(2),1))</span><br><span class="line">(b,(Some(1),1))</span><br><span class="line">(b,(Some(1),2))</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;&gt;&gt;</span><br><span class="line">(d,(None,Some(1)))</span><br><span class="line">(c,(Some(1),None))</span><br><span class="line">(a,(Some(1),Some(1)))</span><br><span class="line">(a,(Some(2),Some(1)))</span><br><span class="line">(b,(Some(1),Some(1)))</span><br><span class="line">(b,(Some(1),Some(2)))</span><br></pre></td></tr></table></figure></div>
+
+
+]]></content>
+      <categories>
+        <category>大数据</category>
+        <category>spark</category>
+      </categories>
+      <tags>
+        <tag>易错点</tag>
+        <tag>大数据</tag>
+        <tag>spark</tag>
+      </tags>
+  </entry>
 </search>
