@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://masteryang4.github.io/"/>
-  <updated>2020-05-26T15:53:58.305Z</updated>
+  <updated>2020-05-26T16:18:08.383Z</updated>
   <id>https://masteryang4.github.io/</id>
   
   <author>
@@ -21,13 +21,34 @@
     <link href="https://masteryang4.github.io/2020/05/26/HiveSQL%E4%B9%8B%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E5%87%BD%E6%95%B0case/"/>
     <id>https://masteryang4.github.io/2020/05/26/HiveSQL%E4%B9%8B%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E5%87%BD%E6%95%B0case/</id>
     <published>2020-05-26T15:53:58.000Z</published>
-    <updated>2020-05-26T15:53:58.305Z</updated>
+    <updated>2020-05-26T16:18:08.383Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="关键词：CASE-WHEN-THEN-ELSE-END"><a href="#关键词：CASE-WHEN-THEN-ELSE-END" class="headerlink" title="关键词：CASE  WHEN  THEN  ELSE  END"></a>关键词：CASE  WHEN  THEN  ELSE  END</h1><h1 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h1><table><thead><tr><th>name</th><th>dept_id</th><th>sex</th></tr></thead><tbody><tr><td>悟空</td><td>A</td><td>男</td></tr><tr><td>大海</td><td>A</td><td>男</td></tr><tr><td>宋宋</td><td>B</td><td>男</td></tr><tr><td>凤姐</td><td>A</td><td>女</td></tr><tr><td>婷姐</td><td>B</td><td>女</td></tr><tr><td>婷婷</td><td>B</td><td>女</td></tr></tbody></table><h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>求出不同部门男女各多少人。结果如下：</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A   2    1</span><br><span class="line">B   1    2</span><br></pre></td></tr></table></figure></div><h1 id="创建本地emp-sex-txt，导入数据"><a href="#创建本地emp-sex-txt，导入数据" class="headerlink" title="创建本地emp_sex.txt，导入数据"></a>创建本地emp_sex.txt，导入数据</h1><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[ys@hadoop102 datas]$ vim emp_sex.txt</span><br><span class="line">悟空A男</span><br><span class="line">大海A男</span><br><span class="line">宋宋B男</span><br><span class="line">凤姐A女</span><br><span class="line">婷姐B女</span><br><span class="line">婷婷B女</span><br></pre></td></tr></table></figure></div><h1 id="创建hive表并导入数据"><a href="#创建hive表并导入数据" class="headerlink" title="创建hive表并导入数据"></a>创建hive表并导入数据</h1><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">sql</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> emp_sex(</span><br><span class="line"><span class="keyword">name</span> <span class="keyword">string</span>, </span><br><span class="line">dept_id <span class="keyword">string</span>, </span><br><span class="line">sex <span class="keyword">string</span>) </span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">"\t"</span>;</span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">'/opt/module/datas/emp_sex.txt'</span> <span class="keyword">into</span> <span class="keyword">table</span> emp_sex;</span><br></pre></td></tr></table></figure></div><h1 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h1><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">sql</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">  dept_id,</span><br><span class="line">  <span class="keyword">sum</span>(<span class="keyword">case</span> sex <span class="keyword">when</span> <span class="string">'男'</span> <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) male_count,</span><br><span class="line">  <span class="keyword">sum</span>(<span class="keyword">case</span> sex <span class="keyword">when</span> <span class="string">'女'</span> <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) female_count</span><br><span class="line"><span class="keyword">from</span> </span><br><span class="line">  emp_sex</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span></span><br><span class="line">  dept_id;</span><br></pre></td></tr></table></figure></div><ul><li>首先注意CASE  WHEN  THEN  ELSE  END的缺一不可</li><li><strong>也要注意<code>sum</code>函数的用法，<code>sum(条件)</code>是经常会用到的方法！！！</strong><ul><li><strong>比如<code>sum(if XXX)</code>就常在HiveSQL里面使用。</strong></li><li>例如：<code>sum(if(dt=&#39;2020-05-27&#39;, order_count,0 )) order_count</code>，本质其实是一样的。</li></ul></li></ul>]]></content>
     
     <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;关键词：CASE-WHEN-THEN-ELSE-END&quot;&gt;&lt;a href=&quot;#关键词：CASE-WHEN-THEN-ELSE-END&quot; class=&quot;headerlink&quot; title=&quot;关键词：CASE  WHEN  THEN  ELSE  END&quot;&gt;&lt;/a&gt;关
+      
     
     </summary>
     
     
+      <category term="大数据" scheme="https://masteryang4.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="hive" scheme="https://masteryang4.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/hive/"/>
+    
+    
+      <category term="易错点" scheme="https://masteryang4.github.io/tags/%E6%98%93%E9%94%99%E7%82%B9/"/>
+    
+      <category term="大数据" scheme="https://masteryang4.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="hive" scheme="https://masteryang4.github.io/tags/hive/"/>
+    
+      <category term="SQL" scheme="https://masteryang4.github.io/tags/SQL/"/>
+    
+      <category term="hivesql" scheme="https://masteryang4.github.io/tags/hivesql/"/>
     
   </entry>
   
@@ -157,9 +178,9 @@
       <category term="elasticsearch" scheme="https://masteryang4.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/elasticsearch/"/>
     
     
-      <category term="数据库" scheme="https://masteryang4.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
       <category term="大数据" scheme="https://masteryang4.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="数据库" scheme="https://masteryang4.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
       <category term="教程" scheme="https://masteryang4.github.io/tags/%E6%95%99%E7%A8%8B/"/>
     
@@ -299,9 +320,9 @@
     
       <category term="面试" scheme="https://masteryang4.github.io/tags/%E9%9D%A2%E8%AF%95/"/>
     
-      <category term="数据库" scheme="https://masteryang4.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
       <category term="大数据" scheme="https://masteryang4.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="数据库" scheme="https://masteryang4.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
       <category term="教程" scheme="https://masteryang4.github.io/tags/%E6%95%99%E7%A8%8B/"/>
     
