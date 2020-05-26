@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://masteryang4.github.io/"/>
-  <updated>2020-05-26T15:35:01.677Z</updated>
+  <updated>2020-05-26T15:53:58.305Z</updated>
   <id>https://masteryang4.github.io/</id>
   
   <author>
@@ -15,6 +15,21 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>HiveSQL之常用查询函数case</title>
+    <link href="https://masteryang4.github.io/2020/05/26/HiveSQL%E4%B9%8B%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E5%87%BD%E6%95%B0case/"/>
+    <id>https://masteryang4.github.io/2020/05/26/HiveSQL%E4%B9%8B%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E5%87%BD%E6%95%B0case/</id>
+    <published>2020-05-26T15:53:58.000Z</published>
+    <updated>2020-05-26T15:53:58.305Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>一段有趣的spark_aggregate代码</title>
@@ -629,33 +644,6 @@
       <category term="易错点" scheme="https://masteryang4.github.io/tags/%E6%98%93%E9%94%99%E7%82%B9/"/>
     
       <category term="Java" scheme="https://masteryang4.github.io/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git使用小结</title>
-    <link href="https://masteryang4.github.io/2020/04/13/Git%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93/"/>
-    <id>https://masteryang4.github.io/2020/04/13/Git%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93/</id>
-    <published>2020-04-12T16:25:50.000Z</published>
-    <updated>2020-04-16T15:52:46.462Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Git使用小结"><a href="#Git使用小结" class="headerlink" title="Git使用小结"></a>Git使用小结</h1><p>小结Git常用指令，以及如何将本地代码同步/更新到Github的常用指令</p><h2 id="一、初始配置"><a href="#一、初始配置" class="headerlink" title="一、初始配置"></a>一、初始配置</h2><p>git安装完成后，需要设置一下，在命令行输入 </p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;Your Name&quot;</span><br><span class="line">$ git config --global user.email &quot;email@example.com&quot;</span><br></pre></td></tr></table></figure></div><p> <strong>–global</strong>参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。 </p><h2 id="二、常用指令"><a href="#二、常用指令" class="headerlink" title="二、常用指令"></a>二、常用指令</h2><p>进入到自己的项目文件下右键选择Git Bash Here打开git客户端 </p><p>初始化项目：</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure></div><p>将文件添加到本地仓库：</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add</span><br></pre></td></tr></table></figure></div><p>将文件提交到仓库</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m &quot;注释内容&quot;</span><br></pre></td></tr></table></figure></div><p>关联远程项目（你的远程仓库地址）</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https:&#x2F;&#x2F;github.com&#x2F;xxxx&#x2F;xxx.git</span><br></pre></td></tr></table></figure></div><p>本地推送到远程（ <strong>第一次</strong>推送<strong>master分支</strong>的所有内容）</p><blockquote><p>由于远程库是空的，我们第一次推送<code>master</code>分支时，加上了<code>-u</code>参数，Git不但会把本地的<code>master</code>分支内容推送的远程新的<code>master</code>分支，还会把本地的<code>master</code>分支和远程的<code>master</code>分支关联起来，在以后的推送或者拉取时就可以简化命令。 </p></blockquote><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure></div><p>查看Git状态</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure></div><h2 id="三、更新文件到Github"><a href="#三、更新文件到Github" class="headerlink" title="三、更新文件到Github"></a>三、更新文件到Github</h2><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add</span><br><span class="line">git commit -m &quot;注释内容&quot;</span><br><span class="line">git pull origin master   #从远程抓取分支，使用git pull，如果有冲突，要先处理冲突</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure></div><p> 查看远程库信息：</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure></div><blockquote><p>会显示可以抓取和推送的<code>origin</code>的地址。如果没有推送权限，就看不到push的地址。 </p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;Git使用小结&quot;&gt;&lt;a href=&quot;#Git使用小结&quot; class=&quot;headerlink&quot; title=&quot;Git使用小结&quot;&gt;&lt;/a&gt;Git使用小结&lt;/h1&gt;&lt;p&gt;小结Git常用指令，以及如何将本地代码同步/更新到Github的常用指令&lt;/p&gt;
-&lt;h2 id=&quot;一
-      
-    
-    </summary>
-    
-    
-      <category term="Git&amp;Github" scheme="https://masteryang4.github.io/categories/Git-Github/"/>
-    
-    
-      <category term="Git&amp;Github" scheme="https://masteryang4.github.io/tags/Git-Github/"/>
     
   </entry>
   
