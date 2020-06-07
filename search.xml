@@ -780,6 +780,110 @@
       </tags>
   </entry>
   <entry>
+    <title>Redis常见问题及扩展</title>
+    <url>/2020/06/07/Redis%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E5%8F%8A%E6%89%A9%E5%B1%95/</url>
+    <content><![CDATA[<h1 id="缓存穿透、缓存雪崩、缓存击穿"><a href="#缓存穿透、缓存雪崩、缓存击穿" class="headerlink" title="缓存穿透、缓存雪崩、缓存击穿"></a>缓存穿透、缓存雪崩、缓存击穿</h1><p>1、缓存穿透是指查询一个一定不存在的数据。由于缓存命不中时会去查询数据库，查不到数据则不写入缓存，这将导致这个不存在的数据每次请求都要到数据库去查询，造成缓存穿透。</p>
+<p>解决方案：</p>
+<ul>
+<li><p>是将空对象也缓存起来，并给它设置一个很短的过期时间，最长不超过5分钟</p>
+</li>
+<li><p>采用<strong>布隆过滤器</strong>，将所有可能存在的数据<strong>哈希</strong>到一个足够大的bitmap中，一个一定不存在的数据会被这个bitmap拦截掉，从而避免了对底层存储系统的查询压力</p>
+</li>
+</ul>
+<blockquote>
+<p>布隆过滤器(bloom filter)： <a href="https://zhuanlan.zhihu.com/p/72378274" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/72378274</a> </p>
+</blockquote>
+<p>2、如果缓存集中在一段时间内失效，发生大量的缓存穿透，所有的查询都落在数据库上，就会造成缓存雪崩。</p>
+<p>解决方案：</p>
+<ul>
+<li>尽量让失效的时间点不分布在同一个时间点</li>
+</ul>
+<p>3、缓存击穿，是指一个key非常热点，在不停的扛着大并发，当这个key在失效的瞬间，持续的大并发就穿破缓存，直接请求数据库，就像在一个屏障上凿开了一个洞。</p>
+<p>解决方案：</p>
+<ul>
+<li>可以设置key永不过期</li>
+</ul>
+<h1 id="哨兵模式"><a href="#哨兵模式" class="headerlink" title="哨兵模式"></a>哨兵模式</h1><p>主从复制中反客为主的自动版，如果主机Down掉，哨兵会从从机中选择一台作为主机，并将它设置为其他从机的主机，而且如果原来的主机再次启动的话也会成为从机。</p>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>string</td>
+<td>字符串</td>
+</tr>
+<tr>
+<td>list</td>
+<td>可以重复的集合</td>
+</tr>
+<tr>
+<td>set</td>
+<td>不可以重复的集合</td>
+</tr>
+<tr>
+<td>hash</td>
+<td>类似于Map&lt;String,String&gt;</td>
+</tr>
+<tr>
+<td>zset(sorted set）</td>
+<td>带分数的set</td>
+</tr>
+</tbody></table>
+<h1 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h1><p>1、RDB持久化：</p>
+<ul>
+<li><p>在指定的时间间隔内持久化</p>
+</li>
+<li><p>服务shutdown会自动持久化</p>
+</li>
+<li><p>输入bgsave也会持久化</p>
+</li>
+</ul>
+<p>2、AOF :  以日志形式记录每个更新操作</p>
+<ul>
+<li><p>Redis重新启动时读取这个文件，重新执行新建、修改数据的命令恢复数据。</p>
+</li>
+<li><p>保存策略：</p>
+<ul>
+<li>推荐（并且也是默认）的措施为每秒持久化一次，这种策略可以兼顾速度和安全性。</li>
+</ul>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li>比起RDB占用更多的磁盘空间</li>
+<li>恢复备份速度要慢</li>
+<li>每次读写都同步的话，有一定的性能压力</li>
+<li>存在个别Bug，造成恢复不能</li>
+</ul>
+</li>
+</ul>
+<p><strong>选择策略：</strong></p>
+<p>官方推荐：</p>
+<p>如果对数据不敏感，可以选单独用RDB；不建议单独用AOF，因为可能出现Bug;如果只是做纯内存缓存，可以都不用。</p>
+<h1 id="悲观锁、乐观锁"><a href="#悲观锁、乐观锁" class="headerlink" title="悲观锁、乐观锁"></a>悲观锁、乐观锁</h1><p>悲观锁：</p>
+<p>执行操作前假设当前的操作肯定（或有很大几率）会被打断（悲观）。基于这个假设，我们在做操作前就会把相关资源锁定，不允许自己执行期间有其他操作干扰。</p>
+<p>乐观锁：</p>
+<p>执行操作前假设当前操作不会被打断（乐观）。基于这个假设，我们在做操作前不会锁定资源，万一发生了其他操作的干扰，那么本次操作将被放弃。</p>
+<p><strong>Redis使用的就是乐观锁。</strong></p>
+<h1 id="推荐参考："><a href="#推荐参考：" class="headerlink" title="推荐参考："></a>推荐参考：</h1><blockquote>
+<p><a href="https://zhuanlan.zhihu.com/p/89620471" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/89620471</a> </p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>大数据</category>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+        <tag>大数据</tag>
+        <tag>Redis</tag>
+        <tag>布隆过滤器</tag>
+        <tag>缓存</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SQL的执行顺序问题</title>
     <url>/2020/04/10/SQL%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<h2 id="SQL的执行顺序问题"><a href="#SQL的执行顺序问题" class="headerlink" title="SQL的执行顺序问题"></a>SQL的执行顺序问题</h2><p>众所周知，sql的执行顺序：</p>
@@ -2243,8 +2347,8 @@
         <tag>面试</tag>
         <tag>大数据</tag>
         <tag>数据库</tag>
-        <tag>教程</tag>
         <tag>Redis</tag>
+        <tag>教程</tag>
         <tag>JavaWeb</tag>
       </tags>
   </entry>
