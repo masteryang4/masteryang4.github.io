@@ -2266,7 +2266,7 @@
 <p>AOF文件故障恢复：</p>
 <ul>
 <li>AOF文件的保存路径，同RDB的路径一致。</li>
-<li>如遇到AOF文件损坏，可通过<pre><code>redis-check-aof  --fix  appendonly.aof   进行恢复</code></pre></li>
+<li>如遇到AOF文件损坏，可通过 <code>redis-check-aof  --fix  appendonly.aof</code>  进行恢复</li>
 </ul>
 <p>Rewrite：</p>
 <ul>
@@ -2303,14 +2303,10 @@
 <h2 id="一主二仆模式："><a href="#一主二仆模式：" class="headerlink" title="一主二仆模式："></a>一主二仆模式：</h2><blockquote>
 <p>复制原理：</p>
 <ul>
-<li><p>每次从机联通后，都会给主机发送sync指令</p>
-</li>
-<li><p>主机立刻进行存盘操作，发送RDB文件，给从机</p>
-</li>
-<li><p>从机收到RDB文件后，进行全盘加载</p>
-</li>
-<li><p>之后每次主机的写操作，都会立刻发送给从机，从机执行相同的命令</p>
-</li>
+<li>每次从机联通后，都会给主机发送sync指令</li>
+<li>主机立刻进行存盘操作，发送RDB文件，给从机</li>
+<li>从机收到RDB文件后，进行全盘加载</li>
+<li>之后每次主机的写操作，都会立刻发送给从机，从机执行相同的命令</li>
 </ul>
 </blockquote>
 <p>薪火相传：</p>
@@ -2326,7 +2322,7 @@
 <li>用 slaveof  no one  将从机变为主机。</li>
 </ul>
 <h2 id="哨兵模式-sentinel"><a href="#哨兵模式-sentinel" class="headerlink" title="哨兵模式(sentinel)"></a>哨兵模式(sentinel)</h2><p>反客为主的自动版，能够后台监控主机是否故障，如果故障了根据投票数自动将从库转换为主库。</p>
-<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1、配置哨兵：</span><br><span class="line">调整为一主二仆模式</span><br><span class="line">自定义的&#x2F;myredis目录下新建sentinel.conf文件</span><br><span class="line">在配置文件中填写内容：</span><br><span class="line">        sentinel  monitor  mymaster  127.0.0.1  6379  1</span><br><span class="line">其中mymaster为监控对象起的服务器名称， 1 为 至少有多少个哨兵同意迁移的数量。 </span><br><span class="line">2、启动哨兵</span><br><span class="line">执行redis-sentinel  &#x2F;myredis&#x2F;sentinel.conf</span><br></pre></td></tr></table></figure></div>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1、配置哨兵：</span><br><span class="line">调整为一主二仆模式</span><br><span class="line">自定义的&#x2F;myredis目录下新建sentinel.conf文件</span><br><span class="line">在配置文件中填写内容：</span><br><span class="line">        sentinel  monitor  mymaster  127.0.0.1  6379  1</span><br><span class="line">其中mymaster为监控对象起的服务器名称， 1 为 至少有多少个哨兵同意迁移的数量。 </span><br><span class="line"></span><br><span class="line">2、启动哨兵</span><br><span class="line">执行redis-sentinel  &#x2F;myredis&#x2F;sentinel.conf</span><br></pre></td></tr></table></figure></div>
 
 <p><strong>故障恢复：</strong></p>
 <p>1、新主登基</p>
