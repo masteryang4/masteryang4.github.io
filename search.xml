@@ -167,10 +167,10 @@
         <category>spark</category>
       </categories>
       <tags>
+        <tag>教程</tag>
         <tag>大数据</tag>
         <tag>spark</tag>
         <tag>spark-streaming</tag>
-        <tag>教程</tag>
         <tag>实时大数据</tag>
       </tags>
   </entry>
@@ -683,12 +683,12 @@
         <category>Redis</category>
       </categories>
       <tags>
-        <tag>面试</tag>
+        <tag>教程</tag>
         <tag>大数据</tag>
         <tag>数据库</tag>
+        <tag>面试</tag>
         <tag>Redis</tag>
         <tag>JavaWeb</tag>
-        <tag>教程</tag>
       </tags>
   </entry>
   <entry>
@@ -1076,9 +1076,9 @@
         <category>spark</category>
       </categories>
       <tags>
+        <tag>教程</tag>
         <tag>大数据</tag>
         <tag>spark</tag>
-        <tag>教程</tag>
       </tags>
   </entry>
   <entry>
@@ -1121,8 +1121,8 @@
       </categories>
       <tags>
         <tag>易错点</tag>
-        <tag>面试</tag>
         <tag>大数据</tag>
+        <tag>面试</tag>
         <tag>sqoop</tag>
         <tag>离线大数据</tag>
       </tags>
@@ -1249,8 +1249,8 @@
       </categories>
       <tags>
         <tag>易错点</tag>
-        <tag>面试</tag>
         <tag>大数据</tag>
+        <tag>面试</tag>
         <tag>spark</tag>
         <tag>spark-core</tag>
       </tags>
@@ -1539,8 +1539,8 @@
         <category>springboot</category>
       </categories>
       <tags>
-        <tag>JavaWeb</tag>
         <tag>教程</tag>
+        <tag>JavaWeb</tag>
         <tag>springboot</tag>
       </tags>
   </entry>
@@ -1731,8 +1731,8 @@
         <category>spring</category>
       </categories>
       <tags>
-        <tag>JavaWeb</tag>
         <tag>教程</tag>
+        <tag>JavaWeb</tag>
         <tag>spring</tag>
       </tags>
   </entry>
@@ -1756,8 +1756,8 @@
         <category>Git&amp;Github</category>
       </categories>
       <tags>
-        <tag>Git&amp;Github</tag>
         <tag>教程</tag>
+        <tag>Git&amp;Github</tag>
         <tag>bug解决</tag>
       </tags>
   </entry>
@@ -1858,8 +1858,8 @@
         <category>Redis</category>
       </categories>
       <tags>
-        <tag>面试</tag>
         <tag>大数据</tag>
+        <tag>面试</tag>
         <tag>Redis</tag>
         <tag>布隆过滤器</tag>
         <tag>缓存</tag>
@@ -2169,8 +2169,8 @@
       </categories>
       <tags>
         <tag>易错点</tag>
-        <tag>面试</tag>
         <tag>大数据</tag>
+        <tag>面试</tag>
         <tag>spark</tag>
       </tags>
   </entry>
@@ -2271,7 +2271,7 @@
   </entry>
   <entry>
     <title>[精]ElasticSearch总结与思考</title>
-    <url>/2020/05/18/%E7%B2%BE-ElasticSearch%E6%80%BB%E7%BB%93%E4%B8%8E%E6%80%9D%E8%80%83/</url>
+    <url>/2020/05/18/ElasticSearch%E6%80%BB%E7%BB%93%E4%B8%8E%E6%80%9D%E8%80%83/</url>
     <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><ul>
 <li><p>Elasticsearch，基于Lucene，隐藏复杂性，提供简单易用的RestfulAPI接口、JavaAPI接口（还有其他语言的API接口）。</p>
 </li>
@@ -2543,10 +2543,10 @@
         <category>elasticsearch</category>
       </categories>
       <tags>
-        <tag>大数据</tag>
-        <tag>数据库</tag>
         <tag>教程</tag>
+        <tag>大数据</tag>
         <tag>elasticsearch</tag>
+        <tag>数据库</tag>
       </tags>
   </entry>
   <entry>
@@ -2622,8 +2622,8 @@
       </categories>
       <tags>
         <tag>易错点</tag>
-        <tag>面试</tag>
         <tag>数据库</tag>
+        <tag>面试</tag>
         <tag>MySQL</tag>
       </tags>
   </entry>
@@ -2714,8 +2714,8 @@
       </categories>
       <tags>
         <tag>易错点</tag>
-        <tag>面试</tag>
         <tag>数据库</tag>
+        <tag>面试</tag>
         <tag>MySQL</tag>
       </tags>
   </entry>
@@ -2915,9 +2915,9 @@
       </categories>
       <tags>
         <tag>易错点</tag>
-        <tag>面试</tag>
-        <tag>大数据</tag>
         <tag>教程</tag>
+        <tag>大数据</tag>
+        <tag>面试</tag>
         <tag>zookeeper</tag>
         <tag>分布式</tag>
       </tags>
@@ -3118,8 +3118,8 @@
         <category>kafka</category>
       </categories>
       <tags>
-        <tag>面试</tag>
         <tag>大数据</tag>
+        <tag>面试</tag>
         <tag>kafka</tag>
       </tags>
   </entry>
@@ -3133,9 +3133,9 @@
       </categories>
       <tags>
         <tag>易错点</tag>
-        <tag>面试</tag>
-        <tag>大数据</tag>
         <tag>教程</tag>
+        <tag>大数据</tag>
+        <tag>面试</tag>
         <tag>flume</tag>
       </tags>
   </entry>
