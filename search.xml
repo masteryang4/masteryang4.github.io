@@ -692,6 +692,52 @@
       </tags>
   </entry>
   <entry>
+    <title>sqoop常见问题汇总</title>
+    <url>/2020/06/17/sqoop%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Sqoop是连接关系型数据库和Hadoop的桥梁，主要有两个方面(导入和导出)。</p>
+<p>目前在我的工程实践中，一般是将MySQL数据进行导入导出</p>
+<h1 id="Sqoop参数"><a href="#Sqoop参数" class="headerlink" title="Sqoop参数"></a>Sqoop参数</h1><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">shell</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/opt/module/sqoop/bin/sqoop import \</span><br><span class="line">--connect \</span><br><span class="line">--username \</span><br><span class="line">--password \</span><br><span class="line">--target-dir \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--num-mappers \</span><br><span class="line">--fields-terminated-by   \</span><br><span class="line">--query   "$2" ' and $CONDITIONS;'</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="Sqoop导入导出Null存储一致性问题"><a href="#Sqoop导入导出Null存储一致性问题" class="headerlink" title="Sqoop导入导出Null存储一致性问题"></a>Sqoop导入导出Null存储一致性问题</h1><p>Hive中的Null在底层是以“\N”来存储，而MySQL中的Null在底层就是Null。为了保证数据两端的一致性。</p>
+<p>往hive导入数据时采用<code>--null-string</code>和<code>--null-non-string</code>。</p>
+<p>在从hive导出数据时采用<code>--input-null-string</code>和<code>--input-null-non-string</code>两个参数。</p>
+<h1 id="Sqoop数据导出一致性问题"><a href="#Sqoop数据导出一致性问题" class="headerlink" title="Sqoop数据导出一致性问题"></a>Sqoop数据导出一致性问题</h1><p>场景：如Sqoop在导出到Mysql时，使用4个Map任务，过程中有2个任务失败，那此时MySQL中存储了另外两个Map任务导入的数据，此时老板正好看到了这个报表数据。而开发工程师发现任务失败后，会调试问题并最终将全部数据正确的导入MySQL，那后面老板再次看报表数据，发现本次看到的数据与之前的不一致，这在生产环境是不允许的。</p>
+<blockquote>
+<p>官网：<a href="http://sqoop.apache.org/docs/1.4.6/SqoopUserGuide.html" target="_blank" rel="noopener">http://sqoop.apache.org/docs/1.4.6/SqoopUserGuide.html</a></p>
+<p>Since Sqoop breaks down export process into multiple transactions, it is possible that a failed export job may result in partial data being committed to the database. This can further lead to subsequent jobs failing due to insert collisions in some cases, or lead to duplicated data in others. You can overcome this problem by specifying a staging table via the –staging-table option which acts as an auxiliary table that is used to stage exported data. The staged data is finally moved to the destination table in a single transaction.</p>
+</blockquote>
+<p>–staging-table方式</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">shell</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sqoop export --connect jdbc:mysql://192.168.137.10:3306/user_behavior --username root --password 123456 --table app_cource_study_report --columns watch_video_cnt,complete_video_cnt,dt --fields-terminated-by "\t" --export-dir "/user/hive/warehouse/tmp.db/app_cource_study_analysis_$&#123;day&#125;" --staging-table app_cource_study_report_tmp --clear-staging-table --input-null-string '\N'</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="Sqoop底层运行的任务是什么"><a href="#Sqoop底层运行的任务是什么" class="headerlink" title="Sqoop底层运行的任务是什么"></a>Sqoop底层运行的任务是什么</h1><p>只有Map阶段，没有Reduce阶段的任务。</p>
+<p>默认是4个MapTask。</p>
+<h1 id="Sqoop一天导入多少数据"><a href="#Sqoop一天导入多少数据" class="headerlink" title="Sqoop一天导入多少数据"></a>Sqoop一天导入多少数据</h1><p>100万日活=》10万订单，1人10条，每天1g左右业务数据</p>
+<p>Sqoop每天将1G的数据量导入到数仓。</p>
+<h1 id="Sqoop数据导出的时候一次执行多长时间"><a href="#Sqoop数据导出的时候一次执行多长时间" class="headerlink" title="Sqoop数据导出的时候一次执行多长时间"></a>Sqoop数据导出的时候一次执行多长时间</h1><p>每天晚上00:30开始执行，Sqoop任务一般情况40 -50分钟的都有。取决于数据量（11:11，6:18等活动在1个小时左右）。</p>
+<h1 id="Sqoop在导入数据的时候数据倾斜"><a href="#Sqoop在导入数据的时候数据倾斜" class="headerlink" title="Sqoop在导入数据的时候数据倾斜"></a>Sqoop在导入数据的时候数据倾斜</h1><blockquote>
+<p><a href="https://blog.csdn.net/lizhiguo18/article/details/103969906" target="_blank" rel="noopener">https://blog.csdn.net/lizhiguo18/article/details/103969906</a></p>
+</blockquote>
+<p>Sqoop 抽数的并行化主要涉及到两个参数：num-mappers：启动N个map来并行导入数据，默认4个；split-by：按照某一列来切分表的工作单元。</p>
+<p>通过ROWNUM() 生成一个严格均匀分布的字段，然后指定为分割字段.</p>
+<h1 id="Sqoop数据导出Parquet"><a href="#Sqoop数据导出Parquet" class="headerlink" title="Sqoop数据导出Parquet"></a>Sqoop数据导出Parquet</h1><p><strong>我在工程项目中经常遇到的问题</strong></p>
+<p>Ads层数据用Sqoop往MySql中导入数据的时候，如果用了orc（Parquet）不能导入，需转化成text格式</p>
+<p>（1）创建临时表，把Parquet中表数据导入到临时表，把临时表导出到目标表用于可视化</p>
+<p>（2）Sqoop里面有参数，可以直接把Parquet转换为text</p>
+<p>（3）ads层建表的时候就不要建Parquet表</p>
+]]></content>
+      <categories>
+        <category>大数据</category>
+        <category>sqoop</category>
+      </categories>
+      <tags>
+        <tag>易错点</tag>
+        <tag>面试</tag>
+        <tag>大数据</tag>
+        <tag>sqoop</tag>
+        <tag>离线大数据</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>redis为什么那么快</title>
     <url>/2020/06/16/redis%E4%B8%BA%E4%BB%80%E4%B9%88%E9%82%A3%E4%B9%88%E5%BF%AB/</url>
     <content><![CDATA[<h1 id="redis是单线程的，为什么那么快"><a href="#redis是单线程的，为什么那么快" class="headerlink" title="redis是单线程的，为什么那么快"></a>redis是单线程的，为什么那么快</h1><ul>
