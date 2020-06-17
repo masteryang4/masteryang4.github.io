@@ -844,7 +844,16 @@
 <li><p>之后执行到Action算子时，触发一个Job，并根据宽依赖开始划分stage，每个stage生成对应的TaskSet，之后将task分发到各个Executor上执行。</p>
 </li>
 </ul>
-<h1 id="spark核心编程"><a href="#spark核心编程" class="headerlink" title="spark核心编程"></a>spark核心编程</h1><h2 id="RDD"><a href="#RDD" class="headerlink" title="RDD"></a>RDD</h2><p>RDD（Resilient Distributed Dataset）叫做弹性分布式数据集，是Spark中最基本的数据处理模型。代码中是一个抽象类，它代表一个弹性的、不可变、可分区、里面的元素可并行计算的集合。</p>
+<h1 id="spark核心编程"><a href="#spark核心编程" class="headerlink" title="spark核心编程"></a>spark核心编程</h1><p>Spark计算框架为了能够对数据进行高并发和高吞吐的处理，封装了三大数据结构，用于处理不同的应用场景。三大数据结构分别是：</p>
+<ul>
+<li><p>RDD : 弹性分布式数据集</p>
+</li>
+<li><p>累加器：分布式共享只写变量</p>
+</li>
+<li><p>广播变量：分布式共享只读变量</p>
+</li>
+</ul>
+<h2 id="RDD"><a href="#RDD" class="headerlink" title="RDD"></a>RDD</h2><p>RDD（Resilient Distributed Dataset）叫做弹性分布式数据集，是Spark中最基本的数据处理模型。代码中是一个抽象类，它代表一个弹性的、不可变、可分区、里面的元素可并行计算的集合。</p>
 <blockquote>
 <p>数据集：RDD封装了计算逻辑，并不保存数据</p>
 </blockquote>
