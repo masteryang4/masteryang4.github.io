@@ -692,6 +692,66 @@
       </tags>
   </entry>
   <entry>
+    <title>kafka事务</title>
+    <url>/2020/06/18/kafka%E4%BA%8B%E5%8A%A1/</url>
+    <content><![CDATA[<h1 id="kafka事务"><a href="#kafka事务" class="headerlink" title="kafka事务"></a>kafka事务</h1><p>Kafka从【0.11】版本开始引入了事务支持。</p>
+<p>事务可以保证Kafka在Exactly Once语义的基础上，生产和消费可以跨分区和会话，要么全部成功，要么全部失败。</p>
+<h2 id="Producer事务"><a href="#Producer事务" class="headerlink" title="Producer事务"></a>Producer事务</h2><p>为了实现跨分区跨会话的事务，需要引入一个全局唯一的Transaction ID，并将Producer获得的PID和Transaction ID绑定。这样当Producer重启后就可以通过正在进行的Transaction ID获得原来的PID。</p>
+<p>为了管理Transaction，Kafka引入了一个新的组件Transaction Coordinator。</p>
+<p>Producer就是通过和Transaction Coordinator交互获得Transaction ID对应的任务状态。Transaction Coordinator还负责将事务所有写入Kafka的一个内部Topic，这样即使整个服务重启，由于事务状态得到保存，进行中的事务状态可以得到恢复，从而继续进行。</p>
+<h2 id="Consumer事务"><a href="#Consumer事务" class="headerlink" title="Consumer事务"></a>Consumer事务</h2><p>上述事务机制主要是从Producer方面考虑，对于Consumer而言，事务的保证就会相对较弱，尤其时无法保证Commit的信息被精确消费。</p>
+<p>这是由于Consumer可以通过offset访问任意信息，而且不同的Segment File生命周期不同，同一事务的消息可能会出现重启后被删除的情况。</p>
+]]></content>
+      <categories>
+        <category>大数据</category>
+        <category>kafka</category>
+      </categories>
+      <tags>
+        <tag>大数据</tag>
+        <tag>kafka</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kafka_exactly_once语义</title>
+    <url>/2020/06/18/kafka-exactly-once%E8%AF%AD%E4%B9%89/</url>
+    <content><![CDATA[<h1 id="Exactly-Once语义"><a href="#Exactly-Once语义" class="headerlink" title="Exactly Once语义"></a>Exactly Once语义</h1><blockquote>
+<p>kafka 每个分区内的 Exactly Once</p>
+</blockquote>
+<p>将服务器的ACK级别设置为<code>-1</code>，可以保证Producer到Server之间不会丢失数据，即At Least Once语义。</p>
+<p>相对的，将服务器ACK级别设置为0，可以保证生产者每条消息只会被发送一次，即At Most Once语义。</p>
+<p>At Least Once可以保证数据不丢失，但是不能保证数据不重复；</p>
+<p>相对的，At Least Once可以保证数据不重复，但是不能保证数据不丢失。</p>
+<p>但是，对于一些非常重要的信息，比如说交易数据，下游数据消费者要求数据既不重复也不丢失，即Exactly Once语义。在0.11版本以前的Kafka，对此是无能为力的，只能保证数据不丢失，再在下游消费者对数据做全局去重。对于多个下游应用的情况，每个都需要单独做全局去重，这就对性能造成了很大影响。</p>
+<blockquote>
+<p>【0.11】版本的Kafka，引入了一项重大特性：幂等性。</p>
+</blockquote>
+<p>开启幂等性<code>enable.idempotence=true</code>。</p>
+<p>所谓的<strong>幂等性就是指Producer不论向Server发送多少次重复数据，Server端都只会持久化一条</strong>。幂等性结合At Least Once语义，就构成了Kafka的Exactly Once语义。即：</p>
+<blockquote>
+<p>At Least Once + 幂等性 = Exactly Once</p>
+</blockquote>
+<p>要启用幂等性，只需要将Producer的参数中<code>enable.idompotence</code>设置为<code>true</code>即可。</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Kafka的幂等性实现其实就是将原来下游需要做的去重放在了数据上游。</span><br><span class="line">开启幂等性的Producer在初始化的时候会被分配一个PID，发往同一Partition的消息会附带Sequence Number。</span><br><span class="line">而Broker端会对&lt;PID, Partition, SeqNumber&gt;做缓存，当具有相同主键的消息提交时，Broker只会持久化一条。</span><br></pre></td></tr></table></figure></div>
+
+<p>但是<strong>PID重启就会变化</strong>，同时不同的Partition也具有不同主键，</p>
+<p>所以幂等性无法保证<strong>跨分区跨会话</strong>的Exactly Once。</p>
+<blockquote>
+<p>保证 kafka 数据无重复</p>
+<p>​    1、幂等性+<code>ack=-1</code>+事务</p>
+<p>​    2、可以在下一级：SparkStreaming、redis 或者 hive 中 dwd 层去重，</p>
+<p>​          去重的手段：分组、按照id开窗只取第一个值；</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>大数据</category>
+        <category>kafka</category>
+      </categories>
+      <tags>
+        <tag>大数据</tag>
+        <tag>kafka</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL练习题</title>
     <url>/2020/06/18/MySQL%E7%BB%83%E4%B9%A0%E9%A2%98/</url>
     <content><![CDATA[<h1 id="MySQL练习题"><a href="#MySQL练习题" class="headerlink" title="MySQL练习题"></a>MySQL练习题</h1><h2 id="1-组合两个表"><a href="#1-组合两个表" class="headerlink" title="1. 组合两个表"></a>1. 组合两个表</h2><p>需求：编写一个 SQL 查询，对两表进行关联，展示列为：<br>FirstName, LastName, City, State</p>
