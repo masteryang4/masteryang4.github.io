@@ -123,6 +123,7 @@ function activateLightMode(){
 <blockquote>
 <p>注意：SparkSubmit、ApplicationMaster和CoarseGrainedExecutorBackend是独立的进程；Executor和Driver是对象。</p>
 </blockquote>
+<p><a href="https://pic.downk.cc/item/5eecab6c14195aa59434d7ec.png" target="_blank" rel="noopener" data-fancybox="group" data-caption class="fancybox"><img alt title data-src="https://pic.downk.cc/item/5eecab6c14195aa59434d7ec.png" class="lazyload"></a></p>
 <h2 id="Standalone模式运行机制"><a href="#Standalone模式运行机制" class="headerlink" title="Standalone模式运行机制"></a>Standalone模式运行机制</h2><p>Standalone集群有2个重要组成部分，分别是：</p>
 <p>1) Master(RM)：是一个进程，主要负责资源的调度和分配，并进行集群的监控等职责；</p>
 <p>2) Worker(NM)：是一个进程，一个Worker运行在集群中的一台服务器上，主要负责两个职责，一个是用自己的内存存储RDD的某个或某些partition；另一个是启动其他进程和线程（Executor），对RDD上的partition进行并行的处理和计算。</p>
