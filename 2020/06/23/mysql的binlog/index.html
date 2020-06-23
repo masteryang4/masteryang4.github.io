@@ -1,0 +1,142 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>mysql的binlog | MasterYangBlog</title><meta name="description" content="mysql的binlog"><meta name="keywords" content="SQL,MySQL"><meta name="author" content="Yang4"><meta name="copyright" content="Yang4"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin><link rel="preconnect" href="//busuanzi.ibruce.info"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="mysql的binlog"><meta name="twitter:description" content="mysql的binlog"><meta name="twitter:image" content="https://pic.downk.cc/item/5eeb147114195aa5946b0444.jpg"><meta property="og:type" content="article"><meta property="og:title" content="mysql的binlog"><meta property="og:url" content="https://masteryang4.github.io/2020/06/23/mysql%E7%9A%84binlog/"><meta property="og:site_name" content="MasterYangBlog"><meta property="og:description" content="mysql的binlog"><meta property="og:image" content="https://pic.downk.cc/item/5eeb147114195aa5946b0444.jpg"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>const autoChangeMode = 'false'
+var t = Cookies.get("theme");
+if (autoChangeMode == '1'){
+const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+const isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+const isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+if (t === undefined){
+  if (isLightMode) activateLightMode()
+  else if (isDarkMode) activateDarkMode()
+  else if (isNotSpecified || hasNoSupport){
+    console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+    now = new Date();
+    hour = now.getHours();
+    isNight = hour < 6 || hour >= 18
+    isNight ? activateDarkMode() : activateLightMode()
+}
+} else if (t == 'light') activateLightMode()
+else activateDarkMode()
+
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="https://masteryang4.github.io/2020/06/23/mysql%E7%9A%84binlog/"><link rel="next" title="spark系列之spark-core" href="https://masteryang4.github.io/2020/06/19/spark%E7%B3%BB%E5%88%97%E4%B9%8Bspark-core/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://masteryang4.github.io/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    title: 'Snackbar.bookmark.title',
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  isHome: false,
+  isPost: true
+  
+}</script><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="MasterYangBlog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><header> <div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">MasterYangBlog</a></span><span class="toggle-menu pull_right close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></span><span class="pull_right" id="search_button"><a class="site-page social-icon search"><i class="fa fa-search fa-fw"></i><span> 搜索</span></a></span></div></header><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/n.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">50</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">43</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">23</div></a></div></div></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div><div id="mobile-sidebar-toc"><div class="toc_mobile_headline">目录</div><div class="sidebar-toc__content"><ol class="toc_mobile_items"><li class="toc_mobile_items-item toc_mobile_items-level-1"><a class="toc_mobile_items-link" href="#什么是Binlog"><span class="toc_mobile_items-number">1.</span> <span class="toc_mobile_items-text">什么是Binlog</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-1"><a class="toc_mobile_items-link" href="#Binlog的开启"><span class="toc_mobile_items-number">2.</span> <span class="toc_mobile_items-text">Binlog的开启</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-1"><a class="toc_mobile_items-link" href="#Binlog的分类设置"><span class="toc_mobile_items-number">3.</span> <span class="toc_mobile_items-text">Binlog的分类设置</span></a></li></ol></div></div></div><div id="body-wrap"><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true">     </i><div class="auto_open" id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是Binlog"><span class="toc-number">1.</span> <span class="toc-text">什么是Binlog</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Binlog的开启"><span class="toc-number">2.</span> <span class="toc-text">Binlog的开启</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Binlog的分类设置"><span class="toc-number">3.</span> <span class="toc-text">Binlog的分类设置</span></a></li></ol></div></div></div><main id="content-outer"><div id="top-container" style="background-image: url(https://pic.downk.cc/item/5eeb147114195aa5946b0444.jpg)"><div id="post-info"><div id="post-title"><div class="posttitle">mysql的binlog</div></div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 发表于 2020-06-23<span class="post-meta__separator">|</span><i class="fa fa-history fa-fw" aria-hidden="true"></i> 更新于 2020-06-23</time><span class="post-meta__separator">|</span><span><i class="fa fa-inbox post-meta__icon fa-fw" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/SQL/">SQL</a><i class="fa fa-angle-right fa-fw" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon fa-fw" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/SQL/MySQL/">MySQL</a></span><div class="post-meta-wordcount"><div class="post-meta-pv-cv"><span><i class="fa fa-eye post-meta__icon fa-fw" aria-hidden="true"> </i>阅读量:</span><span id="busuanzi_value_page_pv"></span></div></div></div></div></div><div class="layout layout_post" id="content-inner">   <article id="post"><div class="article-container" id="post-content"><h1 id="什么是Binlog"><a href="#什么是Binlog" class="headerlink" title="什么是Binlog"></a>什么是Binlog</h1><p>MySQL的二进制日志可以说是MySQL最重要的日志了，它记录了所有的DDL和DML(除了数据查询语句)语句，以事件形式记录，还包含语句所执行的消耗的时间，MySQL的二进制日志是事务安全型的。</p>
+<p>  一般来说开启二进制日志大概会有1%的性能损耗 。二进制有两个最重要的使用场景: </p>
+<p>  <strong>其一：MySQL Replication在Master端开启binlog，Master把它的二进制日志传递给slaves来达到master-slave数据一致的目的。</strong></p>
+<p>  <strong>其二：自然就是数据恢复了，通过使用MySQLBinlog工具来使恢复数据。</strong></p>
+<p>二进制日志包括两类文件：二进制日志索引文件（文件名后缀为.index）用于记录所有的二进制文件，二进制日志文件（文件名后缀为.00000*）记录数据库所有的DDL和DML(除了数据查询语句)语句事件。</p>
+<h1 id="Binlog的开启"><a href="#Binlog的开启" class="headerlink" title="Binlog的开启"></a>Binlog的开启</h1><p>在MySQL的配置文件(Linux: <code>/etc/my.cnf</code> ,  Windows:<code>\my.ini</code>)下,修改配置在[mysqld] 区块设置/添加</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">log-bin&#x3D;mysql-bin</span><br></pre></td></tr></table></figure></div>
+
+<p>这个表示binlog日志的前缀是mysql-bin，以后生成的日志文件就是 mysql-bin.123456 的文件后面的数字按顺序生成。每次mysql重启或者到达单个文件大小的阈值时，新生一个文件，按顺序编号。</p>
+<h1 id="Binlog的分类设置"><a href="#Binlog的分类设置" class="headerlink" title="Binlog的分类设置"></a>Binlog的分类设置</h1><p>MySQL Binlog的格式，那就是有三种，分别是STATEMENT,MIXED,ROW。</p>
+<p>在配置文件中选择配置</p>
+<blockquote>
+<p>canal无执行引擎，一般row</p>
+</blockquote>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">binlog_format&#x3D;row</span><br></pre></td></tr></table></figure></div>
+
+<p>区别：</p>
+<ul>
+<li><p>statement</p>
+<p><strong>语句级，binlog会记录每次一执行写操作的语句。</strong></p>
+<p>相对row模式节省空间，但是可能产生不一致性，比如1</p>
+</li>
+</ul>
+<p>update  tt set create_date=<code>now()</code></p>
+<p>  如果用binlog日志进行恢复，由于执行时间不同可能产生的数据就不同。</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">优点：节省空间</span><br><span class="line">缺点：有可能造成数据不一致。</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>row</p>
+<p><strong>行级，binlog会记录每次操作后每行记录的变化。</strong></p>
+</li>
+</ul>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">优点：保持数据的绝对一致性。因为不管sql是什么，引用了什么函数，他只记录执行后的效果。</span><br><span class="line">缺点：占用较大空间。</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>mixed</p>
+<p>statement的升级版，一定程度上解决了，因为一些情况而造成的statement模式不一致问题</p>
+<p>在某些情况下譬如：</p>
+<p>当函数中包含 UUID() 时；</p>
+<p>包含 AUTO_INCREMENT 字段的表被更新时；</p>
+<p>执行 INSERT DELAYED 语句时；</p>
+<p>用 UDF 时；</p>
+<p>会按照 ROW的方式进行处理</p>
+</li>
+</ul>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">优点：节省空间，同时兼顾了一定的一致性。</span><br><span class="line">缺点：还有些极个别情况依旧会造成不一致，</span><br></pre></td></tr></table></figure></div>
+
+<p>另外statement和mixed对于需要对binlog的监控的情况都不方便。</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Yang4</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://masteryang4.github.io/2020/06/23/mysql%E7%9A%84binlog/">https://masteryang4.github.io/2020/06/23/mysql%E7%9A%84binlog/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://masteryang4.github.io">MasterYangBlog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SQL/">SQL    </a><a class="post-meta__tags" href="/tags/MySQL/">MySQL    </a></div><div class="post_share"><div class="social-share" data-image="https://pic.downk.cc/item/5eeb147114195aa5946b0444.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="lazyload post-qr-code__img" src="https://pic.downk.cc/item/5ea1a251c2a9a83be535b287.png" alt="微信"><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="lazyload post-qr-code__img" src="https://pic.downk.cc/item/5ea1a33ac2a9a83be536f9bc.png" alt="支付宝"><div class="post-qr-code__desc">支付宝</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="next-post pull-full"><a href="/2020/06/19/spark%E7%B3%BB%E5%88%97%E4%B9%8Bspark-core/"><img class="next_cover lazyload" data-src="https://pic.downk.cc/item/5ee64771c2a9a83be5f7a357.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="label">下一篇</div><div class="next_info"><span>spark系列之spark-core</span></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2020/06/18/MySQL练习题/" title="MySQL练习题"><img class="relatedPosts_cover lazyload"data-src="https://pic.downk.cc/item/5eeb147114195aa5946b0444.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-06-18</div><div class="relatedPosts_title">MySQL练习题</div></div></a></div><div class="relatedPosts_item"><a href="/2020/05/26/HiveSQL之常用查询函数case/" title="HiveSQL之常用查询函数case"><img class="relatedPosts_cover lazyload"data-src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2286062658,1417061056&fm=26&gp=0.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-05-26</div><div class="relatedPosts_title">HiveSQL之常用查询函数case</div></div></a></div><div class="relatedPosts_item"><a href="/2020/05/14/MyISAM与InnoDB的区别-详/" title="MyISAM与InnoDB的区别(详)"><img class="relatedPosts_cover lazyload"data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586800440961&di=126ecdb9ec80fbd1db370da33b54e328&imgtype=0&src=http%3A%2F%2Fcdn.45squared.com%2Fwp-content%2Fuploads%2F20180304110830%2Fmysql-logo.png"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-05-14</div><div class="relatedPosts_title">MyISAM与InnoDB的区别(详)</div></div></a></div><div class="relatedPosts_item"><a href="/2020/05/14/MySQL事务相关/" title="MySQL事务相关"><img class="relatedPosts_cover lazyload"data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586800440961&di=126ecdb9ec80fbd1db370da33b54e328&imgtype=0&src=http%3A%2F%2Fcdn.45squared.com%2Fwp-content%2Fuploads%2F20180304110830%2Fmysql-logo.png"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-05-14</div><div class="relatedPosts_title">MySQL事务相关</div></div></a></div><div class="relatedPosts_item"><a href="/2020/04/10/SQL的执行顺序问题/" title="SQL的执行顺序问题"><img class="relatedPosts_cover lazyload"data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586800440961&di=126ecdb9ec80fbd1db370da33b54e328&imgtype=0&src=http%3A%2F%2Fcdn.45squared.com%2Fwp-content%2Fuploads%2F20180304110830%2Fmysql-logo.png"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-04-10</div><div class="relatedPosts_title">SQL的执行顺序问题</div></div></a></div></div><div class="clear_both"></div></div><hr><div id="post-comment"><div class="comment_headling"><i class="fa fa-comments fa-fw" aria-hidden="true"></i><span> 评论</span></div><div class="vcomment" id="vcomment"></div><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = false == true ? true : false;
+var verify = false == true ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'IeiQD5I6g4Doamc68SctmEnW-gzGzoHsz',
+  appKey:'ORWhRoGUBY02RR9DMa5OSIow',
+  placeholder:'评论一下~（支持Markdown格式）',
+  avatar:'monsterid',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang:'zh-cn',
+  recordIP: true
+});</script></div></div></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2020 By Yang4</div><div class="framework-info"><span>驱动 </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">简</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><a id="to_comment" href="#post-comment" title="直达评论"><i class="scroll_to_comment fa fa-comments">  </i></a><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/js/fireworks.js"></script><script id="ribbon" src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/js/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@latest/lazysizes.min.js" async=""></script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
