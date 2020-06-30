@@ -981,8 +981,7 @@
   <entry>
     <title>flume源码修改之flumeTailDirSource兼容log4j</title>
     <url>/2020/06/30/flume%E6%BA%90%E7%A0%81%E4%BF%AE%E6%94%B9%E4%B9%8BflumeTailDirSource%E5%85%BC%E5%AE%B9log4j/</url>
-    <content><![CDATA[<p>lDir Source</p>
-<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p>1）断点续传</p>
+    <content><![CDATA[<h1 id="tailDir-Source"><a href="#tailDir-Source" class="headerlink" title="tailDir Source"></a>tailDir Source</h1><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p>1）断点续传</p>
 <p>2）同时监控多目录</p>
 <h2 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h2><p>1）说明：使用<strong>正则表达式</strong>监控文件名时，当修改文件名称之后，会重复读取数据。</p>
 <p>2）示例：</p>
