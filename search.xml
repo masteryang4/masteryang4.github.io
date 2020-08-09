@@ -979,6 +979,400 @@
       </tags>
   </entry>
   <entry>
+    <title>判断一个链表是否有环</title>
+    <url>/2020/08/09/%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E6%9C%89%E7%8E%AF/</url>
+    <content><![CDATA[<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>怎么能够更高效地判断一个链表是否有环？</p>
+<p>首先创建两个指针p1和p2（在Java里就是两个对象引用），让它们同时指向这个链表的头节点。</p>
+<p>然后开始一个大循环，在循环体中，让指针p1每次向后移动1个节点，让指针p2每次向后移动2个节点，然后比较两个指针指向的节点是否相同。如果相同，则可以判断出链表有环，如果不同，则继续下一次循环。</p>
+<h1 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h1><p>假设链表的节点数量为n，则该算法的时间复杂度为O(n)。</p>
+<p>除两个指针外，没有使用任何额外的存储空间，所以空间复杂度是O(1)</p>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedListCycle</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 判断是否有环</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> head  链表头节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isCycle</span><span class="params">(Node head)</span> </span>&#123;</span><br><span class="line">        Node p1 = head;</span><br><span class="line">        Node p2 = head;</span><br><span class="line">        <span class="keyword">while</span> (p2!=<span class="keyword">null</span> &amp;&amp; p2.next!=<span class="keyword">null</span>)&#123; <span class="comment">// 【注意】</span></span><br><span class="line">            p1 = p1.next;</span><br><span class="line">            p2 = p2.next.next;</span><br><span class="line">            <span class="keyword">if</span>(p1 == p2)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 链表节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> data;</span><br><span class="line">        Node next;</span><br><span class="line">        Node(<span class="keyword">int</span> data) &#123;</span><br><span class="line">            <span class="keyword">this</span>.data = data;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Node node1 = <span class="keyword">new</span> Node(<span class="number">5</span>);</span><br><span class="line">        Node node2 = <span class="keyword">new</span> Node(<span class="number">3</span>);</span><br><span class="line">        Node node3 = <span class="keyword">new</span> Node(<span class="number">7</span>);</span><br><span class="line">        Node node4 = <span class="keyword">new</span> Node(<span class="number">2</span>);</span><br><span class="line">        Node node5 = <span class="keyword">new</span> Node(<span class="number">6</span>);</span><br><span class="line">        node1.next = node2;</span><br><span class="line">        node2.next = node3;</span><br><span class="line">        node3.next = node4;</span><br><span class="line">        node4.next = node5;</span><br><span class="line">        node5.next = node2;</span><br><span class="line"></span><br><span class="line">        System.out.println(isCycle(node1));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h1><p><strong>如果链表有环，如何求出环的长？</strong></p>
+<p>当两个指针首次相遇，证明链表有环的时候，让两个指针从相遇点继续循环前进，并统计前进的循环次数，直到两个指针第2次相遇。此时，统计出来的前进次数就是环长。</p>
+<p>因为指针p1每次走1步，指针p2每次走2步，两者的速度差是1步。当两个指针再次相遇时，p2比p1多走了整整1圈因此，环长 = 每一次速度差 × 前进次数 = 前进次数</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><blockquote>
+<p><a href="https://www.cnblogs.com/zhaoqingqing/p/11853924.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhaoqingqing/p/11853924.html</a> </p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>算法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>算法与数据结构</tag>
+        <tag>链表</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>链表反转</title>
+    <url>/2020/08/09/%E9%93%BE%E8%A1%A8%E5%8F%8D%E8%BD%AC/</url>
+    <content><![CDATA[<h1 id="反转单链表"><a href="#反转单链表" class="headerlink" title="反转单链表"></a>反转单链表</h1><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</span><br><span class="line">输出: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">    ListNode prev = <span class="keyword">null</span>;</span><br><span class="line">    ListNode curr = head;</span><br><span class="line">    <span class="keyword">while</span> (curr != <span class="keyword">null</span>) &#123;</span><br><span class="line">        ListNode nextTemp = curr.next;</span><br><span class="line">        curr.next = prev;</span><br><span class="line">        prev = curr;</span><br><span class="line">        curr = nextTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> prev;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+]]></content>
+      <categories>
+        <category>算法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>算法与数据结构</tag>
+        <tag>链表</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>堆排序总结</title>
+    <url>/2020/08/09/%E5%A0%86%E6%8E%92%E5%BA%8F%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="堆的定义"><a href="#堆的定义" class="headerlink" title="堆的定义"></a>堆的定义</h1><p>堆是一种数据结构，一种叫做完全二叉树的数据结构。</p>
+<h1 id="堆的性质"><a href="#堆的性质" class="headerlink" title="堆的性质"></a>堆的性质</h1><p>这里我们用到两种堆，其实也算是一种。</p>
+<p>大顶堆：每个节点的值都大于或者等于它的左右子节点的值。</p>
+<p>小顶堆：每个节点的值都小于或者等于它的左右子节点的值。</p>
+<p>把这种逻辑结构映射到数组中 ，数组arr逻辑上就是一个堆。</p>
+<p><strong>从这里我们可以得出以下性质</strong></p>
+<p>对于大顶堆：arr[i] &gt;= arr[2i + 1] &amp;&amp; arr[i] &gt;= arr[2i + 2]</p>
+<p>对于小顶堆：arr[i] &lt;= arr[2i + 1] &amp;&amp; arr[i] &lt;= arr[2i + 2]</p>
+<h1 id="堆排序的基本思想"><a href="#堆排序的基本思想" class="headerlink" title="堆排序的基本思想"></a>堆排序的基本思想</h1><p>1、将要排序的序列构造成一个大顶堆，根据大顶堆的性质，当前堆的根节点（堆顶）就是序列中最大的元素；</p>
+<p>2、将堆顶元素和最后一个元素交换，然后将剩下的节点重新构造成一个大顶堆；<br>3、重复步骤2，如此反复，从第一次构建大顶堆开始，每一次构建，我们都能获得一个序列的最大值，然后把它放到大顶堆的尾部。最后，就得到一个有序的序列了。 </p>
+<p><strong>那么，该如何知道最后一个非叶子节点的位置，也就是索引值？</strong></p>
+<p>对于一个完全二叉树，在填满的情况下（非叶子节点都有两个子节点），每一层的元素个数是上一层的二倍，根节点数量是1，所以最后一层的节点数量，一定是之前所有层节点总数+1，所以，我们能找到最后一层的第一个节点的索引，即节点总数/2（根节点索引为0），这也就是第一个叶子节点，所以第一个非叶子节点的索引就是第一个叶子结点的索引-1。那么对于填不满的二叉树呢？这个计算方式仍然适用，当我们从上往下，从左往右填充二叉树的过程中，第一个叶子节点，一定是序列长度/2，所以第一个非叶子节点的索引就是arr.length / 2 -1。</p>
+<p>现在找到了最后一个非叶子节点，即元素值为2的节点，比较它的左右节点的值，是否比他大，如果大就换位置。这里因为1&lt;2，所以，不需要任何操作，继续比较下一个，即元素值为8的节点，它的左节点值为9比它本身大，所以需要交换</p>
+<h1 id="java代码实现"><a href="#java代码实现" class="headerlink" title="java代码实现"></a>java代码实现</h1><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HeapSort</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123;<span class="number">8</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">4</span>&#125;;</span><br><span class="line">        heapSort(arr);</span><br><span class="line">        System.out.println(Arrays.toString(arr));</span><br><span class="line">        <span class="comment">//[1, 2, 3, 4, 5, 6, 7, 8]</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (arr == <span class="keyword">null</span> || arr.length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> len = arr.length;</span><br><span class="line">        <span class="comment">// 构建大顶堆，这里其实就是把待排序序列，变成一个大顶堆结构的数组</span></span><br><span class="line">        buildMaxHeap(arr, len);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 交换堆顶和当前末尾的节点，重置大顶堆</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">            swap(arr, <span class="number">0</span>, i);</span><br><span class="line">            len--;</span><br><span class="line">            heapify(arr, <span class="number">0</span>, len);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">buildMaxHeap</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 从最后一个非叶节点开始向前遍历，调整节点性质，使之成为大顶堆</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = (<span class="keyword">int</span>) Math.floor(len / <span class="number">2</span>) - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            heapify(arr, i, len);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> i, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 先根据堆性质，找出它左右节点的索引</span></span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">2</span> * i + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> right = <span class="number">2</span> * i + <span class="number">2</span>;</span><br><span class="line">        <span class="comment">// 默认当前节点（父节点）是最大值。</span></span><br><span class="line">        <span class="keyword">int</span> largestIndex = i;</span><br><span class="line">        <span class="keyword">if</span> (left &lt; len &amp;&amp; arr[left] &gt; arr[largestIndex]) &#123;</span><br><span class="line">            <span class="comment">// 如果有左节点，并且左节点的值更大，更新最大值的索引</span></span><br><span class="line">            largestIndex = left;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (right &lt; len &amp;&amp; arr[right] &gt; arr[largestIndex]) &#123;</span><br><span class="line">            <span class="comment">// 如果有右节点，并且右节点的值更大，更新最大值的索引</span></span><br><span class="line">            largestIndex = right;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (largestIndex != i) &#123;</span><br><span class="line">            <span class="comment">// 如果最大值不是当前非叶子节点的值，那么就把当前节点和最大值的子节点值互换</span></span><br><span class="line">            swap(arr, i, largestIndex);</span><br><span class="line">            <span class="comment">// 因为互换之后，子节点的值变了，如果该子节点也有自己的子节点，仍需要再次调整。</span></span><br><span class="line">            heapify(arr, largestIndex, len);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> temp = arr[i];</span><br><span class="line">        arr[i] = arr[j];</span><br><span class="line">        arr[j] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h1><p>堆排序是一种选择排序，整体主要由构建初始堆+交换堆顶元素和末尾元素并重建堆两部分组成。其中构建初始堆经推导复杂度为O(n)，在交换并重建堆的过程中，需交换n-1次，而重建堆的过程中，根据完全二叉树的性质，[log2(n-1),log2(n-2)…1]逐步递减，近似为nlogn。所以堆排序时间复杂度一般认为就是O(nlogn)级。 </p>
+<p>最好和最坏的情况时间复杂度都是O(nlogn)，空间复杂度O(1)。 </p>
+]]></content>
+      <categories>
+        <category>算法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>算法与数据结构</tag>
+        <tag>排序算法</tag>
+        <tag>二叉树</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>jvm小结</title>
+    <url>/2020/08/09/jvm%E5%B0%8F%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="JVM简介"><a href="#JVM简介" class="headerlink" title="JVM简介"></a>JVM简介</h1><h2 id="JVM作用"><a href="#JVM作用" class="headerlink" title="JVM作用"></a>JVM作用</h2><p>在Java语言中，最重要的莫过于Java虚拟机。为什么需要有Java虚拟机呢？</p>
+<p>Java 作为一门高级程序语言，它的语法非常复杂，抽象程度也很高。因此，直接在硬件上运行这种复杂的程序并不现实。所以呢，在运行 Java 程序之前，我们需要对其进行一番转换。</p>
+<p>转换的过程为通过编译器将 Java 程序转换成该虚拟机所能识别的指令序列，也称 Java 字节码。Java虚拟机会将字节码，即class文件加载到JVM中。由JVM进行解释和执行。除了 Java 外，Scala、Clojure、Groovy，以及时下热门的 Kotlin，这些语言都可以运行在 Java 虚拟机之上</p>
+<p><strong>JVM是运行在操作系统之上的，它与硬件没有直接的交互</strong></p>
+<h2 id="JVM分类"><a href="#JVM分类" class="headerlink" title="JVM分类"></a>JVM分类</h2><p>​    Sun Classis VM: 世界上第一款商用的虚拟机，已经完全淘汰。</p>
+<p>​    <strong>HotSpot VM</strong>： Sun JDK和OpenJDK中所带的虚拟机，也是目前使用范围最广的Java虚拟机。最初由一家名为“Longview Technologies”的小公司设计，后被Sun公司收购。</p>
+<p>​    Jrockit: 由BEA公司开发的专注于服务器端应用的虚拟机。号称世界上最快的虚拟机。优势在于其垃圾收集器和MissionControl服务套件。BEA Jrockit Mission Control在2005年12月推出，它是一组以极低的开销来监控、管理和分析生产环境中的应用程序的工具。它包括三个独立的应用程序：内存泄露检测器（Memory Leak Detector），JVM运行时分析器（Runtime Analyzer）和管理控制台(Management Console)。</p>
+<p>​    J9：J9由IBM公司开发，曾广泛应用于IBM公司系统内部及IBM小型机上。现已经捐献给Eclipse基金会。</p>
+<h2 id="JVM组成"><a href="#JVM组成" class="headerlink" title="JVM组成"></a>JVM组成</h2><p><a href="https://pic.downk.cc/item/5f2fd48114195aa594db6a78.png" data-fancybox="group" data-caption class="fancybox"><img alt title data-src="https://pic.downk.cc/item/5f2fd48114195aa594db6a78.png" class="lazyload"></a></p>
+<p>Java 虚拟机将运行时内存区域划分为五个部分，分别为<strong>方法区、堆、PC 寄存器、Java 方法栈和本地方法栈。</strong>执行 Java 代码首先需要使用类加载器将它编译而成的 class 文件加载到 Java 虚拟机中。加载后的 Java 类会被存放于方法区（Method Area）中。实际运行时，虚拟机会执行方法区内的代码。</p>
+<p>在虚拟机中，方法区和堆为线程共享，也是垃圾回收的重点照顾区域。栈空间为线程私有，基本不会出现垃圾回收。</p>
+<p>Java 虚拟机将栈细分为面向 Java 方法的 Java 方法栈，面向本地方法（用 C++ 写的 native 方法）的本地方法栈，以及存放各个线程执行位置的 PC 寄存器(程序计数器)。</p>
+<p>在运行过程中，每当调用进入一个 Java 方法，Java 虚拟机会在当前线程的 Java 方法栈中生成一个栈帧(栈的一片区域)，用以存放局部变量以及字节码的操作数。这个栈帧的大小是提前计算好的，而且 Java 虚拟机不要求栈帧在内存空间里连续分布。当退出当前执行的方法时，不管是正常返回还是异常返回，Java 虚拟机均会弹出当前线程的当前栈帧，并将之舍弃。</p>
+<h1 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h1><p><strong>类加载器，即ClassLoader,它负责加载class文件</strong>，class文件在文件开头有特定的文件标示，并且ClassLoader只负责class文件的加载，至于它是否可以运行，则由Execution Engine决定。</p>
+<p><a href="https://pic.downk.cc/item/5f2fd49314195aa594db6eb3.png" data-fancybox="group" data-caption class="fancybox"><img alt title data-src="https://pic.downk.cc/item/5f2fd49314195aa594db6eb3.png" class="lazyload"></a></p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>虚拟机自带的类加载器：</p>
+<p><strong>启动类加载器</strong>（Bootstrap）：主要负责加载jre中的最为基础、最为重要的类。如$JAVA_HOME/jre/lib/rt.jar（runtime）等，以及由虚拟机参数 -Xbootclasspath 指定的类。由于它由由C++代码实现，没有对应的java对象，因此在java中，尝试获取此类时，只能使用null来指代。</p>
+<p><strong>扩展类加载器</strong>（Extension），由Java代码实现，用于加载相对次要、但又通用的类，比如存放在 JRE 的 lib/ext 目录下 jar 包中的类，以及由系统变量 java.ext.dirs 指定的类。如$JAVA_HOME/jre/lib/ext/*.jar。</p>
+<p><strong>应用程序类加载器</strong>（AppClassLoader）,由Java代码实现， 它负责加载应用程序路径下的类。（这里的应用程序路径，便是指虚拟机参数 -cp/-classpath、系统变量 java.class.path 或环境变量 CLASSPATH 所指定的路径。）默认情况下，应用程序中包含的类便是由应用类加载器加载的。</p>
+<p><strong>用户自定义的加载器</strong>：Java.lang.ClassLoader的子类，用户可以定制类的加载方式。例如可以对 class 文件进行加密，加载时再利用自定义的类加载器对其解密。</p>
+<p>除了BootStrap Class Loader，其他的类加载器，都是Java.lang.ClassLoader的子类。其他的类加载器都由加载sum.misc.Launcher类后得到。</p>
+<h2 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h2><p>双亲委派模型：每当一个类加载器接收到加载请求时，它会先将请求转发给父类加载器。在父类加载器没有找到所请求的类的情况下，该类加载器才会尝试去加载。</p>
+<p>优势：</p>
+<p>①这采用双亲委派模式的是好处是Java类随着它的类加载器一起具备了一种带有优先级的层次关系，通过这种层级关可以<strong>避免类的重复加载</strong>，当父亲已经加载了该类时，就没有必要子ClassLoader再加载一次。</p>
+<p>②其次是考虑到安全因素，<strong>防止java核心api中定义类型不会被用户恶意替换和篡改</strong>，从而引发错误。</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> java.lang;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">String</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">String</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"自己伪造的String"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="JVM内存模型"><a href="#JVM内存模型" class="headerlink" title="JVM内存模型"></a>JVM内存模型</h1><p><a href="https://pic.downk.cc/item/5f2fd48114195aa594db6a78.png" data-fancybox="group" data-caption class="fancybox"><img alt title data-src="https://pic.downk.cc/item/5f2fd48114195aa594db6a78.png" class="lazyload"></a></p>
+<h2 id="Execution-Engine"><a href="#Execution-Engine" class="headerlink" title="Execution Engine"></a>Execution Engine</h2><p><strong>Execution Engine执行引擎负责解释命令，提交操作系统执行</strong>。在 HotSpot 里面，将字节码翻译为机器码的翻译过程有两种形式：第一种是解释执行，即逐条将字节码翻译成机器码并执行；第二种是即时编译（Just-In-Time compilation，JIT），即将一个方法中包含的所有字节码编译成机器码后再执行。</p>
+<p>前者的优势在于无需等待编译，而后者的优势在于实际运行速度更快。HotSpot 默认采用混合模式，综合了解释执行和即时编译两者的优点。它会先解释执行字节码，而后将其中反复执行的热点代码，以方法为单位进行即时编译。</p>
+<h2 id="Native-Interface-amp-Native-Method-Stack"><a href="#Native-Interface-amp-Native-Method-Stack" class="headerlink" title="Native Interface  &amp;  Native Method Stack"></a>Native Interface  &amp;  Native Method Stack</h2><p>在每个操作系统内部，都定义了很多本地方法库，例如windows中以.dll文件为主，Linux总以.so文件为主。</p>
+<p>这些本地方法库中，定义了很多调用本地操作系统的方法，也称之为本地方法接口(Native Interface)。</p>
+<p>本地方法接口的作用是融合不同的编程语言为 Java 所用，它的初衷是融合 C/C++程序，Java 诞生的时候是 C/C++横行的时候，要想立足，必须要调用 C/C++程序，于是就在内存中专门开辟了一块区域处理标记为native的代码，它的具体做法是 Native Method Stack中登记 native方法，在Execution Engine 执行时加载native libraie（本地方法库）。</p>
+<p>​    目前该方法使用的越来越少了，除非是与硬件有关的应用，比如通过Java程序驱动打印机或者Java系统管理生产设备，或者是使用Java语言开发安卓操作系统的硬件驱动等。</p>
+<p>​    例如：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Object</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">registerNatives</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        registerNatives();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> Class&lt;?&gt; getClass();</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="PC寄存器（程序计数器）"><a href="#PC寄存器（程序计数器）" class="headerlink" title="PC寄存器（程序计数器）"></a>PC寄存器（程序计数器）</h2><p><strong>每个线程都有一个程序计数器，是线程私有的,就是一个指针</strong>，指向方法区中的方法字节码（用来存储指向下一条指令的地址,就是即将要执行的指令代码），由执行引擎读取下一条指令，是一个非常小的内存空间，几乎可以忽略不记。</p>
+<p>​    PC寄存器主要负责计数和调度。它可以看作是当前线程所执行的字节码的行号指示器。由于Java虚拟机的多线程是通过线程轮流切换并分配处理器执行时间的方式来实现的，一个处理器都只会执行一条线程中的指令。因此，为了线程切换后能恢复到正确的执行位置，每条线程都有一个独立的程序计数器，各个线程之间计数器互不影响，独立存储。程序计数器内存区域是虚拟机中唯一没有规定OutOfMemoryError情况的区域。</p>
+<h2 id="方法区（Method-Area）"><a href="#方法区（Method-Area）" class="headerlink" title="方法区（Method Area）"></a>方法区（Method Area）</h2><p>方法区是被所有线程共享，所有字段和方法字节码，以及一些特殊方法如构造函数，接口代码也在此定义。简单说，<strong>所有定义的方法的信息都保存在该区域，此区属于共享区间</strong>。</p>
+<p>​    <strong>静态变量+常量+类信息(构造方法/接口定义)+运行时常量池存在方法区中</strong>。</p>
+<p>​    But</p>
+<p>​    实例变量存在堆内存中,和方法区无关。</p>
+<p>​    方法区是《Java虚拟机规范》中规定的一个概念，在JDK1.7之前，HotSpot使用永久区实现方法区。</p>
+<p>​    1.8之后，由元空间实现。</p>
+<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><p>栈也叫栈内存，主管Java程序的运行，是在线程创建时创建，它的生命期是跟随线程的生命期，线程结束栈内存也就释放，对于栈来说不存在垃圾回收问题，只要线程一结束该栈就结束，生命周期和线程一致，是线程私有的。</p>
+<p>一个线程中的每个方法在执行的同时都会创建一个栈帧（Stack Frame）用于存储局部变量表、操作数栈、动态链接、方法出口等信息。<strong>8种基本类型的变量+对象的引用变量+实例方法都是在函数的栈内存中分配</strong>。</p>
+<p>在栈区域规定了两种异常状态：如果线程请求的栈深度大于虚拟机所允许的深度，则抛出StackOverflowError异常；如果虚拟机栈可以动态扩展，在扩展是无法申请到足够的内存，就会抛出OutOfMemoryError异常。</p>
+<h2 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h2><h3 id="逻辑设计"><a href="#逻辑设计" class="headerlink" title="逻辑设计"></a>逻辑设计</h3><p>堆是java虚拟机所管理的内存中最大的一块，是被所有线程共享的一块内存区域，在虚拟机启动时创建。堆内存的大小是可以调节的（通过 -Xmx 和 -Xms 控制）。</p>
+<p>所有的对象实例以及数组都要在堆上分配。</p>
+<p>如果堆中没有内存完成实例分配，并且堆也无法再扩展时，将会抛出OutOfMemoryError异常。</p>
+<p>​    java堆是垃圾收集器管理的主要区域，因此也被成为“GC堆”（Garbage Collected Heap）。</p>
+<p><strong>堆内存逻辑上分为三部分：</strong></p>
+<p>​    Young Generation Space  新生区(新生代)          Young/New</p>
+<p>​    Tenure generation space  养老区(养老代)           Old/ Tenure</p>
+<p>​    Permanent Space     永久区(永久代)（1.8后为元空间）  Perm</p>
+<p><a href="https://pic.downk.cc/item/5f2fda7a14195aa594dd52be.png" data-fancybox="group" data-caption class="fancybox"><img alt title data-src="https://pic.downk.cc/item/5f2fda7a14195aa594dd52be.png" class="lazyload"></a></p>
+<h3 id="物理设计"><a href="#物理设计" class="headerlink" title="物理设计"></a>物理设计</h3><p><strong>在Java 中，堆被划分成两个不同的区域：新生代 ( Young )、老年代 ( Old )</strong>。新生代 ( Young ) 又被划分为三个区域：Eden、From Survivor、To Survivor。这样划分的目的是为了使 JVM 能够更好的管理堆内存中的对象，包括内存的分配以及回收</p>
+<p><a href="https://pic.downk.cc/item/5f2fda8c14195aa594dd579d.png" data-fancybox="group" data-caption class="fancybox"><img alt title data-src="https://pic.downk.cc/item/5f2fda8c14195aa594dd579d.png" class="lazyload"></a></p>
+<p>新生代分为eden区、s0区、s1区，s0和s1也被称为from和to区域，他们是两块大小相等并且可以互换角色的空间。绝大多数情况下，对象首先分配在eden区，在新生代回收后，如果对象还存活，则进入s0或s1区，之后每经过一次新生代回收，如果对象存活则它的年龄就加1，对象达到一定的年龄（默认15）后，则进入老年代。</p>
+<h2 id="永久区"><a href="#永久区" class="headerlink" title="永久区"></a>永久区</h2><p>永久存储区是一个常驻内存区域，用于存放JDK自身所携带的 Class,Interface 的元数据，也就是说它存储的是运行环境必须的类信息，被装载进此区域的数据是不会轻易被垃圾回收器回收掉的，关闭 JVM 才会释放此区域所占用的内存。</p>
+<p>如果出现java.lang.OutOfMemoryError: PermGen space，说明是Java虚拟机对永久代Perm内存设置不够。一般出现这种情况，都是程序启动需要加载大量的第三方jar包。例如：在一个Tomcat下部署了太多的应用。或者大量动态反射生成的类不断被加载，最终导致Perm区被占满。 </p>
+<p>Jdk1.6及之前： 有永久代, 常量池1.6在方法区</p>
+<p>Jdk1.7：     有永久代，但已经逐步“去永久代”，常量池1.7在堆</p>
+<p>Jdk1.8及之后： 无永久代，常量池1.8在元空间</p>
+<p>实际而言，方法区（Method Area）和堆一样，是各个线程共享的内存区域，它用于存储虚拟机加载的：类信息+普通常量+静态常量+编译器编译后的代码等等，虽然JVM规范将方法区描述为堆的一个逻辑部分，但它却还有一个别名叫做Non-Heap(非堆)，目的就是要和堆分开。</p>
+<p>对于HotSpot虚拟机，很多开发者习惯将方法区称之为“永久代(Parmanent Gen)” ，但严格本质上说两者不同，或者说使用永久代来实现方法区而已，永久代是方法区(相当于是一个接口interface)的一个实现，jdk1.7的版本中，已经将原本放在永久代的字符串常量池移走。</p>
+<p>常量池（Constant Pool）是方法区的一部分，Class文件除了有类的版本、字段、方法、接口等描述信息外，还有一项信息就是常量池，这部分内容将在类加载后进入方法区的运行时常量池中存放。</p>
+<h1 id="JVM参数设置"><a href="#JVM参数设置" class="headerlink" title="JVM参数设置"></a>JVM参数设置</h1><h2 id="常见参数设置"><a href="#常见参数设置" class="headerlink" title="常见参数设置"></a>常见参数设置</h2><p><a href="https://pic.downk.cc/item/5f2fdad414195aa594dd6ab3.png" data-fancybox="group" data-caption class="fancybox"><img alt title data-src="https://pic.downk.cc/item/5f2fdad414195aa594dd6ab3.png" class="lazyload"></a></p>
+<p>1.7的堆结构</p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-XX:+PrintGC</td>
+<td>每次触发GC的时候打印相关日志</td>
+</tr>
+<tr>
+<td>-XX:+UseSerialGC</td>
+<td>串行回收</td>
+</tr>
+<tr>
+<td>-XX:+PrintGCDetails</td>
+<td>更详细的GC日志</td>
+</tr>
+<tr>
+<td>-Xms</td>
+<td>堆初始值(默认为物理内存的1/64)</td>
+</tr>
+<tr>
+<td>-Xmx</td>
+<td>堆最大可用值(默认为物理内存的1/4)</td>
+</tr>
+<tr>
+<td>-Xmn</td>
+<td>新生代堆初始值</td>
+</tr>
+<tr>
+<td>-XX:SurvivorRatio</td>
+<td>用来设置新生代中eden空间和from/to空间的比例，默认为8</td>
+</tr>
+<tr>
+<td>-XX:NewRatio</td>
+<td>配置新生代与老年代占比，默认1:2</td>
+</tr>
+<tr>
+<td>-Xss</td>
+<td>每个线程的堆栈大小，默认为1M，此值不能设置过大，否则会减少线程并发数。</td>
+</tr>
+</tbody></table>
+<p>VM初始分配的堆内存由-Xms指定，默认是物理内存的1/64；JVM最大分配的堆内存由-Xmx指定，默认是物理内存的1/4。默认空余堆内存小于40%时，JVM就会增大堆直到-Xmx的最大限制；</p>
+<p>空余堆内存大于70%时，JVM会减少堆直到-Xms的最小限制。因此服务器一般设置-Xms、-Xmx 相等以避免在每次GC 后调整堆的大小。</p>
+<p>查看当前JVM内存</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		System.out.print(<span class="string">"最大内存"</span>);</span><br><span class="line">	System.out.println(Runtime.getRuntime().maxMemory() / <span class="number">1024.0</span> / <span class="number">1024</span> + <span class="string">"M"</span>);</span><br><span class="line">		System.out.print(<span class="string">"当前可用内存"</span>);</span><br><span class="line">	System.out.println(Runtime.getRuntime().freeMemory() / <span class="number">1024.0</span> / <span class="number">1024</span> + <span class="string">"M"</span>);</span><br><span class="line">		System.out.print(<span class="string">"当前申请内存"</span>);</span><br><span class="line">	System.out.println(Runtime.getRuntime().totalMemory() / <span class="number">1024.0</span> / <span class="number">1024</span> + <span class="string">"M"</span>);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>设置示例：</p>
+<p>​    -Xms20m -Xmx20m -Xmn1m -XX:SurvivorRatio=2 -XX:+PrintGCDetails -XX:+UseSerialGC代表</p>
+<p>  堆内存初始化值20m,堆内存最大值20m，新生代最大值可用1m，eden空间和from/to空间的比例为2/1，打印详细的GC信息，使用串行GC回收器。</p>
+<h2 id="常见异常"><a href="#常见异常" class="headerlink" title="常见异常"></a>常见异常</h2><h3 id="OutOfMemoryError"><a href="#OutOfMemoryError" class="headerlink" title="OutOfMemoryError"></a>OutOfMemoryError</h3><p>错误原因: java.lang.OutOfMemoryError: Java heap space 堆内存溢出</p>
+<p>解决办法:调大堆内存大小 </p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// -Xms1m -Xmx10m -XX:+PrintGCDetails</span></span><br><span class="line"></span><br><span class="line">		List&lt;Object&gt; listObject = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">			System.out.println(<span class="string">"i:"</span> + i);</span><br><span class="line">			Byte[] bytes = <span class="keyword">new</span> Byte[<span class="number">1</span> * <span class="number">1024</span> * <span class="number">1024</span>];</span><br><span class="line">			listObject.add(bytes);</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(<span class="string">"添加成功..."</span>);</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="StackOverflowError"><a href="#StackOverflowError" class="headerlink" title="StackOverflowError"></a>StackOverflowError</h3><p>错误原因: java.lang.StackOverflowError表示为栈内存溢出，一般产生于递归调用。</p>
+<p>解决办法:设置线程最大调用深度，默认是1M</p>
+<p>-Xss5m 设置最大调用深度</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StackTest</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> count;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">count</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			count++;</span><br><span class="line">			count(); </span><br><span class="line">		&#125; <span class="keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">			System.out.println(<span class="string">"最大深度:"</span>+count);</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">			 count();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="GC"><a href="#GC" class="headerlink" title="GC"></a>GC</h1><h2 id="GC简介"><a href="#GC简介" class="headerlink" title="GC简介"></a>GC简介</h2><p>JVM中的Garbage Collection，简称GC，它会不定时去堆内存中清理不可达对象。</p>
+<p>如果一个对象变成了不可达对象，这并不代表它会立刻被回收。在GC时，不可达的对象并不会立刻回收。</p>
+<p>垃圾回收在一个Java程序中的执行是自动执行的，不受外界干预的。程序员唯一能做的就是通过调用System.gc() 方法来”建议”执行垃圾收集器，但其是否可以执行，什么时候执行却都是不可知的。这也是垃圾收集器的最主要的缺点。当然相对于它给程序员带来的巨大方便性而言，这个缺点是瑕不掩瑜的。</p>
+<h2 id="finalize"><a href="#finalize" class="headerlink" title="finalize()"></a>finalize()</h2><p>Java技术使用finalize()方法在垃圾收集器将对象从内存中清除出去前，做必要的清理工作。</p>
+<p>这个方法是由垃圾收集器在确定这个对象没有被引用时对这个对象调用的。它是在Object类中定义的，因此所有的类都继承了它。子类覆盖finalize()方法以整理系统资源或者执行其他清理工作。</p>
+<h2 id="GC的工作特点"><a href="#GC的工作特点" class="headerlink" title="GC的工作特点"></a>GC的工作特点</h2><p>在GC工作中，通过某种算法来对JVM中的内存区域进行检测，对检测到的不可达对象，进行垃圾回收。</p>
+<p><strong>理论上GC过程中会频繁收集Young区，很少收集Old区，基本不动Perm区（元空间/方法区）。</strong></p>
+<h2 id="GC的分类"><a href="#GC的分类" class="headerlink" title="GC的分类"></a>GC的分类</h2><p>JVM在进行GC时，并非每次都对上面三个内存区域一起回收的，大部分时候回收的都是指新生代。因此GC按照回收的区域又分了两种类型，一种是普通GC（minor GC），一种是全局GC（major GC or Full GC），</p>
+<p>　　新生代GC（minor GC）：只针对新生代区域的GC。</p>
+<p>​       老年代GC（major GC or Full GC）：针对老年代的GC，偶尔伴随对新生代的GC以及对永久代的GC。 一般情况下，当出现了 Major GC，经常会伴随至少一次的 Minor GC（但非绝对的，在 ParallelScavenge 收集器的收集策略里就有直接进行 Major GC 的策略选择过程）。</p>
+<p>MajorGC 的速度一般会比 Minor GC 慢 10倍以上。</p>
+<p>Minor GC触发机制：当年轻代满时就会触发Minor GC，这里的年轻代满指的是Eden区满，Survivor满不会引发GC。</p>
+<p>Full GC触发机制：当年老代满时会引发Full GC，Full GC将会同时回收年轻代、年老代，当永久代满时也会引发Full GC，会导致Class、Method元信息的卸载</p>
+<h2 id="标记不可达对象"><a href="#标记不可达对象" class="headerlink" title="标记不可达对象"></a>标记不可达对象</h2><h3 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h3><p><strong>引用计数法就是如果一个对象没有被任何引用指向，则可视之为垃圾。这种方法的缺点就是不能检测到循环指向的存在。</strong></p>
+<p>首先需要声明，至少主流的Java虚拟机里面都没有选用引用计数算法来管理内存。 </p>
+<p>什么是引用计数算法：给对象中添加一个引用计数器，每当有一个地方引用它时，计数器值加１；当引用失效时，计数器值减１.任何时刻计数器值为０的对象就是不可能再被使用的。</p>
+<p>主流的java虚拟机中没有使用引用计数法的最主要的原因是它很难解决对象之间相互循环引用的问题。</p>
+<p>例如：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyObject</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> Object ref;</span><br><span class="line">	<span class="keyword">public</span> String name;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		MyObject myObject1 = <span class="keyword">new</span> MyObject();</span><br><span class="line">		MyObject myObject2 = <span class="keyword">new</span> MyObject();</span><br><span class="line">		myObject1.ref=myObject2;</span><br><span class="line">		myObject2.ref=myObject1;</span><br><span class="line">		myObject1=<span class="keyword">null</span>;</span><br><span class="line">		myObject2=<span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>将myObject1和myObject2赋值为null后，虚拟机依然无法回收，因为他们还相互指向和依赖。</p>
+<h3 id="GC-ROOTS算法"><a href="#GC-ROOTS算法" class="headerlink" title="GC ROOTS算法"></a>GC ROOTS算法</h3><p>根搜索算法的基本思路就是通过一系列名为”GC Roots”的对象作为起始点，从这些节点开始向下搜索，搜索所走过的路径称为引用链(Reference Chain)，当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的。<strong>真正标记对象为可回收状态至少要标记两次.</strong></p>
+<p><strong>简单理解，可以理解为堆外指向堆内的引用。</strong></p>
+<p>以下对象可以选取GC ROOTS节点：</p>
+<p>(1). 虚拟机栈（栈帧中的局部变量区，也叫做局部变量表）中引用的对象。</p>
+<p>(2). 方法区中的类静态属性引用的对象。</p>
+<p>(3). 方法区中常量引用的对象。</p>
+<p>(4). 本地方法栈中JNI(Native方法)引用的对象。</p>
+<h2 id="垃圾回收的三种方式"><a href="#垃圾回收的三种方式" class="headerlink" title="垃圾回收的三种方式"></a>垃圾回收的三种方式</h2><p>当标记完所有的存活对象时，我们便可以进行死亡对象的回收工作了。主流的基础回收方式可分为三种。</p>
+<h3 id="清除"><a href="#清除" class="headerlink" title="清除"></a>清除</h3><p>第一种是清除（sweep），即把死亡对象所占据的内存标记为空闲内存，并记录在一个空闲列表（free list）之中。当需要新建对象时，内存管理模块便会从该空闲列表中寻找空闲内存，并划分给新建的对象。</p>
+<p>清除这种回收方式的原理及其简单，但是有两个缺点。一是会造成内存碎片。由于 Java 虚拟机的堆中对象必须是连续分布的，因此可能出现总空闲内存足够，但是无法分配的极端情况。另一个则是分配效率较低。如果是一块连续的内存空间，那么我们可以通过指针加法（pointer bumping）来做分配。而对于空闲列表，Java 虚拟机则需要逐个访问列表中的项，来查找能够放入新建对象的空闲内存。</p>
+<h3 id="压缩"><a href="#压缩" class="headerlink" title="压缩"></a>压缩</h3><p>第二种是压缩（compact），即把存活的对象聚集到内存区域的起始位置，从而留下一段连续的内存空间。这种做法能够解决内存碎片化的问题，但代价是压缩算法的性能开销。</p>
+<h3 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h3><p>第三种则是复制（copy），即把内存区域分为两等分，分别用两个指针 from 和 to 来维护，并且只是用 from 指针指向的内存区域来分配内存。当发生垃圾回收时，便把存活的对象复制到 to 指针指向的内存区域中，并且交换 from 指针和 to 指针的内容。复制这种回收方式同样能够解决内存碎片化的问题，但是它的缺点也极其明显，即堆空间的使用效率极其低下。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>回收死亡对象的内存共有三种方式，分别为：会造成内存碎片的清除、性能开销较大的压缩、以及堆使用效率较低的复制。当然，现代的垃圾回收器往往会综合上述几种回收方式，综合它们优点的同时规避它们的缺点。</p>
+<h2 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h2><h3 id="设计思想"><a href="#设计思想" class="headerlink" title="设计思想"></a>设计思想</h3><p>在Java的大部分应用场景下，对象的存活复合这样一个规律，即大部分的 Java 对象只存活一小段时间，而存活下来的小部分 Java 对象则会存活很长一段时间。</p>
+<p>​    基于这样一个规律，在JVM中，使用分代回收思想来回收垃圾。简单来说，就是将堆空间划分为两代，分别叫做新生代和老年代。新生代用来存储新建的对象。当对象存活时间够长时，则将其移动到老年代。</p>
+<p>​    Java 虚拟机可以给不同代使用不同的回收算法。对于新生代，我们猜测大部分的 Java 对象只存活一小段时间，那么便可以频繁地采用耗时较短的垃圾回收算法，让大部分的垃圾都能够在新生代被回收掉。</p>
+<p>对于老年代，由于大部分的垃圾已经在新生代中被回收了，而在老年代中的对象有大概率会继续存活。一般在堆空间即将或者已经耗尽时，才会触发触发针对老年代的回收。这时候，Java 虚拟机往往需要做一次全堆扫描，耗时也将不计成本。（当然，现代的垃圾回收器都在并发收集的道路上发展，来避免这种全堆扫描的情况。）</p>
+<h3 id="堆的划分"><a href="#堆的划分" class="headerlink" title="堆的划分"></a>堆的划分</h3><p>Java 虚拟机将堆划分为新生代和老年代。其中，新生代又被划分为 Eden 区，以及两个大小相同的 Survivor 区。</p>
+<p>默认情况下，Java 虚拟机采取的是一种动态分配的策略（对应 Java 虚拟机参数 -XX:+UsePSAdaptiveSurvivorSizePolicy），根据生成对象的速率，以及 Survivor 区的使用情况动态调整 Eden 区和 Survivor 区的比例。</p>
+<p>当然，你也可以通过参数 -XX:SurvivorRatio 来固定这个比例。但是需要注意的是，其中一个 Survivor 区会一直为空，因此比例越低浪费的堆空间将越高。</p>
+<h3 id="标记复制-Mark-Copying-算法"><a href="#标记复制-Mark-Copying-算法" class="headerlink" title="标记复制(Mark-Copying)算法"></a>标记复制(Mark-Copying)算法</h3><p>当我们调用 new 指令时，它会在 Eden 区中划出一块作为存储对象的内存。当 Eden 区的空间耗尽了怎么办？这个时候 Java 虚拟机便会触发一次 Minor GC，来收集新生代的垃圾。存活下来的对象，则会被送到 Survivor 区。</p>
+<p>​    新生代共有两个 Survivor 区，我们分别用 from 和 to 来指代。其中 to 指向的 Survivior 区是空的。当发生 Minor GC 时，Eden 区和 from 指向的 Survivor 区中的存活对象会被复制到 to 指向的 Survivor 区中，然后交换 from 和 to 指针，以保证下一次 Minor GC 时，to 指向的 Survivor 区还是空的。</p>
+<p>​    Java 虚拟机会记录 Survivor 区中的对象一共被来回复制了几次。如果一个对象被复制的次数为 15（对应虚拟机参数 -XX:+MaxTenuringThreshold），那么该对象将被晋升（promote）至老年代。另外，如果单个 Survivor 区已经被占用了 50%（对应虚拟机参数 -XX:TargetSurvivorRatio），那么较高复制次数的对象也会被晋升至老年代。</p>
+<p>​    万一存活对象数量比较多，那么To域的内存可能不够存放，这个时候会借助老年代的空间。</p>
+<p>​    因此Minor GC使用的则是标记-复制算法。将 Survivor 区中的老存活对象晋升到老年代，然后将剩下的存活对象和 Eden 区的存活对象复制到另一个 Survivor 区中。理想情况下，Eden 区中的对象基本都死亡了，那么需要复制的数据将非常少，因此采用这种标记 - 复制算法的效果极好。</p>
+<p><a href="https://pic.downk.cc/item/5f2fe32914195aa594dfc01c.png" data-fancybox="group" data-caption class="fancybox"><img alt title data-src="https://pic.downk.cc/item/5f2fe32914195aa594dfc01c.png" class="lazyload"></a></p>
+<blockquote>
+<p><strong>口诀：复制必交换，谁空谁为to</strong></p>
+</blockquote>
+<h3 id="标记清除-Mark-Sweep-算法"><a href="#标记清除-Mark-Sweep-算法" class="headerlink" title="标记清除(Mark-Sweep)算法"></a>标记清除(Mark-Sweep)算法</h3><p>老年代一般是由标记清除或者是标记清除与标记整理的混合实现。</p>
+<p>​    标记清除算法一般应用于老年代,因为老年代的对象生命周期比较长。该算法先对所有可访问的对象，做个标记再遍历堆，把未被标记的对象回收（标记活的）。</p>
+<p>​    缺点：</p>
+<p>①回收时，应用需要挂起，也就是stop the world，导致用户体验非常差劲</p>
+<p>②由于需要遍历全堆对象，效率比较低（递归与全堆对象遍历）。</p>
+<p>③造成内存碎片化</p>
+<h3 id="标记压缩-Mark–Compact-算法"><a href="#标记压缩-Mark–Compact-算法" class="headerlink" title="标记压缩(Mark–Compact)算法"></a>标记压缩(Mark–Compact)算法</h3><p>标记清除算法和标记压缩算法非常相同，但是标记压缩算法在标记清除算法之上解决内存碎片化。</p>
+<p>优点：解决内存碎片化问题。也消除了复制算法当中，内存减半的高额代价</p>
+<p>缺点：效率低，压缩阶段，由于移动了可用对象，需要去更新引用。</p>
+<h3 id="标记清除压缩-Mark-Sweep-Compact-算法"><a href="#标记清除压缩-Mark-Sweep-Compact-算法" class="headerlink" title="标记清除压缩(Mark-Sweep-Compact)算法"></a>标记清除压缩(Mark-Sweep-Compact)算法</h3><p>标记清除压缩(Mark-Sweep-Compact)算法是标记清除算法和标记压缩算法的结合算法。其原理和标记清除算法一致，只不过会在多次GC后，进行一次Compact操作！</p>
+<h2 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h2><h3 id="串行回收和并行回收"><a href="#串行回收和并行回收" class="headerlink" title="串行回收和并行回收"></a>串行回收和并行回收</h3><p>串行回收: JDK1.5前的默认算法 缺点是只有一个线程，执行垃圾回收时程序停止的时间比较长。</p>
+<p>并行回收: 多个线程执行垃圾回收适合于高吞吐量的系统，回收时系统会停止运行。</p>
+<h3 id="Serial收集器"><a href="#Serial收集器" class="headerlink" title="Serial收集器"></a>Serial收集器</h3><p>串行收集器是最古老，最稳定以及效率高的收集器，是一个单线程的收集器，在进行垃圾收集时候，必须暂停其他所有的工作线程（Stop The World）直到它收集结束。</p>
+<p>特点：CPU利用率最高，停顿时间即用户等待时间比较长。</p>
+<p>适用场景：小型应用。</p>
+<p>通过JVM参数-XX:+UseSerialGC可以使用串行垃圾回收器。</p>
+<h3 id="Parallel-New收集器"><a href="#Parallel-New收集器" class="headerlink" title="Parallel New收集器"></a>Parallel New收集器</h3><p><strong>Parallel New</strong>收集器其实就是Serial收集器的多线程版本。新生代并行，老年代串行；新生代采用复制算法、老年代采用标记-压缩</p>
+<p>参数控制：-XX:+UseParNewGC 使用ParNew收集器</p>
+<p>-XX:ParallelGCThreads 限制线程数量</p>
+<h3 id="Parallel-Scavenge收集器-jdk1-8默认"><a href="#Parallel-Scavenge收集器-jdk1-8默认" class="headerlink" title="Parallel Scavenge收集器(jdk1.8默认)"></a>Parallel Scavenge收集器(jdk1.8默认)</h3><p>Parallel Scavenge收集器类似ParNew收集器，Parallel收集器更关注系统的吞吐量。可以通过参数来打开自适应调节策略，虚拟机会根据当前系统的运行情况收集性能监控信息，动态调整这些参数以提供最合适的停顿时间或最大的吞吐量；也可以通过参数控制GC的时间不大于多少毫秒或者比例；新生代复制算法、老年代标记-压缩，采用多线程来通过扫描并压缩堆。</p>
+<p>特点：停顿时间短，回收效率高，对吞吐量要求高。</p>
+<p>适用场景：大型应用，科学计算，大规模数据采集等。</p>
+<p>通过JVM参数 -XX:+UseParallelGC 打开并发标记扫描垃圾回收器。</p>
+<h3 id="cms收集器【重点】"><a href="#cms收集器【重点】" class="headerlink" title="cms收集器【重点】"></a>cms收集器【重点】</h3><p>CMS（Concurrent Mark Sweep）收集器是一种以获取最短回收停顿时间为目标的收集器。目前很大一部分的Java应用都集中在互联网站或B/S系统的服务端上，这类应用尤其重视服务的响应速度，希望系统停顿时间最短，以给用户带来较好的体验。从名字（包含“Mark Sweep”）上就可以看出CMS收集器是基于“标记-清除”算法实现的，它的运作过程相对于前面几种收集器来说要更复杂一些，整个过程分为4个步骤，包括： </p>
+<ul>
+<li><p>初始标记（CMS initial mark）</p>
+</li>
+<li><p>并发标记（CMS concurrent mark）</p>
+</li>
+<li><p>并发预处理</p>
+</li>
+<li><p>重新标记（CMS remark）</p>
+</li>
+<li><p>并发清除（CMS concurrent sweep）</p>
+</li>
+<li><p>并发重置</p>
+</li>
+</ul>
+<p>其中初始标记、重新标记这两个步骤仍然需要“Stop The World”。初始标记仅仅只是标记一下GC Roots能直接关联到的对象，速度很快，并发标记阶段就是进行GC Roots Tracing的过程，而重新标记阶段则是为了修正并发标记期间，因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录，这个阶段的停顿时间一般会比初始标记阶段稍长一些，但远比并发标记的时间短。 </p>
+<p>由于整个过程中耗时最长的并发标记和并发清除过程中，收集器线程都可以与用户线程一起工作，所以总体上来说，CMS收集器的内存回收过程是与用户线程一起并发地执行。</p>
+<p>优点:并发收集、低停顿 </p>
+<p>缺点：产生大量空间碎片、并发阶段会降低吞吐量</p>
+<p>采用“标记-清除”算法实现，使用多线程的算法去扫描堆，对发现未使用的对象进行回收。</p>
+<p>特点：响应时间优先，减少垃圾收集停顿时间。</p>
+<p>适应场景：大型服务器等。</p>
+<p>通过JVM参数 -XX:+UseConcMarkSweepGC设置</p>
+<h3 id="G1收集器-jdk1-9默认-【重点】"><a href="#G1收集器-jdk1-9默认-【重点】" class="headerlink" title="G1收集器(jdk1.9默认)【重点】"></a>G1收集器(jdk1.9默认)【重点】</h3><p>G1（Garbage First）是一个横跨新生代和老年代的垃圾回收器。实际上，它已经打乱了前面所说的堆结构，直接将堆分成极其多个区域。每个区域都可以充当 Eden 区、Survivor 区或者老年代中的一个。它采用的是标记-压缩算法，而且和 CMS 一样都能够在应用程序运行过程中并发地进行垃圾回收。G1 能够针对每个细分的区域来进行垃圾回收。在选择进行垃圾回收的区域时，它会优先回收死亡对象较多的区域。这也是 G1 名字的由来。</p>
+<p>特点：支持很大的堆，高吞吐量</p>
+<pre><code>--支持多CPU和垃圾回收线程
+
+--在主线程暂停的情况下，使用并行收集
+
+--在主线程运行的情况下，使用并发收集</code></pre><p>实时目标：可配置在N毫秒内最多只占用M毫秒的时间进行垃圾回收</p>
+<p>通过JVM参数 -XX:+UseG1GC 使用G1垃圾回收器</p>
+<p>注意:  并发是指一个处理器同时处理多个任务。 </p>
+<p>并行是指多个处理器或者是多核的处理器同时处理多个不同的任务。 </p>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>针对新生代的垃圾回收器共有三个：<strong>Serial，Parallel Scavenge和 Parallel New</strong>。这三个采用的都是标记-复制算法。其中，Serial 是一个单线程的，Parallel New 可以看成 Serial 的多线程版本。Parallel Scavenge 和 Parallel New 类似，但更加注重吞吐率。此外，Parallel Scavenge 不能与 CMS 一起使用。</p>
+<p>针对老年代的垃圾回收器也有三个：<strong>Serial Old 和Parallel Old</strong>，以及 <strong>CMS</strong>。Serial Old 和 Parallel Old 都是标记-压缩算法。同样，前者是单线程的，而后者可以看成前者的多线程版本。</p>
+<p>CMS 采用的是标记-清除算法，并且是并发的。除了少数几个操作需要 Stop-the-world 之外，它可以在应用程序运行过程中进行垃圾回收。在并发收集失败的情况下，Java 虚拟机会使用其他两个压缩型垃圾回收器进行一次垃圾回收。由于 G1 的出现，CMS 在 Java 9 中已被废弃。</p>
+<blockquote>
+<p>推荐参考： <a href="https://blog.csdn.net/okForrest27/article/details/107330039" target="_blank" rel="noopener">https://blog.csdn.net/okForrest27/article/details/107330039</a> </p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Synchronized与Lock的区别</title>
+    <url>/2020/08/09/Synchronized%E4%B8%8ELock%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<h1 id="Synchronized与Lock的区别"><a href="#Synchronized与Lock的区别" class="headerlink" title="Synchronized与Lock的区别"></a>Synchronized与Lock的区别</h1><p><strong>参考一</strong></p>
+<ol>
+<li><p>来源：<br>lock是一个接口，而synchronized是java的一个关键字，synchronized是内置的语言实现；</p>
+</li>
+<li><p>异常是否释放锁：<br>synchronized在发生异常时候会自动释放占有的锁，因此不会出现死锁；</p>
+<p>而lock发生异常时候，不会主动释放占有的锁，必须手动unlock来释放锁，可能引起死锁的发生。（所以最好将同步代码块用try catch包起来，finally中写入unlock，避免死锁的发生。）</p>
+</li>
+<li><p>是否响应中断<br>lock等待锁过程中可以用interrupt来中断等待，而synchronized只能等待锁的释放，不能响应中断；</p>
+</li>
+<li><p>是否知道获取锁<br>Lock可以通过trylock来知道有没有获取锁，而synchronized不能；</p>
+</li>
+<li><p>Lock可以提高多个线程进行读操作的效率。（可以通过readwritelock实现读写分离）</p>
+</li>
+<li><p>在性能上来说，如果竞争资源不激烈，两者的性能是差不多的，而当竞争资源非常激烈时（即有大量线程同时竞争），此时Lock的性能要远远优于synchronized。所以说，在具体使用时要根据适当情况选择。</p>
+</li>
+<li><p>synchronized使用Object对象本身的wait 、notify、notifyAll调度机制，而Lock可以使用Condition进行线程之间的调度，</p>
+</li>
+</ol>
+<p><strong>参考二</strong></p>
+<p>1.首先synchronized是java内置关键字，在jvm层面，Lock是个java类；</p>
+<p>2.synchronized无法判断是否获取锁的状态，Lock可以判断是否获取到锁；</p>
+<p>3.synchronized会自动释放锁(a 线程执行完同步代码会释放锁 ；b 线程执行过程中发生异常会释放锁)，Lock需在finally中手工释放锁（unlock()方法释放锁），否则容易造成线程死锁；</p>
+<p>4.用synchronized关键字的两个线程1和线程2，如果当前线程1获得锁，线程2线程等待。如果线程1阻塞，线程2则会一直等待下去，而Lock锁就不一定会等待下去，如果尝试获取不到锁，线程可以不用一直等待就结束了；</p>
+<p>5.synchronized的锁可重入、不可中断、非公平，而Lock锁可重入、可判断、可公平（两者皆可）</p>
+<p>6.Lock锁适合大量同步的代码的同步问题，synchronized锁适合代码少量的同步问题。</p>
+<blockquote>
+<p>参考： <a href="https://www.cnblogs.com/iyyy/p/7993788.html" target="_blank" rel="noopener">https://www.cnblogs.com/iyyy/p/7993788.html</a> </p>
+<p>​            <a href="https://blog.csdn.net/hefenglian/article/details/82383569" target="_blank" rel="noopener">https://blog.csdn.net/hefenglian/article/details/82383569</a> </p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>JUC</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JUC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Runnable和Callable的区别</title>
+    <url>/2020/08/09/Runnable%E5%92%8CCallable%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<h1 id="Runnable和Callable的区别"><a href="#Runnable和Callable的区别" class="headerlink" title="Runnable和Callable的区别"></a>Runnable和Callable的区别</h1><p> Java多线程有两个重要的接口，Runnable和Callable，分别提供一个run方法和call方法，二者是有较大差异的。 </p>
+<p><strong>1）Runnable提供run方法，无法通过throws抛出异常，所有CheckedException必须在run方法内部处理。</strong></p>
+<p><strong>Callable提供call方法，直接抛出Exception异常。</strong></p>
+<p><strong>2）Runnable的run方法无返回值，</strong></p>
+<p><strong>Callable的call方法提供返回值用来表示任务运行的结果</strong></p>
+<p><strong>3）Runnable可以作为Thread构造器的参数，通过开启新的线程来执行，也可以通过线程池来执行。</strong></p>
+<p><strong>而Callable只能通过线程池执行。</strong></p>
+<p><strong>4）Runnable接口中的落地方法是call方法；Callable接口中的落地方法是run方法</strong></p>
+<blockquote>
+<p>参考： <a href="https://blog.csdn.net/mryang125/article/details/81878168" target="_blank" rel="noopener">https://blog.csdn.net/mryang125/article/details/81878168</a> </p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>JUC</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JUC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>读书笔记节选一</title>
     <url>/2020/08/08/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E8%8A%82%E9%80%89%E4%B8%80/</url>
     <content><![CDATA[<p>今天这个故事，关于人是如何废掉的。</p>
