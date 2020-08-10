@@ -979,80 +979,8 @@
       </tags>
   </entry>
   <entry>
-    <title>判断一个链表是否有环</title>
-    <url>/2020/08/09/%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E6%9C%89%E7%8E%AF/</url>
-    <content><![CDATA[<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>怎么能够更高效地判断一个链表是否有环？</p>
-<p>首先创建两个指针p1和p2（在Java里就是两个对象引用），让它们同时指向这个链表的头节点。</p>
-<p>然后开始一个大循环，在循环体中，让指针p1每次向后移动1个节点，让指针p2每次向后移动2个节点，然后比较两个指针指向的节点是否相同。如果相同，则可以判断出链表有环，如果不同，则继续下一次循环。</p>
-<h1 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h1><p>假设链表的节点数量为n，则该算法的时间复杂度为O(n)。</p>
-<p>除两个指针外，没有使用任何额外的存储空间，所以空间复杂度是O(1)</p>
-<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedListCycle</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 判断是否有环</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> head  链表头节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isCycle</span><span class="params">(Node head)</span> </span>&#123;</span><br><span class="line">        Node p1 = head;</span><br><span class="line">        Node p2 = head;</span><br><span class="line">        <span class="keyword">while</span> (p2!=<span class="keyword">null</span> &amp;&amp; p2.next!=<span class="keyword">null</span>)&#123; <span class="comment">// 【注意】</span></span><br><span class="line">            p1 = p1.next;</span><br><span class="line">            p2 = p2.next.next;</span><br><span class="line">            <span class="keyword">if</span>(p1 == p2)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 链表节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> data;</span><br><span class="line">        Node next;</span><br><span class="line">        Node(<span class="keyword">int</span> data) &#123;</span><br><span class="line">            <span class="keyword">this</span>.data = data;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Node node1 = <span class="keyword">new</span> Node(<span class="number">5</span>);</span><br><span class="line">        Node node2 = <span class="keyword">new</span> Node(<span class="number">3</span>);</span><br><span class="line">        Node node3 = <span class="keyword">new</span> Node(<span class="number">7</span>);</span><br><span class="line">        Node node4 = <span class="keyword">new</span> Node(<span class="number">2</span>);</span><br><span class="line">        Node node5 = <span class="keyword">new</span> Node(<span class="number">6</span>);</span><br><span class="line">        node1.next = node2;</span><br><span class="line">        node2.next = node3;</span><br><span class="line">        node3.next = node4;</span><br><span class="line">        node4.next = node5;</span><br><span class="line">        node5.next = node2;</span><br><span class="line"></span><br><span class="line">        System.out.println(isCycle(node1));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h1><p><strong>如果链表有环，如何求出环的长？</strong></p>
-<p>当两个指针首次相遇，证明链表有环的时候，让两个指针从相遇点继续循环前进，并统计前进的循环次数，直到两个指针第2次相遇。此时，统计出来的前进次数就是环长。</p>
-<p>因为指针p1每次走1步，指针p2每次走2步，两者的速度差是1步。当两个指针再次相遇时，p2比p1多走了整整1圈因此，环长 = 每一次速度差 × 前进次数 = 前进次数</p>
-<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><blockquote>
-<p><a href="https://www.cnblogs.com/zhaoqingqing/p/11853924.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhaoqingqing/p/11853924.html</a> </p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>算法与数据结构</category>
-      </categories>
-      <tags>
-        <tag>算法与数据结构</tag>
-        <tag>链表</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>链表反转</title>
-    <url>/2020/08/09/%E9%93%BE%E8%A1%A8%E5%8F%8D%E8%BD%AC/</url>
-    <content><![CDATA[<h1 id="反转单链表"><a href="#反转单链表" class="headerlink" title="反转单链表"></a>反转单链表</h1><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</span><br><span class="line">输出: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL</span><br></pre></td></tr></table></figure></div>
-
-<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">    ListNode prev = <span class="keyword">null</span>;</span><br><span class="line">    ListNode curr = head;</span><br><span class="line">    <span class="keyword">while</span> (curr != <span class="keyword">null</span>) &#123;</span><br><span class="line">        ListNode nextTemp = curr.next;</span><br><span class="line">        curr.next = prev;</span><br><span class="line">        prev = curr;</span><br><span class="line">        curr = nextTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> prev;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-
-]]></content>
-      <categories>
-        <category>算法与数据结构</category>
-      </categories>
-      <tags>
-        <tag>算法与数据结构</tag>
-        <tag>链表</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>堆排序总结</title>
-    <url>/2020/08/09/%E5%A0%86%E6%8E%92%E5%BA%8F%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="堆的定义"><a href="#堆的定义" class="headerlink" title="堆的定义"></a>堆的定义</h1><p>堆是一种数据结构，一种叫做完全二叉树的数据结构。</p>
-<h1 id="堆的性质"><a href="#堆的性质" class="headerlink" title="堆的性质"></a>堆的性质</h1><p>这里我们用到两种堆，其实也算是一种。</p>
-<p>大顶堆：每个节点的值都大于或者等于它的左右子节点的值。</p>
-<p>小顶堆：每个节点的值都小于或者等于它的左右子节点的值。</p>
-<p>把这种逻辑结构映射到数组中 ，数组arr逻辑上就是一个堆。</p>
-<p><strong>从这里我们可以得出以下性质</strong></p>
-<p>对于大顶堆：arr[i] &gt;= arr[2i + 1] &amp;&amp; arr[i] &gt;= arr[2i + 2]</p>
-<p>对于小顶堆：arr[i] &lt;= arr[2i + 1] &amp;&amp; arr[i] &lt;= arr[2i + 2]</p>
-<h1 id="堆排序的基本思想"><a href="#堆排序的基本思想" class="headerlink" title="堆排序的基本思想"></a>堆排序的基本思想</h1><p>1、将要排序的序列构造成一个大顶堆，根据大顶堆的性质，当前堆的根节点（堆顶）就是序列中最大的元素；</p>
-<p>2、将堆顶元素和最后一个元素交换，然后将剩下的节点重新构造成一个大顶堆；<br>3、重复步骤2，如此反复，从第一次构建大顶堆开始，每一次构建，我们都能获得一个序列的最大值，然后把它放到大顶堆的尾部。最后，就得到一个有序的序列了。 </p>
-<p><strong>那么，该如何知道最后一个非叶子节点的位置，也就是索引值？</strong></p>
-<p>对于一个完全二叉树，在填满的情况下（非叶子节点都有两个子节点），每一层的元素个数是上一层的二倍，根节点数量是1，所以最后一层的节点数量，一定是之前所有层节点总数+1，所以，我们能找到最后一层的第一个节点的索引，即节点总数/2（根节点索引为0），这也就是第一个叶子节点，所以第一个非叶子节点的索引就是第一个叶子结点的索引-1。那么对于填不满的二叉树呢？这个计算方式仍然适用，当我们从上往下，从左往右填充二叉树的过程中，第一个叶子节点，一定是序列长度/2，所以第一个非叶子节点的索引就是arr.length / 2 -1。</p>
-<p>现在找到了最后一个非叶子节点，即元素值为2的节点，比较它的左右节点的值，是否比他大，如果大就换位置。这里因为1&lt;2，所以，不需要任何操作，继续比较下一个，即元素值为8的节点，它的左节点值为9比它本身大，所以需要交换</p>
-<h1 id="java代码实现"><a href="#java代码实现" class="headerlink" title="java代码实现"></a>java代码实现</h1><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HeapSort</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123;<span class="number">8</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">4</span>&#125;;</span><br><span class="line">        heapSort(arr);</span><br><span class="line">        System.out.println(Arrays.toString(arr));</span><br><span class="line">        <span class="comment">//[1, 2, 3, 4, 5, 6, 7, 8]</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (arr == <span class="keyword">null</span> || arr.length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> len = arr.length;</span><br><span class="line">        <span class="comment">// 构建大顶堆，这里其实就是把待排序序列，变成一个大顶堆结构的数组</span></span><br><span class="line">        buildMaxHeap(arr, len);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 交换堆顶和当前末尾的节点，重置大顶堆</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">            swap(arr, <span class="number">0</span>, i);</span><br><span class="line">            len--;</span><br><span class="line">            heapify(arr, <span class="number">0</span>, len);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">buildMaxHeap</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 从最后一个非叶节点开始向前遍历，调整节点性质，使之成为大顶堆</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = (<span class="keyword">int</span>) Math.floor(len / <span class="number">2</span>) - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            heapify(arr, i, len);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> i, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 先根据堆性质，找出它左右节点的索引</span></span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">2</span> * i + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> right = <span class="number">2</span> * i + <span class="number">2</span>;</span><br><span class="line">        <span class="comment">// 默认当前节点（父节点）是最大值。</span></span><br><span class="line">        <span class="keyword">int</span> largestIndex = i;</span><br><span class="line">        <span class="keyword">if</span> (left &lt; len &amp;&amp; arr[left] &gt; arr[largestIndex]) &#123;</span><br><span class="line">            <span class="comment">// 如果有左节点，并且左节点的值更大，更新最大值的索引</span></span><br><span class="line">            largestIndex = left;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (right &lt; len &amp;&amp; arr[right] &gt; arr[largestIndex]) &#123;</span><br><span class="line">            <span class="comment">// 如果有右节点，并且右节点的值更大，更新最大值的索引</span></span><br><span class="line">            largestIndex = right;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (largestIndex != i) &#123;</span><br><span class="line">            <span class="comment">// 如果最大值不是当前非叶子节点的值，那么就把当前节点和最大值的子节点值互换</span></span><br><span class="line">            swap(arr, i, largestIndex);</span><br><span class="line">            <span class="comment">// 因为互换之后，子节点的值变了，如果该子节点也有自己的子节点，仍需要再次调整。</span></span><br><span class="line">            heapify(arr, largestIndex, len);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> temp = arr[i];</span><br><span class="line">        arr[i] = arr[j];</span><br><span class="line">        arr[j] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h1><p>堆排序是一种选择排序，整体主要由构建初始堆+交换堆顶元素和末尾元素并重建堆两部分组成。其中构建初始堆经推导复杂度为O(n)，在交换并重建堆的过程中，需交换n-1次，而重建堆的过程中，根据完全二叉树的性质，[log2(n-1),log2(n-2)…1]逐步递减，近似为nlogn。所以堆排序时间复杂度一般认为就是O(nlogn)级。 </p>
-<p>最好和最坏的情况时间复杂度都是O(nlogn)，空间复杂度O(1)。 </p>
-]]></content>
-      <categories>
-        <category>算法与数据结构</category>
-      </categories>
-      <tags>
-        <tag>算法与数据结构</tag>
-        <tag>排序算法</tag>
-        <tag>二叉树</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>jvm小结</title>
-    <url>/2020/08/09/jvm%E5%B0%8F%E7%BB%93/</url>
+    <url>/2020/08/10/jvm%E5%B0%8F%E7%BB%93/</url>
     <content><![CDATA[<h1 id="JVM简介"><a href="#JVM简介" class="headerlink" title="JVM简介"></a>JVM简介</h1><h2 id="JVM作用"><a href="#JVM作用" class="headerlink" title="JVM作用"></a>JVM作用</h2><p>在Java语言中，最重要的莫过于Java虚拟机。为什么需要有Java虚拟机呢？</p>
 <p>Java 作为一门高级程序语言，它的语法非常复杂，抽象程度也很高。因此，直接在硬件上运行这种复杂的程序并不现实。所以呢，在运行 Java 程序之前，我们需要对其进行一番转换。</p>
 <p>转换的过程为通过编译器将 Java 程序转换成该虚拟机所能识别的指令序列，也称 Java 字节码。Java虚拟机会将字节码，即class文件加载到JVM中。由JVM进行解释和执行。除了 Java 外，Scala、Clojure、Groovy，以及时下热门的 Kotlin，这些语言都可以运行在 Java 虚拟机之上</p>
@@ -1307,6 +1235,78 @@
       </tags>
   </entry>
   <entry>
+    <title>判断一个链表是否有环</title>
+    <url>/2020/08/09/%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E6%9C%89%E7%8E%AF/</url>
+    <content><![CDATA[<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>怎么能够更高效地判断一个链表是否有环？</p>
+<p>首先创建两个指针p1和p2（在Java里就是两个对象引用），让它们同时指向这个链表的头节点。</p>
+<p>然后开始一个大循环，在循环体中，让指针p1每次向后移动1个节点，让指针p2每次向后移动2个节点，然后比较两个指针指向的节点是否相同。如果相同，则可以判断出链表有环，如果不同，则继续下一次循环。</p>
+<h1 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h1><p>假设链表的节点数量为n，则该算法的时间复杂度为O(n)。</p>
+<p>除两个指针外，没有使用任何额外的存储空间，所以空间复杂度是O(1)</p>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedListCycle</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 判断是否有环</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> head  链表头节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isCycle</span><span class="params">(Node head)</span> </span>&#123;</span><br><span class="line">        Node p1 = head;</span><br><span class="line">        Node p2 = head;</span><br><span class="line">        <span class="keyword">while</span> (p2!=<span class="keyword">null</span> &amp;&amp; p2.next!=<span class="keyword">null</span>)&#123; <span class="comment">// 【注意】</span></span><br><span class="line">            p1 = p1.next;</span><br><span class="line">            p2 = p2.next.next;</span><br><span class="line">            <span class="keyword">if</span>(p1 == p2)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 链表节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> data;</span><br><span class="line">        Node next;</span><br><span class="line">        Node(<span class="keyword">int</span> data) &#123;</span><br><span class="line">            <span class="keyword">this</span>.data = data;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Node node1 = <span class="keyword">new</span> Node(<span class="number">5</span>);</span><br><span class="line">        Node node2 = <span class="keyword">new</span> Node(<span class="number">3</span>);</span><br><span class="line">        Node node3 = <span class="keyword">new</span> Node(<span class="number">7</span>);</span><br><span class="line">        Node node4 = <span class="keyword">new</span> Node(<span class="number">2</span>);</span><br><span class="line">        Node node5 = <span class="keyword">new</span> Node(<span class="number">6</span>);</span><br><span class="line">        node1.next = node2;</span><br><span class="line">        node2.next = node3;</span><br><span class="line">        node3.next = node4;</span><br><span class="line">        node4.next = node5;</span><br><span class="line">        node5.next = node2;</span><br><span class="line"></span><br><span class="line">        System.out.println(isCycle(node1));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h1><p><strong>如果链表有环，如何求出环的长？</strong></p>
+<p>当两个指针首次相遇，证明链表有环的时候，让两个指针从相遇点继续循环前进，并统计前进的循环次数，直到两个指针第2次相遇。此时，统计出来的前进次数就是环长。</p>
+<p>因为指针p1每次走1步，指针p2每次走2步，两者的速度差是1步。当两个指针再次相遇时，p2比p1多走了整整1圈因此，环长 = 每一次速度差 × 前进次数 = 前进次数</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><blockquote>
+<p><a href="https://www.cnblogs.com/zhaoqingqing/p/11853924.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhaoqingqing/p/11853924.html</a> </p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>算法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>算法与数据结构</tag>
+        <tag>链表</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>链表反转</title>
+    <url>/2020/08/09/%E9%93%BE%E8%A1%A8%E5%8F%8D%E8%BD%AC/</url>
+    <content><![CDATA[<h1 id="反转单链表"><a href="#反转单链表" class="headerlink" title="反转单链表"></a>反转单链表</h1><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</span><br><span class="line">输出: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">    ListNode prev = <span class="keyword">null</span>;</span><br><span class="line">    ListNode curr = head;</span><br><span class="line">    <span class="keyword">while</span> (curr != <span class="keyword">null</span>) &#123;</span><br><span class="line">        ListNode nextTemp = curr.next;</span><br><span class="line">        curr.next = prev;</span><br><span class="line">        prev = curr;</span><br><span class="line">        curr = nextTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> prev;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+]]></content>
+      <categories>
+        <category>算法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>算法与数据结构</tag>
+        <tag>链表</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>堆排序总结</title>
+    <url>/2020/08/09/%E5%A0%86%E6%8E%92%E5%BA%8F%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="堆的定义"><a href="#堆的定义" class="headerlink" title="堆的定义"></a>堆的定义</h1><p>堆是一种数据结构，一种叫做完全二叉树的数据结构。</p>
+<h1 id="堆的性质"><a href="#堆的性质" class="headerlink" title="堆的性质"></a>堆的性质</h1><p>这里我们用到两种堆，其实也算是一种。</p>
+<p>大顶堆：每个节点的值都大于或者等于它的左右子节点的值。</p>
+<p>小顶堆：每个节点的值都小于或者等于它的左右子节点的值。</p>
+<p>把这种逻辑结构映射到数组中 ，数组arr逻辑上就是一个堆。</p>
+<p><strong>从这里我们可以得出以下性质</strong></p>
+<p>对于大顶堆：arr[i] &gt;= arr[2i + 1] &amp;&amp; arr[i] &gt;= arr[2i + 2]</p>
+<p>对于小顶堆：arr[i] &lt;= arr[2i + 1] &amp;&amp; arr[i] &lt;= arr[2i + 2]</p>
+<h1 id="堆排序的基本思想"><a href="#堆排序的基本思想" class="headerlink" title="堆排序的基本思想"></a>堆排序的基本思想</h1><p>1、将要排序的序列构造成一个大顶堆，根据大顶堆的性质，当前堆的根节点（堆顶）就是序列中最大的元素；</p>
+<p>2、将堆顶元素和最后一个元素交换，然后将剩下的节点重新构造成一个大顶堆；<br>3、重复步骤2，如此反复，从第一次构建大顶堆开始，每一次构建，我们都能获得一个序列的最大值，然后把它放到大顶堆的尾部。最后，就得到一个有序的序列了。 </p>
+<p><strong>那么，该如何知道最后一个非叶子节点的位置，也就是索引值？</strong></p>
+<p>对于一个完全二叉树，在填满的情况下（非叶子节点都有两个子节点），每一层的元素个数是上一层的二倍，根节点数量是1，所以最后一层的节点数量，一定是之前所有层节点总数+1，所以，我们能找到最后一层的第一个节点的索引，即节点总数/2（根节点索引为0），这也就是第一个叶子节点，所以第一个非叶子节点的索引就是第一个叶子结点的索引-1。那么对于填不满的二叉树呢？这个计算方式仍然适用，当我们从上往下，从左往右填充二叉树的过程中，第一个叶子节点，一定是序列长度/2，所以第一个非叶子节点的索引就是arr.length / 2 -1。</p>
+<p>现在找到了最后一个非叶子节点，即元素值为2的节点，比较它的左右节点的值，是否比他大，如果大就换位置。这里因为1&lt;2，所以，不需要任何操作，继续比较下一个，即元素值为8的节点，它的左节点值为9比它本身大，所以需要交换</p>
+<h1 id="java代码实现"><a href="#java代码实现" class="headerlink" title="java代码实现"></a>java代码实现</h1><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">java</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HeapSort</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123;<span class="number">8</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">4</span>&#125;;</span><br><span class="line">        heapSort(arr);</span><br><span class="line">        System.out.println(Arrays.toString(arr));</span><br><span class="line">        <span class="comment">//[1, 2, 3, 4, 5, 6, 7, 8]</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (arr == <span class="keyword">null</span> || arr.length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> len = arr.length;</span><br><span class="line">        <span class="comment">// 构建大顶堆，这里其实就是把待排序序列，变成一个大顶堆结构的数组</span></span><br><span class="line">        buildMaxHeap(arr, len);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 交换堆顶和当前末尾的节点，重置大顶堆</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">            swap(arr, <span class="number">0</span>, i);</span><br><span class="line">            len--;</span><br><span class="line">            heapify(arr, <span class="number">0</span>, len);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">buildMaxHeap</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 从最后一个非叶节点开始向前遍历，调整节点性质，使之成为大顶堆</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = (<span class="keyword">int</span>) Math.floor(len / <span class="number">2</span>) - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            heapify(arr, i, len);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> i, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 先根据堆性质，找出它左右节点的索引</span></span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">2</span> * i + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> right = <span class="number">2</span> * i + <span class="number">2</span>;</span><br><span class="line">        <span class="comment">// 默认当前节点（父节点）是最大值。</span></span><br><span class="line">        <span class="keyword">int</span> largestIndex = i;</span><br><span class="line">        <span class="keyword">if</span> (left &lt; len &amp;&amp; arr[left] &gt; arr[largestIndex]) &#123;</span><br><span class="line">            <span class="comment">// 如果有左节点，并且左节点的值更大，更新最大值的索引</span></span><br><span class="line">            largestIndex = left;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (right &lt; len &amp;&amp; arr[right] &gt; arr[largestIndex]) &#123;</span><br><span class="line">            <span class="comment">// 如果有右节点，并且右节点的值更大，更新最大值的索引</span></span><br><span class="line">            largestIndex = right;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (largestIndex != i) &#123;</span><br><span class="line">            <span class="comment">// 如果最大值不是当前非叶子节点的值，那么就把当前节点和最大值的子节点值互换</span></span><br><span class="line">            swap(arr, i, largestIndex);</span><br><span class="line">            <span class="comment">// 因为互换之后，子节点的值变了，如果该子节点也有自己的子节点，仍需要再次调整。</span></span><br><span class="line">            heapify(arr, largestIndex, len);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> temp = arr[i];</span><br><span class="line">        arr[i] = arr[j];</span><br><span class="line">        arr[j] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h1><p>堆排序是一种选择排序，整体主要由构建初始堆+交换堆顶元素和末尾元素并重建堆两部分组成。其中构建初始堆经推导复杂度为O(n)，在交换并重建堆的过程中，需交换n-1次，而重建堆的过程中，根据完全二叉树的性质，[log2(n-1),log2(n-2)…1]逐步递减，近似为nlogn。所以堆排序时间复杂度一般认为就是O(nlogn)级。 </p>
+<p>最好和最坏的情况时间复杂度都是O(nlogn)，空间复杂度O(1)。 </p>
+]]></content>
+      <categories>
+        <category>算法与数据结构</category>
+      </categories>
+      <tags>
+        <tag>算法与数据结构</tag>
+        <tag>排序算法</tag>
+        <tag>二叉树</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Synchronized与Lock的区别</title>
     <url>/2020/08/09/Synchronized%E4%B8%8ELock%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
     <content><![CDATA[<h1 id="Synchronized与Lock的区别"><a href="#Synchronized与Lock的区别" class="headerlink" title="Synchronized与Lock的区别"></a>Synchronized与Lock的区别</h1><p><strong>参考一</strong></p>
@@ -1349,102 +1349,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Runnable和Callable的区别</title>
-    <url>/2020/08/09/Runnable%E5%92%8CCallable%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<h1 id="Runnable和Callable的区别"><a href="#Runnable和Callable的区别" class="headerlink" title="Runnable和Callable的区别"></a>Runnable和Callable的区别</h1><p> Java多线程有两个重要的接口，Runnable和Callable，分别提供一个run方法和call方法，二者是有较大差异的。 </p>
-<p><strong>1）Runnable提供run方法，无法通过throws抛出异常，所有CheckedException必须在run方法内部处理。</strong></p>
-<p><strong>Callable提供call方法，直接抛出Exception异常。</strong></p>
-<p><strong>2）Runnable的run方法无返回值，</strong></p>
-<p><strong>Callable的call方法提供返回值用来表示任务运行的结果</strong></p>
-<p><strong>3）Runnable可以作为Thread构造器的参数，通过开启新的线程来执行，也可以通过线程池来执行。</strong></p>
-<p><strong>而Callable只能通过线程池执行。</strong></p>
-<p><strong>4）Runnable接口中的落地方法是call方法；Callable接口中的落地方法是run方法</strong></p>
-<blockquote>
-<p>参考： <a href="https://blog.csdn.net/mryang125/article/details/81878168" target="_blank" rel="noopener">https://blog.csdn.net/mryang125/article/details/81878168</a> </p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>JUC</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>JUC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>读书笔记节选一</title>
-    <url>/2020/08/08/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E8%8A%82%E9%80%89%E4%B8%80/</url>
-    <content><![CDATA[<p>今天这个故事，关于人是如何废掉的。</p>
-<p>1995年，美国旧金山举行过一个全球精英会议。500名政经精英在会上，为全球化的世界进行分析与规划。</p>
-<p>大家一致认为：</p>
-<p>1，八二定律真切地存在。</p>
-<p>2，竞争会越来越激烈，而80%的人，将越来越贫穷，地位越来越下降，淘汰率也越来越高。</p>
-<p>可是问题来了，这80%的loser，与其余20%的精英之间，必然存在冲突。</p>
-<p>冲突如果剧烈，社会就会动荡。如何解决这一问题呢？</p>
-<p>布热津斯基就此提出了著名的“奶头乐”理论。</p>
-<p>所谓奶头乐，就是指采取娱乐化、低智化、游戏化、低成本、轻易就能获取刺激性快乐的办法，卸除底层人口的不满。</p>
-<p>所以，娱乐要越多越好，游戏要越普及越好，综艺与真人秀要随处可见，低智的、无逻辑的、甚至堪称脑残的偶像剧要一部接一部。</p>
-<p>当这些东西触手可及，底层人就会安分下来，快乐地、毫无怨言地、无知无觉地继续贫穷，继续无所得，然后虚度一生。</p>
-<p>这虽然是大洋彼岸的事件，但奶头乐的现象，在我们身边同样存在。</p>
-<p>曾有人说过，给一个人一根网线，一个小房间，一个外卖电话，就足以毁了一个人。</p>
-<p>因为，当一个人置身于充满感官刺激的娱乐、碎片化的信息和无规则的游戏中时，你的注意力全部被占据，时间全被消耗，你的欲望能轻易被满足，自律会一点一点丧失，意志力逐渐瘫软。</p>
-<p>你不会再思考。也不再向往艰难的事业。你会恐惧挑战，恐惧前行。</p>
-<p>你会在一个接一个的综艺中，在一坨又一坨的微博资讯里，一阵接一阵的低质量欢娱中，走向你的颓废。</p>
-<p>王尔德说过一句话：“人生只有两种悲剧，一种是：一直得不到。另一种是：太容易得到。”</p>
-<p>一直得不到，是为永生遗憾。</p>
-<p>太容易得到，要么会变味（边际效用递减），要么会上瘾（沉溺于直接刺激）。无论哪一种，都绝非善事。</p>
-<p>要知道，人真正能成长，取决于不断的自我挑战。</p>
-<p>是明知很苦，仍然前行；明知不易，仍然投入。</p>
-<p>当一个人不断突破，在杂乱的信息里分花错柳，在活色生香的影像中保持高强度自律，目标明确，遇山开路，遇水搭桥，终于在某一天，他获得“我真的做到了”的大高潮，这种高峰体验，会令他受益一生。</p>
-<p>因为，这才是真正的幸福——努力过，实现过，我无悔。</p>
-<p>第二个故事，关于多任务执行所带来的消耗。</p>
-<p>一个熟人，也是写字的。</p>
-<p>文笔好，细节把控一流，出过多篇爆文。倘若一直专注写下去，不说成为名作家，至少，凭借一支笔，也能活得体面又阔绰。</p>
-<p>可惜，她同时做了太多事。</p>
-<p>前天她在做教材编改；今天她在接待领导，陪饭陪酒陪唱歌，想在就职的工作里混上一官半职；又过几天，她说自己正在和老公疯狂撕逼，打得天翻地覆，鸡犬不宁；没多久，开始做公益，准备去贫困山区支教；</p>
-<p>但这个决心没下几天，又变了，说要开直播，做网红，教人搭配衣服和化妆；</p>
-<p>直播没做几天，又生出一事儿，说有朋友拉她入伙，一起干房产，决定以后也同时做房地产销售……</p>
-<p>就这样，她一份漂亮的成绩单也没有交出来。</p>
-<p>几年过去了，我们早已经做出了或大或小的成就，只有她，仍然一无所成，甚至仍然赤贫。</p>
-<p>是谁说，什么都做，就等于什么都没做。</p>
-<p>人的精力是有限的。</p>
-<p>假设精力总量是100，分在10个任务上，那就每个任务，都只能使上10%的精力与注意力。</p>
-<p>这种低质的投入，当然带不来高回报。</p>
-<p>而你还会一天到晚说：“好累啊，忙得没个停，也没赚到半个钱……”</p>
-<p>为什么会这样？</p>
-<p>就因为，当举足轻重的一件事VS无足轻重的多数事，理智的人，都会选择前者。他们知道，只有将80%以上的精力，都投注在前者上，才会真正有成效，也会真正为自己带来收益。</p>
-<p>冯仑曾经讲过一件事。</p>
-<p>一个著名的企业，大家都眼睁睁地看着它走下坡路。曾经的业内标杆，如今成了大家的负面教材。曾经金光闪闪放光彩，如今黯然无光危机重重。</p>
-<p>为什么会这样？</p>
-<p>因为老板的心散了。</p>
-<p>为了资本，什么项目都开。这也做，那也做，主营项目停滞不前，结果哪个业务都没有精进。</p>
-<p>企业如此，人也一样。</p>
-<p>倘若你也不想穷忙而无所得，那么，谨记一条：用80%，甚至90%的精力，去做最最最最重要的那件事。</p>
-<p>这样，才会带来真正的成长。</p>
-<p>一个人的废掉，往往是悄无声息的。</p>
-<p>它没有预警，也没有提示，但你反观自己，如果有如下症状，就应该警醒了：</p>
-<p>一是太懒。懒于改变，懒于坚持。 </p>
-<p>二是太闲。将时间与注意力，都放在索取低密度的信息、瞬间回报的快感中。 </p>
-<p>三是太无逻辑。一旦做事，眉毛胡子一把抓，抓不到重点，也摸不清门路，光阴消耗，疲累不堪，一无所得。</p>
-<p>如果你还喜欢找借口，推诿责任，不面对，不学习，不负责，那你就是行走的危险二字。 </p>
-<p>时代正在大洗牌。贪图“奶头乐”的人，会逐渐被淘汰。迷恋感官愉悦的人，会在睁眼时，发现自己已跟不上时代的滚滚车流。</p>
-<p>如果你想活得更无愧此生，改变趁当下，学习趁此时。不要再敷衍自己。因为生命已在追问：“你，到底赋予我什么意义？” </p>
-<blockquote>
-<p>*作者：周冲，2015年离开体制，放弃公职，从事自由写作。新书《我更喜欢努力的自己》正在热卖中。微博：周冲周冲 </p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>其他</tag>
-        <tag>读书笔记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>flink系列12电商用户行为分析</title>
-    <url>/2020/07/02/flink%E7%B3%BB%E5%88%9712%E7%94%B5%E5%95%86%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%88%86%E6%9E%90/</url>
+    <url>/2020/08/09/flink%E7%B3%BB%E5%88%9712%E7%94%B5%E5%95%86%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%88%86%E6%9E%90/</url>
     <content><![CDATA[<h2 id="数据集解析"><a href="#数据集解析" class="headerlink" title="数据集解析"></a>数据集解析</h2><h3 id="淘宝数据集解析"><a href="#淘宝数据集解析" class="headerlink" title="淘宝数据集解析"></a>淘宝数据集解析</h3><p>我们准备了一份淘宝用户行为数据集，保存为csv文件。本数据集包含了淘宝上某一天随机一百万用户的所有行为（包括点击、购买、收藏、喜欢）。数据集的每一行表示一条用户行为，由用户ID、商品ID、商品类目ID、行为类型和时间戳组成，并以逗号分隔。关于数据集中每一列的详细描述如下：</p>
 <table>
 <thead>
@@ -1629,6 +1535,100 @@
         <tag>教程</tag>
         <tag>大数据</tag>
         <tag>flink</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Runnable和Callable的区别</title>
+    <url>/2020/08/09/Runnable%E5%92%8CCallable%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<h1 id="Runnable和Callable的区别"><a href="#Runnable和Callable的区别" class="headerlink" title="Runnable和Callable的区别"></a>Runnable和Callable的区别</h1><p> Java多线程有两个重要的接口，Runnable和Callable，分别提供一个run方法和call方法，二者是有较大差异的。 </p>
+<p><strong>1）Runnable提供run方法，无法通过throws抛出异常，所有CheckedException必须在run方法内部处理。</strong></p>
+<p><strong>Callable提供call方法，直接抛出Exception异常。</strong></p>
+<p><strong>2）Runnable的run方法无返回值，</strong></p>
+<p><strong>Callable的call方法提供返回值用来表示任务运行的结果</strong></p>
+<p><strong>3）Runnable可以作为Thread构造器的参数，通过开启新的线程来执行，也可以通过线程池来执行。</strong></p>
+<p><strong>而Callable只能通过线程池执行。</strong></p>
+<p><strong>4）Runnable接口中的落地方法是call方法；Callable接口中的落地方法是run方法</strong></p>
+<blockquote>
+<p>参考： <a href="https://blog.csdn.net/mryang125/article/details/81878168" target="_blank" rel="noopener">https://blog.csdn.net/mryang125/article/details/81878168</a> </p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>JUC</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JUC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>读书笔记节选一</title>
+    <url>/2020/08/08/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E8%8A%82%E9%80%89%E4%B8%80/</url>
+    <content><![CDATA[<p>今天这个故事，关于人是如何废掉的。</p>
+<p>1995年，美国旧金山举行过一个全球精英会议。500名政经精英在会上，为全球化的世界进行分析与规划。</p>
+<p>大家一致认为：</p>
+<p>1，八二定律真切地存在。</p>
+<p>2，竞争会越来越激烈，而80%的人，将越来越贫穷，地位越来越下降，淘汰率也越来越高。</p>
+<p>可是问题来了，这80%的loser，与其余20%的精英之间，必然存在冲突。</p>
+<p>冲突如果剧烈，社会就会动荡。如何解决这一问题呢？</p>
+<p>布热津斯基就此提出了著名的“奶头乐”理论。</p>
+<p>所谓奶头乐，就是指采取娱乐化、低智化、游戏化、低成本、轻易就能获取刺激性快乐的办法，卸除底层人口的不满。</p>
+<p>所以，娱乐要越多越好，游戏要越普及越好，综艺与真人秀要随处可见，低智的、无逻辑的、甚至堪称脑残的偶像剧要一部接一部。</p>
+<p>当这些东西触手可及，底层人就会安分下来，快乐地、毫无怨言地、无知无觉地继续贫穷，继续无所得，然后虚度一生。</p>
+<p>这虽然是大洋彼岸的事件，但奶头乐的现象，在我们身边同样存在。</p>
+<p>曾有人说过，给一个人一根网线，一个小房间，一个外卖电话，就足以毁了一个人。</p>
+<p>因为，当一个人置身于充满感官刺激的娱乐、碎片化的信息和无规则的游戏中时，你的注意力全部被占据，时间全被消耗，你的欲望能轻易被满足，自律会一点一点丧失，意志力逐渐瘫软。</p>
+<p>你不会再思考。也不再向往艰难的事业。你会恐惧挑战，恐惧前行。</p>
+<p>你会在一个接一个的综艺中，在一坨又一坨的微博资讯里，一阵接一阵的低质量欢娱中，走向你的颓废。</p>
+<p>王尔德说过一句话：“人生只有两种悲剧，一种是：一直得不到。另一种是：太容易得到。”</p>
+<p>一直得不到，是为永生遗憾。</p>
+<p>太容易得到，要么会变味（边际效用递减），要么会上瘾（沉溺于直接刺激）。无论哪一种，都绝非善事。</p>
+<p>要知道，人真正能成长，取决于不断的自我挑战。</p>
+<p>是明知很苦，仍然前行；明知不易，仍然投入。</p>
+<p>当一个人不断突破，在杂乱的信息里分花错柳，在活色生香的影像中保持高强度自律，目标明确，遇山开路，遇水搭桥，终于在某一天，他获得“我真的做到了”的大高潮，这种高峰体验，会令他受益一生。</p>
+<p>因为，这才是真正的幸福——努力过，实现过，我无悔。</p>
+<p>第二个故事，关于多任务执行所带来的消耗。</p>
+<p>一个熟人，也是写字的。</p>
+<p>文笔好，细节把控一流，出过多篇爆文。倘若一直专注写下去，不说成为名作家，至少，凭借一支笔，也能活得体面又阔绰。</p>
+<p>可惜，她同时做了太多事。</p>
+<p>前天她在做教材编改；今天她在接待领导，陪饭陪酒陪唱歌，想在就职的工作里混上一官半职；又过几天，她说自己正在和老公疯狂撕逼，打得天翻地覆，鸡犬不宁；没多久，开始做公益，准备去贫困山区支教；</p>
+<p>但这个决心没下几天，又变了，说要开直播，做网红，教人搭配衣服和化妆；</p>
+<p>直播没做几天，又生出一事儿，说有朋友拉她入伙，一起干房产，决定以后也同时做房地产销售……</p>
+<p>就这样，她一份漂亮的成绩单也没有交出来。</p>
+<p>几年过去了，我们早已经做出了或大或小的成就，只有她，仍然一无所成，甚至仍然赤贫。</p>
+<p>是谁说，什么都做，就等于什么都没做。</p>
+<p>人的精力是有限的。</p>
+<p>假设精力总量是100，分在10个任务上，那就每个任务，都只能使上10%的精力与注意力。</p>
+<p>这种低质的投入，当然带不来高回报。</p>
+<p>而你还会一天到晚说：“好累啊，忙得没个停，也没赚到半个钱……”</p>
+<p>为什么会这样？</p>
+<p>就因为，当举足轻重的一件事VS无足轻重的多数事，理智的人，都会选择前者。他们知道，只有将80%以上的精力，都投注在前者上，才会真正有成效，也会真正为自己带来收益。</p>
+<p>冯仑曾经讲过一件事。</p>
+<p>一个著名的企业，大家都眼睁睁地看着它走下坡路。曾经的业内标杆，如今成了大家的负面教材。曾经金光闪闪放光彩，如今黯然无光危机重重。</p>
+<p>为什么会这样？</p>
+<p>因为老板的心散了。</p>
+<p>为了资本，什么项目都开。这也做，那也做，主营项目停滞不前，结果哪个业务都没有精进。</p>
+<p>企业如此，人也一样。</p>
+<p>倘若你也不想穷忙而无所得，那么，谨记一条：用80%，甚至90%的精力，去做最最最最重要的那件事。</p>
+<p>这样，才会带来真正的成长。</p>
+<p>一个人的废掉，往往是悄无声息的。</p>
+<p>它没有预警，也没有提示，但你反观自己，如果有如下症状，就应该警醒了：</p>
+<p>一是太懒。懒于改变，懒于坚持。 </p>
+<p>二是太闲。将时间与注意力，都放在索取低密度的信息、瞬间回报的快感中。 </p>
+<p>三是太无逻辑。一旦做事，眉毛胡子一把抓，抓不到重点，也摸不清门路，光阴消耗，疲累不堪，一无所得。</p>
+<p>如果你还喜欢找借口，推诿责任，不面对，不学习，不负责，那你就是行走的危险二字。 </p>
+<p>时代正在大洗牌。贪图“奶头乐”的人，会逐渐被淘汰。迷恋感官愉悦的人，会在睁眼时，发现自己已跟不上时代的滚滚车流。</p>
+<p>如果你想活得更无愧此生，改变趁当下，学习趁此时。不要再敷衍自己。因为生命已在追问：“你，到底赋予我什么意义？” </p>
+<blockquote>
+<p>*作者：周冲，2015年离开体制，放弃公职，从事自由写作。新书《我更喜欢努力的自己》正在热卖中。微博：周冲周冲 </p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>其他</tag>
+        <tag>读书笔记</tag>
       </tags>
   </entry>
   <entry>
